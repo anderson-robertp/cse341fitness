@@ -1,0 +1,48 @@
+{
+  "name": "cse341fitness",
+  "version": "1.0.0",
+  "description": "A backend web API for tracking user physical fitness.",
+  "main": "server.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "dev": "tsx watch server.ts",
+    "swagger": "tsx ./swagger.ts"
+  },
+  "author": "Robert Anderson, Mandi Beauchaine, Sandi Junker",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "mongodb": "^6.14.2",
+    "mongoose": "^8.12.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "swagger": "^0.7.5",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.10",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.16",
+    "@types/swagger-ui-express": "^4.1.8",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
