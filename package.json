@@ -9,7 +9,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "dev": "tsx watch server.ts",
     "swagger": "tsx ./swagger.ts",
-    "start": "node server.ts"
+    "start": "tsx ./server.ts"
   },
   "author": "Robert Anderson, Mandi Beauchaine, Sandi Junker",
   "license": "ISC",
