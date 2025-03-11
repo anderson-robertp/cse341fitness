@@ -1,14 +1,14 @@
+import env from "dotenv";
 import { InitializeDatabase } from "./db/connection.ts";
 import { Request, Response, NextFunction } from "express";
 import express from "express";
 import bodyParser from "body-parser";
-import env from "dotenv";
 import router from "./routes/index.ts";
 import passport from "passport";
 import session from "express-session";
 import "./config/passport.ts";
 
-env.config({ path: "AnimalShelter" + "/.env" });
+env.config({ path: "cse341fitness/.env" });
 
 const app = express();
 const port = process.env.PORT || 8080;
