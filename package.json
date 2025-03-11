@@ -8,7 +8,8 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "dev": "tsx watch server.ts",
-    "swagger": "tsx ./swagger.ts"
+    "swagger": "tsx ./swagger.ts",
+    "start": "node server.ts"
   },
   "author": "Robert Anderson, Mandi Beauchaine, Sandi Junker",
   "license": "ISC",
