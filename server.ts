@@ -7,11 +7,12 @@ import router from "./routes/index.ts";
 import passport from "passport";
 import session from "express-session";
 import "./config/passport.ts";
+import swaggerDocs from "./docs/swagger.ts";
 
 env.config({ path: "cse341fitness/.env" });
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 const host = process.env.HOST || "localhost";
 
 //Middleware
@@ -28,9 +29,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Swagger Documentation
+swaggerDocs(app);
+
 //Get the router
 app
-  .use(bodyParser.json())
+  .use(express.json())
   .use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     next();
