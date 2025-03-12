@@ -7,6 +7,7 @@ interface IUser {
   googleId: string;
   workoutIds?: Types.ObjectId[];
   favoriteExercise?: Types.ObjectId;
+  achievements?: Types.ObjectId[]; 
 }
 
 //Mongoose schema
@@ -17,6 +18,7 @@ const userSchema = new Schema<IUser>(
     googleId: { type: String, unique: true, required: true },
     workoutIds: [{ type: Schema.Types.ObjectId, ref: "Workout" }],
     favoriteExercise: { type: Schema.Types.ObjectId, ref: "Exercise" },
+    achievements: [{ type: Schema.Types.ObjectId, ref: "UserAchievement" }],
   },
   { collection: "Users" }
 );
