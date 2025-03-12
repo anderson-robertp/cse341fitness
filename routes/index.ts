@@ -7,10 +7,8 @@ import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
 import swaggerDocs from "../docs/swagger";
 
-const router = express();
+const router = express.Router();
 
-// Use Swagger documentation at /api-docs
-swaggerDocs(router);
 
 //Authentication
 router.use("/authentication", authenticationRouter);
