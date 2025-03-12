@@ -5,8 +5,10 @@ import usersRouter from "./users";
 import exercisesRouter from "./exercises";
 import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
+import swaggerDocs from "../docs/swagger";
 
 const router = express.Router();
+
 
 //Authentication
 router.use("/authentication", authenticationRouter);
