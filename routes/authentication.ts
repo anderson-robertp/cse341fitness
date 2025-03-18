@@ -11,9 +11,26 @@ authenticationRouter.get(
       scope: ["email", "profile"],
     })
   )
+  /*  
+    #swagger.tags = ['Authentication'],
+    #swagger.description = 'Go to authentication page.',
+  */
 );
 
-authenticationRouter.get("/google/callback", handleErrors(Login));
+authenticationRouter.get(
+  "/google/callback",
+  handleErrors(Login)
+  /*  
+    #swagger.tags = ['Authentication'],
+    #swagger.description = 'Authenticate the user.',
+    #swagger.responses[200] = {
+        description: 'User logged in',
+    },
+    #swagger.responses[500] = {
+        description: 'Error authenticating the user.',
+    }
+    */
+);
 
 authenticationRouter.get(
   "/logout",
@@ -25,6 +42,13 @@ authenticationRouter.get(
       res.status(200).redirect("/");
     });
   })
+  /*  
+    #swagger.tags = ['Authentication'],
+    #swagger.description = 'Logout user.',
+    #swagger.responses[200] = {
+        description: 'User logged out',
+    }
+    */
 );
 
 export default authenticationRouter;
