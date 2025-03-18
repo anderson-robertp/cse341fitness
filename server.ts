@@ -7,7 +7,6 @@ import session from "express-session";
 import "./config/passport";
 import router from "./routes/index";
 import { InitializeDatabase } from "./db/connection";
-import swaggerDocs from "./docs/swagger";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,7 +38,7 @@ InitializeDatabase()
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on ${host}:${port}`);
-
+      
       //Swagger Documentation
       swaggerDocs(app);
     });

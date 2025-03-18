@@ -1,0 +1,228 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fitness API",
+    "description": "An API for tracking fitness data",
+    "version": "1.0.0"
+  },
+  "host": [
+    "cse341fitness.onrender.com"
+  ],
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "authorizationUrl": "https://cse341fitness.onrender.com/authentication/google",
+      "flow": "implicit"
+    }
+  },
+  "paths": {
+    "/authentication/google": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Go to authentication page.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/authentication/google/callback": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Authenticate the user.",
+        "responses": {
+          "200": {
+            "description": "User logged in"
+          },
+          "500": {
+            "description": "Error authenticating the user."
+          }
+        }
+      }
+    },
+    "/authentication/logout": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Logout user.",
+        "responses": {
+          "200": {
+            "description": "User logged out"
+          }
+        }
+      }
+    },
+    "/achievements/": {
+      "get": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Get all achievements.",
+        "responses": {
+          "200": {
+            "description": "Achievements retrieved successfully."
+          },
+          "500": {
+            "description": "Error getting achievements."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Create a new achievement.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Run 5 miles"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Run 5 miles in a week"
+                },
+                "progressGoal": {
+                  "type": "number",
+                  "example": 5
+                }
+              },
+              "required": [
+                "title",
+                "description"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Achievement created successfully."
+          },
+          "500": {
+            "description": "Error creating achievement."
+          }
+        }
+      }
+    },
+    "/achievements/{id}": {
+      "get": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Get achievement.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement retrieved successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error retrieving achievement."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Delete achievement.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement deleted successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error deleting achievement."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Update a new achievement.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "progressGoal": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement updated successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error updating achievement."
+          }
+        }
+      }
+    },
+    "/api-docs/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
