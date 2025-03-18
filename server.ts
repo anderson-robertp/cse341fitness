@@ -38,6 +38,9 @@ InitializeDatabase()
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on ${host}:${port}`);
+      
+      //Swagger Documentation
+      swaggerDocs(app);
     });
   })
   .catch((error: Error) => {
