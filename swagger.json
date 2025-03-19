@@ -62,6 +62,69 @@
         }
       }
     },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "string",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "string",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "workoutIds": {
+                  "example": "any"
+                },
+                "favoriteExercise": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
     "/achievements/": {
       "get": {
         "tags": [

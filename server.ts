@@ -7,6 +7,9 @@ import session from "express-session";
 import "./config/passport";
 import router from "./routes/index";
 import { InitializeDatabase } from "./db/connection";
+import swaggerUi from "swagger-ui-express";
+import { generateSwaggerDocs } from "./swagger";
+import swaggerDocument from "./swagger.json"; 
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,16 +36,23 @@ app.use(passport.session());
 // Register routes
 app.use("/", router);
 
-//Initialize the database
-InitializeDatabase()
+// Swagger UI route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Initialize the database and generate Swagger docs before starting the server
+generateSwaggerDocs()  
   .then(() => {
-    app.listen(port, () => {
-      console.log(`Server is running on ${host}:${port}`);
-      
-      //Swagger Documentation
-      swaggerDocs(app);
-    });
+    InitializeDatabase()
+      .then(() => {
+        app.listen(port, () => {
+          console.log(`Server is running on ${host}:${port}`);
+          console.log(`Swagger Docs available at http://${host}:${port}/api-docs`);
+        });
+      })
+      .catch((error: Error) => {
+        console.error("Error initializing database:", error);
+      });
   })
   .catch((error: Error) => {
-    console.error("Error initializing database:", error);
+    console.error("Error generating Swagger docs:", error);
   });
