@@ -1,187 +1,510 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Fitness API",
-        "description": "An API for tracking fitness data",
-        "version": "1.0.0"
-    },
-    "host": "cse341fitness.onrender.com",
-    "basePath": "/",
-    "schemes": ["https"],
-    "securityDefinitions": {
-        "OAuth2": {
-            "type": "oauth2",
-            "authorizationUrl": "https://cse341fitness.onrender.com/authentication/google",
-            "flow": "implicit"
-        }
-    },
-    "paths": {
-        "/authentication/google": {
-            "get": {
-                "tags": ["Authentication"],
-                "description": "Go to authentication page.",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/authentication/google/callback": {
-            "get": {
-                "tags": ["Authentication"],
-                "description": "Authenticate the user.",
-                "responses": {
-                    "200": {
-                        "description": "User logged in"
-                    },
-                    "500": {
-                        "description": "Error authenticating the user."
-                    }
-                }
-            }
-        },
-        "/authentication/logout": {
-            "get": {
-                "tags": ["Authentication"],
-                "description": "Logout user.",
-                "responses": {
-                    "200": {
-                        "description": "User logged out"
-                    }
-                }
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "tags": ["Users"],
-                "description": "Get user by ID.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "string",
-                        "description": "User ID"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User retrieved successfully."
-                    },
-                    "404": {
-                        "description": "User not found."
-                    },
-                    "500": {
-                        "description": "Error retrieving user."
-                    }
-                }
-            },
-            "put": {
-                "tags": ["Users"],
-                "description": "Update user by ID.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "string",
-                        "description": "User ID"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "name": { "type": "string", "example": "John Doe" },
-                                "email": { "type": "string", "example": "john@example.com" },
-                                "workoutIds": { "type": "array", "items": { "type": "string" } },
-                                "favoriteExercise": { "type": "string", "example": "Running" }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User updated successfully."
-                    },
-                    "404": {
-                        "description": "User not found."
-                    },
-                    "500": {
-                        "description": "Error updating user."
-                    }
-                }
-            }
-        },
-        "/health-metrics/": {
-            "get": {
-                "tags": ["Health Metrics"],
-                "description": "Get all health metrics.",
-                "responses": {
-                    "200": { "description": "Health metrics retrieved successfully." },
-                    "500": { "description": "Error getting health metrics." }
-                }
-            },
-            "post": {
-                "tags": ["Health Metrics"],
-                "description": "Create a new health metric.",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "userId": { "type": "string", "example": "123" },
-                                "healthMetric": { "type": "string", "example": "Steps" },
-                                "value": { "type": "number", "example": 10000 },
-                                "unit": { "type": "string", "example": "steps" },
-                                "timestamp": { "type": "string", "example": "2024-07-15T10:00:00Z" }
-                            },
-                            "required": ["userId", "healthMetric", "value", "unit", "timestamp"]
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": { "description": "Health metric created successfully." },
-                    "500": { "description": "Error creating health metric." }
-                }
-            }
-        },
-        "/achievements/": {
-            "get": {
-                "tags": ["Achievements"],
-                "description": "Get all achievements.",
-                "responses": {
-                    "200": { "description": "Achievements retrieved successfully." },
-                    "500": { "description": "Error getting achievements." }
-                }
-            },
-            "post": {
-                "tags": ["Achievements"],
-                "description": "Create a new achievement.",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "title": { "type": "string", "example": "Run 5 miles" },
-                                "description": { "type": "string", "example": "Run 5 miles in a week" },
-                                "progressGoal": { "type": "number", "example": 5 }
-                            },
-                            "required": ["title", "description"]
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": { "description": "Achievement created successfully." },
-                    "500": { "description": "Error creating achievement." }
-                }
-            }
-        }
+  "swagger": "2.0",
+  "info": {
+    "title": "Fitness API",
+    "description": "An API for tracking fitness data",
+    "version": "1.0.0"
+  },
+  "host": [
+    "cse341fitness.onrender.com"
+  ],
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "authorizationUrl": "https://cse341fitness.onrender.com/authentication/google",
+      "flow": "implicit"
     }
+  },
+  "paths": {
+    "/authentication/google": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Go to authentication page.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/authentication/google/callback": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Authenticate the user.",
+        "responses": {
+          "200": {
+            "description": "User logged in"
+          },
+          "500": {
+            "description": "Error authenticating the user."
+          }
+        }
+      }
+    },
+    "/authentication/logout": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Logout user.",
+        "responses": {
+          "200": {
+            "description": "User logged out"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "string",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get users.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "string",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "workoutIds": {
+                  "example": "any"
+                },
+                "favoriteExercise": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/health-metrics/": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get all health metrics.",
+        "responses": {
+          "200": {
+            "description": "Health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error getting health metrics."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Create a new health metric.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Health metric data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "healthMetric": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "example": "date"
+                }
+              },
+              "required": [
+                "userId",
+                "healthMetric",
+                "value",
+                "unit",
+                "timestamp"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Health metric created successfully.",
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
+            }
+          },
+          "500": {
+            "description": "Error creating health metric."
+          }
+        }
+      }
+    },
+    "/health-metrics/{id}": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric retrieved successfully."
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error retrieving health metric."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Update a health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated health metric data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "healthMetric": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "example": "date"
+                }
+              },
+              "required": [
+                "userId",
+                "healthMetric",
+                "value",
+                "unit",
+                "timestamp"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
+            }
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error updating health metric."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Delete a health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric deleted successfully."
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error deleting health metric."
+          }
+        }
+      }
+    },
+    "/health-metrics/user/{userId}": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get health metrics by user ID.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving health metrics."
+          }
+        }
+      }
+    },
+    "/achievements/": {
+      "get": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Retrieve all achievements",
+        "responses": {
+          "200": {
+            "description": "Achievements retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving achievements."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Create a new achievement",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Run 5 miles"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Run 5 miles in a week"
+                },
+                "progressGoal": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Achievement created successfully."
+          },
+          "500": {
+            "description": "Error creating achievement."
+          }
+        }
+      }
+    },
+    "/achievements/{id}": {
+      "get": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Retrieve an achievement by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the achievement"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement retrieved successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error retrieving achievement."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Delete an achievement by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the achievement"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement deleted successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error deleting achievement."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Update an existing achievement",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the achievement"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Run 5 miles"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Run 5 miles in a week"
+                },
+                "progressGoal": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Achievement updated successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error updating achievement."
+          }
+        }
+      }
+    },
+    "/api-docs/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
 }
