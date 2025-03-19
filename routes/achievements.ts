@@ -1,19 +1,19 @@
 import express, { Request, Response } from "express";
 import {
-  createAchievement,
-  getAchievements,
-  deleteAchievement,
-  getAchievementById,
-  updateAchievement,
+    createAchievement,
+    getAchievements,
+    deleteAchievement,
+    getAchievementById,
+    updateAchievement,
 } from "../controllers/achievements";
 
 const achievementsRouter = express.Router();
 
 //Get Achievements Route
 achievementsRouter.get(
-  "/",
-  getAchievements
-  /*  
+    "/",
+    getAchievements,
+    /*  
     #swagger.tags = ['Achievements'],
     #swagger.description = 'Get all achievements.',
     #swagger.responses[200] = {
@@ -27,9 +27,9 @@ achievementsRouter.get(
 
 //Get Achievement by ID Route
 achievementsRouter.get(
-  "/:id",
-  getAchievementById
-  /*  
+    "/:id",
+    getAchievementById,
+    /*  
     #swagger.tags = ['Achievements'],
     #swagger.description = 'Get achievement.',
     #swagger.parameters['id'] = {
@@ -52,9 +52,9 @@ achievementsRouter.get(
 
 //Create Achievement Route
 achievementsRouter.post(
-  "/",
-  createAchievement
-  /*  
+    "/",
+    createAchievement,
+    /*  
     #swagger.tags = ['Achievements'],
     #swagger.description = 'Create a new achievement.',
     #swagger.parameters['body'] = {
@@ -77,9 +77,9 @@ achievementsRouter.post(
 
 //Delete Achievement Route
 achievementsRouter.delete(
-  "/:id",
-  deleteAchievement
-  /*  
+    "/:id",
+    deleteAchievement,
+    /*  
     #swagger.tags = ['Achievements'],
     #swagger.description = 'Delete achievement.',
     #swagger.parameters['id'] = {
@@ -102,9 +102,9 @@ achievementsRouter.delete(
 
 //update Achievement Route
 achievementsRouter.put(
-  "/:id",
-  updateAchievement
-  /*  
+    "/:id",
+    updateAchievement,
+    /*  
     #swagger.tags = ['Achievements'],
     #swagger.description = 'Update a new achievement.',
     #swagger.parameters['id'] = {

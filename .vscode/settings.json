@@ -1,3 +1,7 @@
 {
-  "cSpell.words": ["codepaths", "Autogen", "codepaths", "onrender"]
+    "cSpell.words": ["codepaths", "Autogen", "codepaths", "onrender"],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "eslint.validate": ["javascript", "typescript"],
+    "prettier.requireConfig": true
 }
