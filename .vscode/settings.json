@@ -1,5 +1,12 @@
 {
-    "cSpell.words": ["codepaths", "Autogen", "codepaths", "onrender"],
+    "cSpell.words": [
+        "Autogen",
+        "Beauchaine",
+        "codepaths",
+        "Mandi",
+        "onrender",
+        "Sandi"
+    ],
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "eslint.validate": ["javascript", "typescript"],
