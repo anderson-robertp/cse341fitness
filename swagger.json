@@ -125,6 +125,221 @@
         }
       }
     },
+    "/health-metrics/": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get all health metrics.",
+        "responses": {
+          "200": {
+            "description": "Health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error getting health metrics."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Create a new health metric.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Health metric data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "healthMetric": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "example": "date"
+                }
+              },
+              "required": [
+                "userId",
+                "healthMetric",
+                "value",
+                "unit",
+                "timestamp"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Health metric created successfully.",
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
+            }
+          },
+          "500": {
+            "description": "Error creating health metric."
+          }
+        }
+      }
+    },
+    "/health-metrics/{id}": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric retrieved successfully."
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error retrieving health metric."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Update a health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated health metric data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "healthMetric": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "unit": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "example": "date"
+                }
+              },
+              "required": [
+                "userId",
+                "healthMetric",
+                "value",
+                "unit",
+                "timestamp"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
+            }
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error updating health metric."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Delete a health metric by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metric deleted successfully."
+          },
+          "404": {
+            "description": "Health metric not found."
+          },
+          "500": {
+            "description": "Error deleting health metric."
+          }
+        }
+      }
+    },
+    "/health-metrics/user/{userId}": {
+      "get": {
+        "tags": [
+          "Health Metrics"
+        ],
+        "description": "Get health metrics by user ID.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving health metrics."
+          }
+        }
+      }
+    },
     "/achievements/": {
       "get": {
         "tags": [
