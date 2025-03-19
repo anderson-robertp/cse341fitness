@@ -19,11 +19,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Express Session
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-  })
+    session({
+        secret: process.env.SESSION_SECRET || "keyboard cat",
+        resave: false,
+        saveUninitialized: false,
+    }),
 );
 
 //Passport
@@ -35,12 +35,14 @@ app.use("/", router);
 
 // Initialize the database
 InitializeDatabase()
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`Server is running on ${host}:${port}`);
-      console.log(`Swagger Docs available at http://${host}:${port}/api-docs`);
+    .then(() => {
+        app.listen(port, () => {
+            console.log(`Server is running on ${host}:${port}`);
+            console.log(
+                `Swagger Docs available at http://${host}:${port}/api-docs`,
+            );
+        });
+    })
+    .catch((error: Error) => {
+        console.error("Error initializing database:", error);
     });
-  })
-  .catch((error: Error) => {
-    console.error("Error initializing database:", error);
-  });

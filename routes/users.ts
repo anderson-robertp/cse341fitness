@@ -7,10 +7,10 @@ const usersRouter = express.Router();
 
 //Get User
 usersRouter.get(
-  "/:id",
-  handleErrors(getUserById)
+    "/:id",
+    handleErrors(getUserById),
 
-  /* 
+    /* 
    #swagger.tags = ['Users'],
    #swagger.description = 'Get user.',
    #swagger.parameters['id'] = {
@@ -23,11 +23,11 @@ usersRouter.get(
 
 //Update User
 usersRouter.put(
-  "/:id",
-  userValidationRules(),
-  userValidate,
-  handleErrors(updateUserById)
-  /* 
+    "/:id",
+    userValidationRules(),
+    userValidate,
+    handleErrors(updateUserById),
+    /* 
   #swagger.tags = ['Users'],
   #swagger.description = 'Get users.',
   #swagger.parameters['id'] = {
