@@ -9,11 +9,11 @@ const usersRouter = express.Router();
 usersRouter.get(
   "/:id",
   handleErrors(getUserById)
-  
+
   /* 
    #swagger.tags = ['Users'],
-  #swagger.description = 'Get users.',
-  #swagger.parameters['id'] = {
+   #swagger.description = 'Get user.',
+   #swagger.parameters['id'] = {
         in: 'string',
         description: 'user id',
         required: 'true',
