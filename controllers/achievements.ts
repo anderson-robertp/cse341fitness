@@ -101,3 +101,17 @@ export const deleteAchievement: RequestHandler = async (
         res.status(500).json({ message: "Error deleting achievement" });
     }
 };
+
+export const getUserAchievements: RequestHandler = async (
+    req: Request,
+    res: Response,
+): Promise<void> => {
+    try {
+        const { userId } = req.params;
+        const userAchievements = await UserAchievement.find({ userId });
+        res.status(200).json(userAchievements);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching user achievements" });
+    }
+};
