@@ -5,6 +5,7 @@ import {
     deleteAchievement,
     getAchievementById,
     updateAchievement,
+    getUserAchievements
 } from "../controllers/achievements";
 
 const achievementsRouter = express.Router();
@@ -130,6 +131,32 @@ achievementsRouter.put(
     }
     #swagger.responses[500] = {
         description: 'Error updating achievement.'
+    }
+    */
+);
+
+// Get User Achievements Route
+achievementsRouter.get( 
+    
+    "/user/:userId",
+    getUserAchievements,
+    /*  
+    #swagger.tags = ['Achievements']
+    #swagger.description = 'Retrieve achievements for a specific user'
+    #swagger.parameters['userId'] = {
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "description": "The ID of the user"
+    }
+    #swagger.responses[200] = {
+        description: 'User achievements retrieved successfully.'
+    }
+    #swagger.responses[404] = {
+        description: 'No achievements found for the given user.'
+    }
+    #swagger.responses[500] = {
+        description: 'Error retrieving user achievements.'
     }
     */
 );
