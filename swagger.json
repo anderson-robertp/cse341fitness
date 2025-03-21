@@ -125,6 +125,284 @@
         }
       }
     },
+    "/exercises/": {
+      "post": {
+        "tags": [
+          "Exercises"
+        ],
+        "description": "Create a new exercise",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Name of the exercise"
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Description of the exercise"
+                        }
+                      }
+                    },
+                    "duration": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Duration of the exercise in minutes"
+                        }
+                      }
+                    },
+                    "intensity": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Intensity level of the exercise"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "name",
+                    "description",
+                    "duration",
+                    "intensity"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Exercise created successfully."
+          },
+          "500": {
+            "description": "Error creating exercise."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "description": "Retrieve all exercises",
+        "responses": {
+          "200": {
+            "description": "Exercises retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving exercises."
+          }
+        }
+      }
+    },
+    "/exercises/{id}": {
+      "get": {
+        "tags": [
+          "Exercises"
+        ],
+        "description": "Retrieve an exercise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the exercise"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise retrieved successfully."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Error retrieving exercise."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Exercises"
+        ],
+        "description": "Update an exercise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the exercise"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Name of the exercise"
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Description of the exercise"
+                        }
+                      }
+                    },
+                    "duration": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Duration of the exercise in minutes"
+                        }
+                      }
+                    },
+                    "intensity": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Intensity level of the exercise"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "name",
+                    "description",
+                    "duration",
+                    "intensity"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise updated successfully."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Error updating exercise."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Exercises"
+        ],
+        "description": "Delete an exercise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the exercise"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise deleted successfully."
+          },
+          "404": {
+            "description": "Exercise not found."
+          },
+          "500": {
+            "description": "Error deleting exercise."
+          }
+        }
+      }
+    },
     "/health-metrics/": {
       "get": {
         "tags": [
