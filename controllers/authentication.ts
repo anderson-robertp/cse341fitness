@@ -15,7 +15,7 @@ export async function Login(req: Request, res: Response, next: NextFunction) {
                 return next(loginErr);
             }
 
-            res.status(200).json("User logged in.");
+            res.status(200).redirect("/authentication/google/callback");
         });
     })(req, res, next);
 }
@@ -28,6 +28,6 @@ export function isAuthenticated(
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.status(401).json("User not logged in.");
+        res.status(401).redirect("/authentication/google");
     }
 }

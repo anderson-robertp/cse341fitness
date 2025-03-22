@@ -12,14 +12,17 @@
   "schemes": [
     "https"
   ],
-  "securityDefinitions": {
-    "OAuth2": {
-      "type": "oauth2",
-      "authorizationUrl": "https://cse341fitness.onrender.com/authentication/google",
-      "flow": "implicit"
-    }
-  },
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/authentication/google": {
       "get": {
         "tags": [
@@ -78,8 +81,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized"
           }
         }
       },
@@ -119,8 +122,387 @@
           }
         ],
         "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
           "422": {
             "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/workouts/": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Create a new workout",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Type of the workout"
+                        }
+                      }
+                    },
+                    "duration": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Duration of the workout in minutes"
+                        }
+                      }
+                    },
+                    "caloriesBurned": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Calories burned during the workout"
+                        }
+                      }
+                    },
+                    "exerciseIds": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "array"
+                        },
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "string"
+                            }
+                          }
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Array of exercise IDs associated with the workout"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "format": {
+                          "type": "string",
+                          "example": "date-time"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Timestamp of the workout"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "type",
+                    "duration",
+                    "caloriesBurned",
+                    "timestamp"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Workout created successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Error creating workout."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Retrieve all workouts",
+        "responses": {
+          "200": {
+            "description": "Workouts retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Error retrieving workouts."
+          }
+        }
+      }
+    },
+    "/workouts/{id}": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Retrieve a workout by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the workout"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Error retrieving workout."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Update an existing workout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the workout"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Type of the workout"
+                        }
+                      }
+                    },
+                    "duration": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Duration of the workout in minutes"
+                        }
+                      }
+                    },
+                    "caloriesBurned": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Calories burned during the workout"
+                        }
+                      }
+                    },
+                    "exerciseIds": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "array"
+                        },
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "string"
+                            }
+                          }
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Array of exercise IDs associated with the workout"
+                        }
+                      }
+                    },
+                    "timestamp": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "format": {
+                          "type": "string",
+                          "example": "date-time"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Timestamp of the workout"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "type",
+                    "duration",
+                    "caloriesBurned",
+                    "timestamp"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout updated successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Error updating workout."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Delete a workout by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the workout"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout deleted successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Workout not found."
+          },
+          "500": {
+            "description": "Error deleting workout."
+          }
+        }
+      }
+    },
+    "/workouts/user/{userId}": {
+      "get": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Retrieve workouts by user ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workouts retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "No workouts found for the given user."
+          },
+          "500": {
+            "description": "Error retrieving workouts."
           }
         }
       }
@@ -220,6 +602,9 @@
           "201": {
             "description": "Exercise created successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Error creating exercise."
           }
@@ -233,6 +618,9 @@
         "responses": {
           "200": {
             "description": "Exercises retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Error retrieving exercises."
@@ -258,6 +646,9 @@
         "responses": {
           "200": {
             "description": "Exercise retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Exercise not found."
@@ -368,6 +759,9 @@
           "200": {
             "description": "Exercise updated successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Exercise not found."
           },
@@ -394,6 +788,9 @@
           "200": {
             "description": "Exercise deleted successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Exercise not found."
           },
@@ -412,6 +809,9 @@
         "responses": {
           "200": {
             "description": "Health metrics retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Error getting health metrics."
@@ -470,6 +870,9 @@
               "$ref": "#/definitions/HealthMetric"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Error creating health metric."
           }
@@ -493,6 +896,9 @@
         "responses": {
           "200": {
             "description": "Health metric retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -560,6 +966,9 @@
               "$ref": "#/definitions/HealthMetric"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Health metric not found."
           },
@@ -584,6 +993,9 @@
         "responses": {
           "200": {
             "description": "Health metric deleted successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -612,6 +1024,9 @@
           "200": {
             "description": "Health metrics retrieved successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Error retrieving health metrics."
           }
@@ -627,6 +1042,9 @@
         "responses": {
           "200": {
             "description": "Achievements retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Error retrieving achievements."
@@ -666,6 +1084,9 @@
           "201": {
             "description": "Achievement created successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Error creating achievement."
           }
@@ -690,6 +1111,9 @@
         "responses": {
           "200": {
             "description": "Achievement retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -716,6 +1140,9 @@
         "responses": {
           "200": {
             "description": "Achievement deleted successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -765,6 +1192,9 @@
           "200": {
             "description": "Achievement updated successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Achievement not found."
           },
@@ -774,15 +1204,69 @@
         }
       }
     },
+    "/achievements/user/{userId}": {
+      "get": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Retrieve achievements for a specific user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User achievements retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "No achievements found for the given user."
+          },
+          "500": {
+            "description": "Error retrieving user achievements."
+          }
+        }
+      }
+    },
     "/api-docs/": {
       "get": {
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
     }
-  }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://127.0.0.1:3000/authentication/google",
+            "tokenUrl": "https://oauth2.googleapis.com/token",
+            "scopes": {
+              "openid": "OpenID authentication",
+              "profile": "Profile information",
+              "email": "Email information"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": []
+    }
+  ]
 }

@@ -5,13 +5,16 @@ import {
     getWorkoutById,
     updateWorkout,
     deleteWorkout,
-    getWorkoutsByUserId
+    getWorkoutsByUserId,
 } from "../controllers/workout"; // Adjust the import path as necessary
+import handleErrors from "../utilities";
 
 const workoutsRouter = express.Router();
 
 // Create Workout Route
-workoutsRouter.post("/", createWorkout, 
+workoutsRouter.post(
+    "/",
+    handleErrors(createWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Create a new workout'
@@ -40,7 +43,9 @@ workoutsRouter.post("/", createWorkout,
 );
 
 // Get All Workouts Route
-workoutsRouter.get("/", getWorkouts, 
+workoutsRouter.get(
+    "/",
+    handleErrors(getWorkouts),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve all workouts'
@@ -54,7 +59,9 @@ workoutsRouter.get("/", getWorkouts,
 );
 
 // Get Workout by ID Route
-workoutsRouter.get("/:id", getWorkoutById, 
+workoutsRouter.get(
+    "/:id",
+    handleErrors(getWorkoutById),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve a workout by ID'
@@ -77,8 +84,10 @@ workoutsRouter.get("/:id", getWorkoutById,
 );
 
 // Get Workouts by User ID Route
-workoutsRouter.get("/user/:userId", getWorkoutsByUserId,    
-    
+workoutsRouter.get(
+    "/user/:userId",
+    handleErrors(getWorkoutsByUserId),
+
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve workouts by user ID'
@@ -101,7 +110,9 @@ workoutsRouter.get("/user/:userId", getWorkoutsByUserId,
 );
 
 // Update Workout by ID Route
-workoutsRouter.put("/:id", updateWorkout, 
+workoutsRouter.put(
+    "/:id",
+    handleErrors(updateWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Update an existing workout'
@@ -139,7 +150,9 @@ workoutsRouter.put("/:id", updateWorkout,
 );
 
 // Delete Workout by ID Route
-workoutsRouter.delete("/:id", deleteWorkout, 
+workoutsRouter.delete(
+    "/:id",
+    handleErrors(deleteWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Delete a workout by ID'
@@ -160,7 +173,5 @@ workoutsRouter.delete("/:id", deleteWorkout,
     }
     */
 );
-
-
 
 export default workoutsRouter;

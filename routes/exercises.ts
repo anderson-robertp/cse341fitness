@@ -4,14 +4,17 @@ import {
     getExercises,
     getExerciseById,
     updateExercise,
-    deleteExercise
+    deleteExercise,
 } from "../controllers/exercise";
+import handleErrors from "../utilities";
 
 const exercisesRouter = express.Router();
 
 // Create Exercise Route
-exercisesRouter.post("/", createExercise,
-/*
+exercisesRouter.post(
+    "/",
+    handleErrors(createExercise),
+    /*
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Create a new exercise'
     #swagger.parameters['body'] = { 
@@ -38,7 +41,9 @@ exercisesRouter.post("/", createExercise,
 );
 
 // Get Exercises Route
-exercisesRouter.get("/", getExercises,
+exercisesRouter.get(
+    "/",
+    handleErrors(getExercises),
     /*
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Retrieve all exercises'
@@ -48,11 +53,13 @@ exercisesRouter.get("/", getExercises,
     #swagger.responses[500] = {
         description: 'Error retrieving exercises.'
     }
-    */    
-); 
+    */
+);
 
 // Get Exercise by ID Route
-exercisesRouter.get("/:id", getExerciseById,
+exercisesRouter.get(
+    "/:id",
+    handleErrors(getExerciseById),
     /*
     #swagger.tags = ['Exercises']
     #swagger.description = 'Retrieve an exercise by ID';
@@ -75,7 +82,9 @@ exercisesRouter.get("/:id", getExerciseById,
 );
 
 //update exercise by id
-exercisesRouter.put("/:id", updateExercise,
+exercisesRouter.put(
+    "/:id",
+    handleErrors(updateExercise),
     /*
     #swagger.tags = ['Exercises']       
     #swagger.description = 'Update an exercise by ID'
@@ -109,11 +118,12 @@ exercisesRouter.put("/:id", updateExercise,
         description: 'Error updating exercise.'
     }
     */
-);  
-
+);
 
 // Delete Exercise by ID Route
-exercisesRouter.delete("/:id", deleteExercise,
+exercisesRouter.delete(
+    "/:id",
+    handleErrors(deleteExercise),
     /*
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Delete an exercise by ID'
@@ -132,7 +142,7 @@ exercisesRouter.delete("/:id", deleteExercise,
     #swagger.responses[500] = {     
         description: 'Error deleting exercise.'
     }
-    */  
+    */
 );
 
 export default exercisesRouter;
