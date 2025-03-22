@@ -7,13 +7,14 @@ import {
     deleteWorkout,
     getWorkoutsByUserId,
 } from "../controllers/workout"; // Adjust the import path as necessary
+import handleErrors from "../utilities";
 
 const workoutsRouter = express.Router();
 
 // Create Workout Route
 workoutsRouter.post(
     "/",
-    createWorkout,
+    handleErrors(createWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Create a new workout'
@@ -44,7 +45,7 @@ workoutsRouter.post(
 // Get All Workouts Route
 workoutsRouter.get(
     "/",
-    getWorkouts,
+    handleErrors(getWorkouts),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve all workouts'
@@ -60,7 +61,7 @@ workoutsRouter.get(
 // Get Workout by ID Route
 workoutsRouter.get(
     "/:id",
-    getWorkoutById,
+    handleErrors(getWorkoutById),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve a workout by ID'
@@ -85,7 +86,7 @@ workoutsRouter.get(
 // Get Workouts by User ID Route
 workoutsRouter.get(
     "/user/:userId",
-    getWorkoutsByUserId,
+    handleErrors(getWorkoutsByUserId),
 
     /*  
     #swagger.tags = ['Workouts']
@@ -111,7 +112,7 @@ workoutsRouter.get(
 // Update Workout by ID Route
 workoutsRouter.put(
     "/:id",
-    updateWorkout,
+    handleErrors(updateWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Update an existing workout'
@@ -151,7 +152,7 @@ workoutsRouter.put(
 // Delete Workout by ID Route
 workoutsRouter.delete(
     "/:id",
-    deleteWorkout,
+    handleErrors(deleteWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Delete a workout by ID'

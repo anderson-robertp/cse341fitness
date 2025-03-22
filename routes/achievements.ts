@@ -5,15 +5,16 @@ import {
     deleteAchievement,
     getAchievementById,
     updateAchievement,
-    getUserAchievements
+    getUserAchievements,
 } from "../controllers/achievements";
+import handleErrors from "../utilities";
 
 const achievementsRouter = express.Router();
 
 // Get Achievements Route
 achievementsRouter.get(
     "/",
-    getAchievements,
+    handleErrors(getAchievements),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Retrieve all achievements'
@@ -29,7 +30,7 @@ achievementsRouter.get(
 // Get Achievement by ID Route
 achievementsRouter.get(
     "/:id",
-    getAchievementById,
+    handleErrors(getAchievementById),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Retrieve an achievement by ID'
@@ -54,7 +55,7 @@ achievementsRouter.get(
 // Create Achievement Route
 achievementsRouter.post(
     "/",
-    createAchievement,
+    handleErrors(createAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Create a new achievement'
@@ -79,7 +80,7 @@ achievementsRouter.post(
 // Delete Achievement Route
 achievementsRouter.delete(
     "/:id",
-    deleteAchievement,
+    handleErrors(deleteAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Delete an achievement by ID'
@@ -104,7 +105,7 @@ achievementsRouter.delete(
 // Update Achievement Route
 achievementsRouter.put(
     "/:id",
-    updateAchievement,
+    handleErrors(updateAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Update an existing achievement'
@@ -136,10 +137,9 @@ achievementsRouter.put(
 );
 
 // Get User Achievements Route
-achievementsRouter.get( 
-    
+achievementsRouter.get(
     "/user/:userId",
-    getUserAchievements,
+    handleErrors(getUserAchievements),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Retrieve achievements for a specific user'

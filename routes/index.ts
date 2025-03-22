@@ -10,6 +10,11 @@ import swaggerRouter from "./swagger";
 
 const router = express.Router();
 
+//Home route
+router.get("/", (req, res) => {
+    res.send("Welcome to the Fitness API!");
+});
+
 //Authentication
 router.use("/authentication", authenticationRouter);
 
