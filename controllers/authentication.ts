@@ -28,6 +28,6 @@ export function isAuthenticated(
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.status(401).json("User not logged in.");
+        res.status(401).redirect("/");
     }
 }

@@ -5,6 +5,7 @@ import usersRouter from "./users";
 import exercisesRouter from "./exercises";
 import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
+import { isAuthenticated } from "../controllers/authentication";
 import swaggerRouter from "./swagger";
 
 const router = express.Router();
@@ -13,19 +14,19 @@ const router = express.Router();
 router.use("/authentication", authenticationRouter);
 
 //Users
-router.use("/users", usersRouter);
+router.use("/users", isAuthenticated, usersRouter);
 
 //Workouts
-router.use("/workouts", workoutsRouter);
+router.use("/workouts", isAuthenticated, workoutsRouter);
 
 //Exercises
-router.use("/exercises", exercisesRouter);
+router.use("/exercises", isAuthenticated, exercisesRouter);
 
 //Health Metrics
-router.use("/health-metrics", metricsRouter);
+router.use("/health-metrics", isAuthenticated, metricsRouter);
 
 //Achievements
-router.use("/achievements", achievementsRouter);
+router.use("/achievements", isAuthenticated, achievementsRouter);
 
 //Swagger
 router.use("/api-docs", swaggerRouter);

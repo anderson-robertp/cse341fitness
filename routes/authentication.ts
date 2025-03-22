@@ -52,6 +52,3 @@ authenticationRouter.get(
 );
 
 export default authenticationRouter;
-
-//This is a bit different than the suggested routes
-//Check for accuracy
