@@ -1,18 +1,19 @@
 import express from "express";
 import {
-  createHealthMetric,
+    createHealthMetric,
     getHealthMetrics,
     getHealthMetricById,
     updateHealthMetric,
     deleteHealthMetric,
 } from "../controllers/health-metrics";
+import handleErrors from "../utilities";
 
 const metricsRouter = express.Router();
 
 //Get Health Metrics Route
 metricsRouter.get(
     "/",
-    getHealthMetrics
+    handleErrors(getHealthMetrics),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get all health metrics.',
@@ -28,7 +29,7 @@ metricsRouter.get(
 //Get Health Metric by ID Route
 metricsRouter.get(
     "/:id",
-    getHealthMetricById
+    handleErrors(getHealthMetricById),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get health metric by ID.',
@@ -53,7 +54,7 @@ metricsRouter.get(
 //Create Health Metric Route
 metricsRouter.post(
     "/",
-    createHealthMetric
+    handleErrors(createHealthMetric),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Create a new health metric.',
@@ -78,12 +79,12 @@ metricsRouter.post(
             description: 'Error creating health metric.',
         }
         */
-    );
+);
 
 //Update Health Metric Route
 metricsRouter.put(
     "/:id",
-    updateHealthMetric
+    handleErrors(updateHealthMetric),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Update a health metric by ID.',
@@ -122,7 +123,7 @@ metricsRouter.put(
 //Delete Health Metric Route
 metricsRouter.delete(
     "/:id",
-    deleteHealthMetric
+    handleErrors(deleteHealthMetric),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Delete a health metric by ID.',
@@ -147,7 +148,7 @@ metricsRouter.delete(
 //Get Health Metrics by User ID Route
 metricsRouter.get(
     "/user/:userId",
-    getHealthMetrics
+    handleErrors(getHealthMetrics),
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get health metrics by user ID.',
