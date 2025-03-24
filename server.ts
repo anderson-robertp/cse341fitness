@@ -34,15 +34,19 @@ app.use(passport.session());
 app.use("/", router);
 
 // Initialize the database
-InitializeDatabase()
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server is running on ${host}:${port}`);
-            console.log(
-                `Swagger Docs available at http://${host}:${port}/api-docs`,
-            );
+if (process.env.NODE_ENV !== "test") {
+    InitializeDatabase()
+        .then(() => {
+            app.listen(port, () => {
+                console.log(`Server is running on ${host}:${port}`);
+                console.log(
+                    `Swagger Docs available at http://${host}:${port}/api-docs`,
+                );
+            });
+        })
+        .catch((error: Error) => {
+            console.error("Error initializing database:", error);
         });
-    })
-    .catch((error: Error) => {
-        console.error("Error initializing database:", error);
-    });
+}
+
+export default app;
