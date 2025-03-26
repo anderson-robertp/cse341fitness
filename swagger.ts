@@ -6,13 +6,17 @@ const doc = {
         title: "Fitness API",
         description: "An API for tracking fitness data",
     },
-    host: ["cse341fitness.onrender.com"],
-    schemes: ["https"],
+    schemes: ["http"],
     security: [
         {
             oauth2: [], // Global security for OAuth2
         },
     ],
+    scopes: {
+        openid: "OpenID authentication",
+        profile: "Profile information",
+        email: "Email information",
+    },
     components: {
         securitySchemes: {
             oauth2: {

@@ -5,12 +5,10 @@
     "description": "An API for tracking fitness data",
     "version": "1.0.0"
   },
-  "host": [
-    "cse341fitness.onrender.com"
-  ],
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -1252,7 +1250,7 @@
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "https://127.0.0.1:3000/authentication/google",
+            "authorizationUrl": "https://cse341fitness.onrender.com/authentication/google",
             "tokenUrl": "https://oauth2.googleapis.com/token",
             "scopes": {
               "openid": "OpenID authentication",
@@ -1268,5 +1266,10 @@
     {
       "oauth2": []
     }
-  ]
+  ],
+  "scopes": {
+    "openid": "OpenID authentication",
+    "profile": "Profile information",
+    "email": "Email information"
+  }
 }

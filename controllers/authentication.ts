@@ -1,13 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 
-export async function Login(req: Request, res: Response, next: NextFunction) {
+// Initiates authentication flow with Google
+export function Login(req: Request, res: Response, next: NextFunction) {
+    passport.authenticate("google", {
+        scope: ["openid", "profile", "email"], // Include the necessary scopes
+    })(req, res, next); // Redirect the user to Google
+}
+
+// This handles the callback from Google after the user is authenticated
+export async function GoogleCallback(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) {
     passport.authenticate("google", (err: Error, user: any) => {
         if (err) {
-            return next(err); // Handle errors
+            return next(err); // Handle errors during authentication
         }
+
         if (!user) {
-            return res.status(500).json({ error: "Could not login user." });
+            return res.status(500).json({ error: "Could not log in user." });
         }
 
         req.logIn(user, (loginErr) => {
@@ -15,9 +28,10 @@ export async function Login(req: Request, res: Response, next: NextFunction) {
                 return next(loginErr);
             }
 
-            res.status(200).redirect("/authentication/google/callback");
+            // After successful login, you can redirect to another page
+            res.status(200).redirect("/"); // Or any route you want
         });
-    })(req, res, next);
+    })(req, res, next); // Pass the request and response to passport
 }
 
 export function isAuthenticated(

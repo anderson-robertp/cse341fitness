@@ -2,15 +2,11 @@ import express, { Request, Response, NextFunction } from "express";
 const authenticationRouter = express.Router();
 import passport from "passport";
 import handleErrors from "../utilities";
-import { Login } from "../controllers/authentication";
+import { Login, GoogleCallback } from "../controllers/authentication";
 
 authenticationRouter.get(
     "/google",
-    handleErrors(
-        passport.authenticate("google", {
-            scope: ["email", "profile"],
-        }),
-    ),
+    handleErrors(Login),
     /*  
     #swagger.tags = ['Authentication'],
     #swagger.description = 'Go to authentication page.',
@@ -19,7 +15,7 @@ authenticationRouter.get(
 
 authenticationRouter.get(
     "/google/callback",
-    handleErrors(Login),
+    handleErrors(GoogleCallback),
     /*  
     #swagger.tags = ['Authentication'],
     #swagger.description = 'Authenticate the user.',
