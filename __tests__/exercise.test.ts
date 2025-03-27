@@ -8,15 +8,13 @@ describe("Exercises API", () => {
     });
 
     it("should create a new exercise", async () => {
-        const response = await request(app)
-            .post("/exercises")
-            .send({
-                name: "Push Up",
-                description: "A basic upper body exercise",
-                type: "strength",
-                duration: 30,
-                caloriesBurned: 100,
-            });
+        const response = await request(app).post("/exercises").send({
+            name: "Push Up",
+            description: "A basic upper body exercise",
+            type: "strength",
+            duration: 30,
+            caloriesBurned: 100,
+        });
 
         expect(response.status).toBe(201);
         expect(response.body.exercise).toHaveProperty("_id");

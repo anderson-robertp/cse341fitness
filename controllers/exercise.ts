@@ -42,11 +42,16 @@ export const getExerciseById: RequestHandler = async (req, res) => {
     }
 };
 
-// Update an exercise by ID  
-export const updateExercise: RequestHandler = async (req, res): Promise<void> => {   
+// Update an exercise by ID
+export const updateExercise: RequestHandler = async (
+    req,
+    res,
+): Promise<void> => {
     try {
         const { id } = req.params;
-        const updatedExercise = await Exercise.findByIdAndUpdate(id, req.body, { new: true });
+        const updatedExercise = await Exercise.findByIdAndUpdate(id, req.body, {
+            new: true,
+        });
 
         if (!updatedExercise) {
             res.status(404).json({ message: "Exercise not found" });
@@ -56,15 +61,18 @@ export const updateExercise: RequestHandler = async (req, res): Promise<void> =>
         res.status(200).json(updatedExercise);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ 
-            message: "Failed to update exercise",  
-            error: error instanceof Error ? error.message : String(error) 
+        res.status(500).json({
+            message: "Failed to update exercise",
+            error: error instanceof Error ? error.message : String(error),
         });
     }
 };
 
 // Delete an exercise by ID
-export const deleteExercise: RequestHandler = async (req, res): Promise<void> => {
+export const deleteExercise: RequestHandler = async (
+    req,
+    res,
+): Promise<void> => {
     try {
         const { id } = req.params;
         const deletedExercise = await Exercise.findByIdAndDelete(id);
@@ -77,9 +85,9 @@ export const deleteExercise: RequestHandler = async (req, res): Promise<void> =>
         res.status(200).json({ message: "Exercise deleted successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ 
-            message: "Failed to delete exercise",  
-            error: error instanceof Error ? error.message : String(error) 
+        res.status(500).json({
+            message: "Failed to delete exercise",
+            error: error instanceof Error ? error.message : String(error),
         });
     }
 };

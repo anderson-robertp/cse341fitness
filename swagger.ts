@@ -1,13 +1,12 @@
 import swaggerAutogen from "swagger-autogen";
-import env from "dotenv";
 
 const doc = {
     info: {
         title: "Fitness API",
         description: "An API for tracking fitness data",
     },
-    host: ["cse341fitness.onrender.com"],
-    schemes: ["https"],
+    host: "localhost:3000", // Change this when deploying to production
+    schemes: ["http"], // Update to "https" when deployed
     security: [
         {
             oauth2: [], // Global security for OAuth2
@@ -20,8 +19,8 @@ const doc = {
                 flows: {
                     authorizationCode: {
                         authorizationUrl:
-                            "https://cse341fitness.onrender.com/authentication/google",
-                        tokenUrl: "https://oauth2.googleapis.com/token", // Token URL for Google OAuth (replace with your provider)
+                            "http://localhost:3000/authentication/google/",
+                        tokenUrl: "https://oauth2.googleapis.com/token",
                         clientId: process.env.CLIENT_ID,
                         clientSecret: process.env.CLIENT_SECRET,
                         scopes: {
@@ -40,6 +39,3 @@ const outputFile = "./swagger.json";
 const endpointFiles = ["./routes/index.ts"];
 
 swaggerAutogen(outputFile, endpointFiles, doc);
-
-//AuthorizationUrl for development: https://127.0.0.1:3000/authentication/google
-//AuthorizationUrl for production: https://cse341fitness.onrender.com/authentication/google

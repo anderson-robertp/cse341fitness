@@ -1,4 +1,7 @@
-import { InitializeInMemoryDatabase, CloseInMemoryDatabase } from "./db/connection";
+import {
+    InitializeInMemoryDatabase,
+    CloseInMemoryDatabase,
+} from "./db/connection";
 
 beforeAll(async () => {
     await InitializeInMemoryDatabase();

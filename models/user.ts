@@ -1,7 +1,7 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-//TS interface
-interface IUser {
+// TS interface for user
+export interface IUser extends Document {
     name: string;
     email: string;
     googleId: string;
@@ -10,8 +10,8 @@ interface IUser {
     achievements?: Types.ObjectId[];
 }
 
-//Mongoose schema
-const userSchema = new Schema<IUser>(
+// Mongoose schema for user
+const userSchema = new Schema<IUser & Document>(
     {
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
@@ -23,5 +23,5 @@ const userSchema = new Schema<IUser>(
     { collection: "Users" },
 );
 
-//Mongoose model
-export const User = model<IUser>("User", userSchema);
+// Extend the model with IUser and Document
+export const User = model<IUser & Document>("User", userSchema);

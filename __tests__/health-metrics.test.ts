@@ -9,15 +9,13 @@ describe("Health Metrics API", () => {
     });
 
     it("should create a new health metric", async () => {
-        const response = await request(app)
-            .post("/health-metrics")
-            .send({
-                weight: 70,
-                height: 175,
-                bodyFatPercentage: 15,
-                muscleMass: 30,
-                waterPercentage: 60,
-            });
+        const response = await request(app).post("/health-metrics").send({
+            weight: 70,
+            height: 175,
+            bodyFatPercentage: 15,
+            muscleMass: 30,
+            waterPercentage: 60,
+        });
 
         expect(response.status).toBe(201);
         expect(response.body.healthMetric).toHaveProperty("_id");
@@ -38,6 +36,5 @@ describe("Health Metrics API", () => {
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
     });
-}
-);
+});
 // Note: The above test suite assumes that the server is running and the database connection is established.
