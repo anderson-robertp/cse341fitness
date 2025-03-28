@@ -14,8 +14,8 @@ authenticationRouter.get(
         description: 'Redirects to Google OAuth login'
     }
     */
-    // eslint-disable-next-line prettier/prettier
-    passport.authenticate("google", { scope: ["email", "profile"] })
+
+    passport.authenticate("google", { scope: ["email", "profile"] }),
 );
 
 authenticationRouter.get(

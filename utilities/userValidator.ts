@@ -29,7 +29,7 @@ export function userValidationRules() {
             .isLength({ max: 3 })
             .escape()
             .isInt()
-            .withMessage("Valid faovrite exercise is required."),
+            .withMessage("Valid favorite exercise is required."),
     ];
 }
 
@@ -37,9 +37,7 @@ export function userValidationRules() {
 export function userValidate(req: Request, res: Response, next: NextFunction) {
     const { name, email, workoutIds, favoriteExercise } = req.body;
 
-    let errors: any = [];
-
-    errors = validationResult(req);
+    const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
         res.status(422).json({ errors: errors.array() });

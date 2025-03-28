@@ -16,7 +16,7 @@ const host = process.env.HOST || "localhost";
 
 // CORS Configuration
 const corsOptions = {
-    origin: "http://localhost:3000", // Allow your frontend to make requests
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // Allow your frontend to make requests
     credentials: true, // Allow cookies to be passed with requests
 };
 
@@ -40,14 +40,16 @@ app.use(passport.session());
 
 // Protect non-GET routes globally before applying routes
 app.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(`Request method: ${req.method}`); // Log the method
     if (req.method === "GET") {
         return next(); // Allow GET requests for everyone
     }
 
     if (req.isAuthenticated()) {
-        return next(); // Allow other requests if user is authenticated
+        return next(); // Allow non-GET requests if user is authenticated
     }
 
+    // If the user is not authenticated and is trying a non-GET request
     res.status(401).json({ message: "Unauthorized: Please log in first." });
 });
 

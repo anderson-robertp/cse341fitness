@@ -91,19 +91,22 @@
         "tags": [
           "Users"
         ],
-        "description": "Get user.",
+        "description": "Get user by ID.",
         "parameters": [
           {
             "name": "id",
-            "in": "string",
+            "in": "path",
             "required": true,
             "type": "string",
-            "description": "user id"
+            "description": "User ID to retrieve"
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "User details retrieved successfully."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       },
@@ -111,40 +114,250 @@
         "tags": [
           "Users"
         ],
-        "description": "Get users.",
+        "description": "Update a user’s details.",
         "parameters": [
           {
             "name": "id",
-            "in": "string",
+            "in": "path",
             "required": true,
             "type": "string",
-            "description": "user id"
+            "description": "User ID to update"
           },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "example": "any"
+                "type": {
+                  "type": "string",
+                  "example": "object"
                 },
-                "email": {
-                  "example": "any"
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "John Doe"
+                        }
+                      }
+                    },
+                    "email": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "john@example.com"
+                        }
+                      }
+                    },
+                    "workoutIds": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "array"
+                        },
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "string"
+                            }
+                          }
+                        },
+                        "example": {
+                          "type": "array",
+                          "example": [
+                            "60b8d7e9ef9b3a8ed64f1234"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "favoriteExercise": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Dead lifts"
+                        }
+                      }
+                    },
+                    "achievements": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "array"
+                        },
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "string"
+                            }
+                          }
+                        },
+                        "example": {
+                          "type": "array",
+                          "example": [
+                            "60b8d7e9ef9b3a8ed64f1111"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
                 },
-                "workoutIds": {
-                  "example": "any"
-                },
-                "favoriteExercise": {
-                  "example": "any"
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "name",
+                    "email"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
+          "200": {
+            "description": "User updated."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/users/{id}/{property}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Fetch a specific property of a user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "property",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Property name (e.g., name, email, workoutIds)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User property retrieved."
+          },
+          "400": {
+            "description": "Invalid property."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Update a single property of a user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "property",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Property name (e.g., email, favoriteExercise)"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "johndoe@gmail.com"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "value"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User property updated."
+          },
+          "400": {
+            "description": "Invalid property."
           },
           "422": {
             "description": "Unprocessable Entity"
@@ -273,9 +486,6 @@
           "201": {
             "description": "Workout created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating workout."
           }
@@ -289,9 +499,6 @@
         "responses": {
           "200": {
             "description": "Workouts retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Error retrieving workouts."
@@ -317,9 +524,6 @@
         "responses": {
           "200": {
             "description": "Workout retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Workout not found."
@@ -456,9 +660,6 @@
           "200": {
             "description": "Workout updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Workout not found."
           },
@@ -484,9 +685,6 @@
         "responses": {
           "200": {
             "description": "Workout deleted successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Workout not found."
@@ -515,9 +713,6 @@
         "responses": {
           "200": {
             "description": "Workouts retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "No workouts found for the given user."
@@ -623,9 +818,6 @@
           "201": {
             "description": "Exercise created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating exercise."
           }
@@ -639,9 +831,6 @@
         "responses": {
           "200": {
             "description": "Exercises retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Error retrieving exercises."
@@ -667,9 +856,6 @@
         "responses": {
           "200": {
             "description": "Exercise retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Exercise not found."
@@ -780,9 +966,6 @@
           "200": {
             "description": "Exercise updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Exercise not found."
           },
@@ -809,9 +992,6 @@
           "200": {
             "description": "Exercise deleted successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Exercise not found."
           },
@@ -830,9 +1010,6 @@
         "responses": {
           "200": {
             "description": "Health metrics retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Error getting health metrics."
@@ -891,9 +1068,6 @@
               "$ref": "#/definitions/HealthMetric"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating health metric."
           }
@@ -917,9 +1091,6 @@
         "responses": {
           "200": {
             "description": "Health metric retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -987,9 +1158,6 @@
               "$ref": "#/definitions/HealthMetric"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Health metric not found."
           },
@@ -1014,9 +1182,6 @@
         "responses": {
           "200": {
             "description": "Health metric deleted successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -1045,9 +1210,6 @@
           "200": {
             "description": "Health metrics retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving health metrics."
           }
@@ -1063,9 +1225,6 @@
         "responses": {
           "200": {
             "description": "Achievements retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Error retrieving achievements."
@@ -1105,9 +1264,6 @@
           "201": {
             "description": "Achievement created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating achievement."
           }
@@ -1132,9 +1288,6 @@
         "responses": {
           "200": {
             "description": "Achievement retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -1161,9 +1314,6 @@
         "responses": {
           "200": {
             "description": "Achievement deleted successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -1213,9 +1363,6 @@
           "200": {
             "description": "Achievement updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Achievement not found."
           },
@@ -1243,9 +1390,6 @@
         "responses": {
           "200": {
             "description": "User achievements retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "No achievements found for the given user."
