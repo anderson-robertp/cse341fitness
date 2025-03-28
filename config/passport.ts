@@ -1,35 +1,50 @@
+/* eslint-disable no-console */
 import passport from "passport";
 import passportGoogle from "passport-google-oauth20";
 import env from "dotenv";
+import { User, IUser } from "../models/user"; // Importing User model and IUser type
 import { Profile } from "passport";
-import { User } from "../models/user.ts";
 
+// Load environment variables
 env.config();
+
+// Check if required environment variables are set
+if (
+    !process.env.CLIENT_ID ||
+    !process.env.CLIENT_SECRET ||
+    !process.env.CALLBACK_URL
+) {
+    throw new Error("Missing required environment variables for Google OAuth");
+}
 
 const GoogleStrategy = passportGoogle.Strategy;
 
+// Configure Google OAuth strategy
 passport.use(
     new GoogleStrategy(
         {
             clientID: process.env.CLIENT_ID || "",
             clientSecret: process.env.CLIENT_SECRET || "",
-            callbackURL: process.env.CALLBACK_URL || "",
+            callbackURL:
+                process.env.CALLBACK_URL ||
+                "http://localhost:3000/authentication/google/callback", // Default callback URL
             passReqToCallback: true,
         },
         async (
-            req: any,
+            req: import("express").Request,
             accessToken: string,
             refreshToken: string,
+            params: passportGoogle.GoogleCallbackParameters,
             profile: Profile,
-            done: Function,
+            done: passportGoogle.VerifyCallback,
         ) => {
             try {
-                //Find the google user
+                // Find the Google user
                 const existingUser = await User.findOne({
                     googleId: profile.id,
-                });
+                }).exec();
 
-                // If user doesn't exist creates a new user
+                // If user doesn't exist, create a new user
                 if (!existingUser) {
                     const newUser = new User({
                         name: profile.displayName,
@@ -41,41 +56,57 @@ passport.use(
                         const createdUser = await newUser.save();
                         done(null, createdUser);
                     } catch (error) {
-                        console.log(`Error creating user: ${error}`);
-                        done(error, null);
+                        console.error("Error creating user:", error);
+                        done(error as Error, false); // Cast to Error type
                     }
                 } else {
-                    done(null, existingUser);
+                    done(null, existingUser); // User found, proceed with existing user
                 }
             } catch (error) {
-                console.log(`Error looking up user: ${error}`);
-                done(error, null);
+                console.error("Error looking up user:", error);
+                done(error as Error, false); // Cast to Error type
             }
         },
     ),
 );
 
-// Store/serialize the user
-passport.serializeUser((user: any, done) => {
-    console.log("Serializing user:", user._id);
-    done(null, user._id);
-});
+// Serialize User: Convert Mongoose Document to plain object
+passport.serializeUser(
+    (user: unknown, done: (err: Error | null, id?: unknown) => void) => {
+        // First, check if the user is of type IUser
+        if (user && typeof user === "object" && "_id" in user) {
+            const typedUser = user as IUser; // Assert that user is of type IUser
 
-// Get/deserialize the user
-passport.deserializeUser(async (id: string, done) => {
-    try {
-        console.log("Deserializing user with ID:", id);
-        const currentUser = await User.findById(id);
-
-        if (!currentUser) {
-            return done(new Error("User not found"), null);
+            // Check if _id is actually a valid ObjectId (if using MongoDB)
+            if (typedUser._id && typeof typedUser._id.toString === "function") {
+                done(null, typedUser._id.toString()); // Convert ObjectId to string
+            } else {
+                done(new Error("Invalid _id in user object"), null);
+            }
+        } else {
+            done(new Error("Invalid user object"), null);
         }
+    },
+);
 
-        console.log("Deserializing user:", currentUser);
-        done(null, currentUser);
-    } catch (error) {
-        done(error, null);
-    }
-});
+// Deserialize the user from the session
+passport.deserializeUser(
+    async (
+        id: string,
+        done: (err: Error | null, user?: IUser | null) => void,
+    ) => {
+        try {
+            const user = await User.findById(id).exec();
+            if (user) {
+                console.log("Deserialized user:", user);
+                done(null, user as IUser);
+            } else {
+                done(new Error("User not found"), null);
+            }
+        } catch (err) {
+            done(err instanceof Error ? err : new Error("Unknown error"), null);
+        }
+    },
+);
 
-module.exports = passport;
+export default passport;

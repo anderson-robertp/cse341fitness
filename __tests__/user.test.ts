@@ -8,22 +8,19 @@ describe("Users API", () => {
     });
 
     it("should create a new user", async () => {
-        const response = await request(app)
-            .post("/users")
-            .send({
-                name: "testuser",
-                email: "test@yser.com",
-                googleId: "1234567890",
-                workoutIds: [],
-                favoriteExercise: [],
-                achievements: [],
-            });
+        const response = await request(app).post("/users").send({
+            name: "testuser",
+            email: "test@yser.com",
+            googleId: "1234567890",
+            workoutIds: [],
+            favoriteExercise: [],
+            achievements: [],
+        });
 
         expect(response.status).toBe(201);
         expect(response.body.user).toHaveProperty("_id");
         expect(response.body.user.name).toBe("testuser");
-    }
-    );
+    });
 
     it("should retrieve all users", async () => {
         await new User({
@@ -38,6 +35,5 @@ describe("Users API", () => {
         const response = await request(app).get("/users").redirects(1);
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
-    }
-    );
+    });
 });

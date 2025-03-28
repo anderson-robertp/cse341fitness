@@ -12,14 +12,17 @@ interface IHealthMetric {
 //HealthMetric schema
 const healthMetricSchema = new Schema<IHealthMetric>(
     {
-        userId: { type: Schema.Types.ObjectId, ref:"User", required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         healrhMetric: { type: String, required: true },
         value: { type: Number, required: true },
         unit: { type: String, required: true },
         timestamp: { type: Date, required: true },
     },
-    { collection: "healthMetrics" }
+    { collection: "healthMetrics" },
 );
 
 //Export Mongoose Model
-export const HealthMetric = model<IHealthMetric>("HealthMetric", healthMetricSchema);
+export const HealthMetric = model<IHealthMetric>(
+    "HealthMetric",
+    healthMetricSchema,
+);

@@ -45,7 +45,9 @@ export async function CloseDatabase(): Promise<void> {
 // Initialize in-memory MongoDB server for testing purposes
 export async function InitializeInMemoryDatabase(): Promise<void> {
     if (isConnected) {
-        console.log("Database already connected. Closing existing connection first...");
+        console.log(
+            "Database already connected. Closing existing connection first...",
+        );
         await CloseDatabase();
     }
 

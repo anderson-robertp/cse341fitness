@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 
 export async function Login(req: Request, res: Response, next: NextFunction) {
-    passport.authenticate("google", (err: Error, user: any) => {
+    passport.authenticate("google", (err: Error, user: Express.User) => {
         if (err) {
             return next(err); // Handle errors
         }
@@ -26,8 +26,8 @@ export function isAuthenticated(
     next: NextFunction,
 ) {
     if (req.isAuthenticated()) {
-        return next();
+        return next(); // User is authenticated, proceed to the next middleware
     } else {
-        res.status(401).redirect("/authentication/google");
+        res.status(401).json({ message: "Unauthorized: Please log in first." });
     }
 }
