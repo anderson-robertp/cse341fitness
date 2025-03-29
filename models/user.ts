@@ -8,6 +8,7 @@ export interface IUser extends Document {
     workoutIds?: Types.ObjectId[];
     favoriteExercise?: Types.ObjectId;
     achievements?: Types.ObjectId[];
+    [key: string]: unknown; // Allow additional properties
 }
 
 // Mongoose schema for user
@@ -20,7 +21,7 @@ const userSchema = new Schema<IUser & Document>(
         favoriteExercise: { type: Schema.Types.ObjectId, ref: "Exercise" },
         achievements: [{ type: Schema.Types.ObjectId, ref: "UserAchievement" }],
     },
-    { collection: "Users" },
+    { collection: "Users", strict: false },
 );
 
 // Extend the model with IUser and Document

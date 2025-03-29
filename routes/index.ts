@@ -5,7 +5,7 @@ import usersRouter from "./users";
 import exercisesRouter from "./exercises";
 import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
-import { isAuthenticated } from "../controllers/authentication"; // Make sure this is used
+import { isAuthenticated } from "../controllers/authentication"; // Import the isAuthenticated middleware
 import swaggerRouter from "./swagger";
 
 const router = express.Router();
@@ -21,11 +21,20 @@ router.use("/authentication", authenticationRouter);
 // Swagger route (public, GET)
 router.use("/api-docs", swaggerRouter);
 
-// Apply the isAuthenticated middleware to specific routes (POST, PUT, DELETE)
-router.use("/users", isAuthenticated, usersRouter);
-router.use("/workouts", isAuthenticated, workoutsRouter);
-router.use("/exercises", isAuthenticated, exercisesRouter);
-router.use("/health-metrics", isAuthenticated, metricsRouter);
-router.use("/achievements", isAuthenticated, achievementsRouter);
+// Apply the isAuthenticated middleware to all non-GET routes globally
+router.use((req, res, next) => {
+    if (req.method !== "GET") {
+        // Apply isAuthenticated middleware to all non-GET routes
+        return isAuthenticated(req, res, next);
+    }
+    next(); // Skip isAuthenticated middleware for GET requests
+});
+
+// Register routes
+router.use("/users", usersRouter);
+router.use("/workouts", workoutsRouter);
+router.use("/exercises", exercisesRouter);
+router.use("/health-metrics", metricsRouter);
+router.use("/achievements", achievementsRouter);
 
 export default router;
