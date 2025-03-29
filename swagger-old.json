@@ -26,7 +26,7 @@
         "tags": [
           "Authentication"
         ],
-        "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google)",
+        "description": "Redirects the user to Google authentication page.   **Note:** You must manually click this link to authenticate with Google:   [Click here to log in with Google](http://localhost:3000/authentication/google)",
         "responses": {
           "302": {
             "description": "Redirects to Google OAuth login"
@@ -1400,26 +1400,70 @@
         }
       }
     },
+    "/user-health-metrics/": {
+      "get": {
+        "tags": [
+          "User Health Metrics"
+        ],
+        "description": "Retrieve all user health metrics",
+        "responses": {
+          "200": {
+            "description": "User health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving user health metrics."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User Health Metrics"
+        ],
+        "description": "Create a new user health metric",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User health metric created successfully."
+          },
+          "500": {
+            "description": "Error creating user health metric."
+          }
+        }
+      }
+    },
     "/user-health-metrics/{userId}": {
       "get": {
         "tags": [
           "User Health Metrics"
         ],
-        "description": "Get all health metrics for a specific user.",
+        "description": "Retrieve a user health metric by ID",
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ID of the user health metric"
           }
         ],
         "responses": {
           "200": {
-            "description": "Health metrics retrieved successfully."
+            "description": "User health metric retrieved successfully."
+          },
+          "404": {
+            "description": "User health metric not found."
           },
           "500": {
-            "description": "Error fetching user health metrics."
+            "description": "Error retrieving user health metric."
           }
         }
       }
@@ -1429,306 +1473,25 @@
         "tags": [
           "User Health Metrics"
         ],
-        "description": "Get the latest health metric for a specific user.",
+        "description": "Retrieve the latest user health metric for a specific user",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ID of the user"
           }
         ],
         "responses": {
           "200": {
-            "description": "Latest health metric retrieved successfully."
+            "description": "Latest user health metric retrieved successfully."
           },
           "404": {
-            "description": "No health records found for the user."
+            "description": "No health metrics found for the given user."
           },
           "500": {
-            "description": "Error fetching latest health metric."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/all": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get all health metrics for all users (Admin route).",
-        "responses": {
-          "200": {
-            "description": "All health metrics retrieved successfully."
-          },
-          "404": {
-            "description": "No health records found."
-          },
-          "500": {
-            "description": "Error fetching all user health metrics."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/": {
-      "post": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Add a new health metric for a specific user.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Health metric data for the user.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "userId": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "67df521afc6481f5bf781ec2"
-                        }
-                      }
-                    },
-                    "metrics": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "object"
-                        },
-                        "properties": {
-                          "type": "object",
-                          "properties": {
-                            "heartRate": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 72
-                                }
-                              }
-                            },
-                            "bloodPressure": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "object"
-                                },
-                                "properties": {
-                                  "type": "object",
-                                  "properties": {
-                                    "systolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 120
-                                        }
-                                      }
-                                    },
-                                    "diastolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 80
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "bloodSugar": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 95
-                                }
-                              }
-                            },
-                            "temperature": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 36.5
-                                }
-                              }
-                            },
-                            "steps": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 5000
-                                }
-                              }
-                            },
-                            "caloriesBurned": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 250
-                                }
-                              }
-                            },
-                            "sleepDuration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 7.5
-                                }
-                              }
-                            },
-                            "weight": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 75.2
-                                }
-                              }
-                            },
-                            "hydration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 1.5
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "timestamp": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "2025-03-22T08:00:00.000+00:00"
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "userId",
-                    "metrics",
-                    "timestamp"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Health metric added successfully."
-          },
-          "400": {
-            "description": "Invalid input data."
-          },
-          "500": {
-            "description": "Error adding health metric."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{id}": {
-      "delete": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Delete a health metric for a specific user by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric deleted successfully."
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error deleting health metric."
+            "description": "Error retrieving latest user health metric."
           }
         }
       }

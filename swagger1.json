@@ -1451,25 +1451,6 @@
         }
       }
     },
-    "/user-health-metrics/all": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get all health metrics for all users (Admin route).",
-        "responses": {
-          "200": {
-            "description": "All health metrics retrieved successfully."
-          },
-          "404": {
-            "description": "No health records found."
-          },
-          "500": {
-            "description": "Error fetching all user health metrics."
-          }
-        }
-      }
-    },
     "/user-health-metrics/": {
       "post": {
         "tags": [
@@ -1485,211 +1466,70 @@
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
+                "userId": {
                   "type": "string",
-                  "example": "object"
+                  "example": "67df521afc6481f5bf781ec2"
                 },
-                "properties": {
+                "metrics": {
                   "type": "object",
                   "properties": {
-                    "userId": {
+                    "heartRate": {
+                      "type": "integer",
+                      "example": 72
+                    },
+                    "bloodPressure": {
                       "type": "object",
                       "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
+                        "systolic": {
+                          "type": "integer",
+                          "example": 120
                         },
-                        "example": {
-                          "type": "string",
-                          "example": "67df521afc6481f5bf781ec2"
+                        "diastolic": {
+                          "type": "integer",
+                          "example": 80
                         }
                       }
                     },
-                    "metrics": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "object"
-                        },
-                        "properties": {
-                          "type": "object",
-                          "properties": {
-                            "heartRate": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 72
-                                }
-                              }
-                            },
-                            "bloodPressure": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "object"
-                                },
-                                "properties": {
-                                  "type": "object",
-                                  "properties": {
-                                    "systolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 120
-                                        }
-                                      }
-                                    },
-                                    "diastolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 80
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "bloodSugar": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 95
-                                }
-                              }
-                            },
-                            "temperature": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 36.5
-                                }
-                              }
-                            },
-                            "steps": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 5000
-                                }
-                              }
-                            },
-                            "caloriesBurned": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 250
-                                }
-                              }
-                            },
-                            "sleepDuration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 7.5
-                                }
-                              }
-                            },
-                            "weight": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 75.2
-                                }
-                              }
-                            },
-                            "hydration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 1.5
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
+                    "bloodSugar": {
+                      "type": "integer",
+                      "example": 95
                     },
-                    "timestamp": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "2025-03-22T08:00:00.000+00:00"
-                        }
-                      }
+                    "temperature": {
+                      "type": "number",
+                      "example": 36.5
+                    },
+                    "steps": {
+                      "type": "integer",
+                      "example": 5000
+                    },
+                    "caloriesBurned": {
+                      "type": "integer",
+                      "example": 250
+                    },
+                    "sleepDuration": {
+                      "type": "number",
+                      "example": 7.5
+                    },
+                    "weight": {
+                      "type": "number",
+                      "example": 75.2
+                    },
+                    "hydration": {
+                      "type": "number",
+                      "example": 1.5
                     }
                   }
                 },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "userId",
-                    "metrics",
-                    "timestamp"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                "timestamp": {
+                  "type": "string",
+                  "example": "2025-03-22T08:00:00.000+00:00"
                 }
-              }
+              },
+              "required": [
+                "userId",
+                "metrics",
+                "timestamp"
+              ]
             }
           }
         ],

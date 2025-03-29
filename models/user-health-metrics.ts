@@ -1,14 +1,5 @@
 import { Schema, model, Types } from "mongoose";
 
-// TS interface for HealthMetric
-interface IHealthMetric {
-    userId: Types.ObjectId;
-    healthMetric: string;
-    value: number;
-    unit: string;
-    timestamp: Date;
-}
-
 // TS interface for userHealthMetrics
 interface IUserHealthMetrics {
     userId: Types.ObjectId; // User ID (Meta Field in MongoDB)
@@ -29,18 +20,6 @@ interface IUserHealthMetrics {
     };
 }
 
-// HealthMetric schema
-const healthMetricSchema = new Schema<IHealthMetric>(
-    {
-        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-        healthMetric: { type: String, required: true }, // Fixed typo
-        value: { type: Number, required: true },
-        unit: { type: String, required: true },
-        timestamp: { type: Date, required: true },
-    },
-    { collection: "healthMetrics" }
-);
-
 const userHealthMetricsSchema = new Schema<IUserHealthMetrics>(
     {
         userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -60,9 +39,8 @@ const userHealthMetricsSchema = new Schema<IUserHealthMetrics>(
             hydration: { type: Number, default: null },
         },
     },
-    { timestamps: true }
+    { collection: "userHealthMetrics" }, // Collection name in MongoDB
+    //{ timestamps: true }
 );
 
-// Export Mongoose Model
-export const HealthMetric = model<IHealthMetric>("HealthMetric", healthMetricSchema);
-//export const UserHealthMetrics = model<IUserHealthMetrics>("UserHealthMetrics", userHealthMetricsSchema);
+export const UserHealthMetrics = model<IUserHealthMetrics>("UserHealthMetrics", userHealthMetricsSchema);
