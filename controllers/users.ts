@@ -1,11 +1,31 @@
 /* eslint-disable no-console */
 import { Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
+import mongoose from "mongoose"; // Import mongoose for ObjectId validation
 
 //Get entire user by ID
 export async function getUserById(req: Request, res: Response) {
     try {
-        const user = await User.findById(req.params.id);
+        const userId = req.params.id; // Extract the user ID from the request parameters
+        
+        // Validate the ID parameter from the request
+        if (!userId) {
+            return res.status(400).json({
+                message: "User ID is required in users/getUserById controller.",
+            });
+        }
+        // Check if the provided ID is a valid MongoDB ObjectId format
+        // This is optional but can help avoid unnecessary database queries
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({
+                message: "Invalid User ID format in users/getUserById controller.",
+            });
+        }
+
+        const userIdObject = new mongoose.Types.ObjectId(userId); // Create a new ObjectId instance for validation
+
+        // Attempt to find the user by ID using Mongoose's findById method
+        const user = await User.findById(userIdObject);
         if (!user) {
             return res.status(404).json({
                 message: "User not found in users/getUserById controller.",
