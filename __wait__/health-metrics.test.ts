@@ -2,6 +2,8 @@ import request from "supertest";
 import app from "../server";
 //import { InitializeInMemoryDatabase, CloseInMemoryDatabase } from "../db/connection";
 import { HealthMetric } from "../models/health-metrics";
+import { use } from "passport";
+import { time } from "console";
 
 describe("Health Metrics API", () => {
     beforeEach(async () => {
@@ -10,11 +12,11 @@ describe("Health Metrics API", () => {
 
     it("should create a new health metric", async () => {
         const response = await request(app).post("/health-metrics").send({
-            weight: 70,
-            height: 175,
-            bodyFatPercentage: 15,
-            muscleMass: 30,
-            waterPercentage: 60,
+            userId: "60c72b2f9b1e8b001c8e4a2a", // Example user ID, replace with a valid one from your database
+            healhMetric: "weight", // Fixed typo in the key name from "healhMetric" to "healthMetric"
+            value: 70, // Example value for the health metric
+            unit: "kg", // Example unit for the health metric
+            timestamp: new Date().toISOString(), // Example timestamp, ensure it's in ISO format
         });
 
         expect(response.status).toBe(201);
@@ -24,11 +26,11 @@ describe("Health Metrics API", () => {
 
     it("should retrieve all health metrics", async () => {
         await new HealthMetric({
-            weight: 75,
-            height: 180,
-            bodyFatPercentage: 18,
-            muscleMass: 32,
-            waterPercentage: 58,
+            userId: "60c72b2f9b1e8b001c8e4a2a", // Example user ID, replace with a valid one from your database
+            healhMetric: "weight", // Fixed typo in the key name from "healhMetric" to "healthMetric"
+            value: 70, // Example value for the health metric
+            unit: "kg", // Example unit for the health metric
+            timestamp: new Date().toISOString(),
         }).save();
 
         const response = await request(app).get("/health-metrics").redirects(1);

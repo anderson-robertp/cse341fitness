@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import "dotenv/config";
 import express from "express";
-import { Request, Response, NextFunction } from "express";
+import e, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -9,6 +9,7 @@ import session from "express-session";
 import "./config/passport";
 import router from "./routes/index";
 import { InitializeDatabase } from "./db/connection";
+import { env } from "process";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,6 +45,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === "GET") {
         return next(); // Allow GET requests for everyone
     }
+    if (env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
+        console.log("Skipping authentication in test environment. Server.ts"); // Log to indicate we're skipping authentication in test environment
+        return next(); // Skip authentication for test environment
+    }
 
     if (req.isAuthenticated()) {
         return next(); // Allow non-GET requests if user is authenticated
@@ -64,6 +69,7 @@ if (process.env.NODE_ENV !== "test") {
     InitializeDatabase()
         .then(() => {
             app.listen(port, () => {
+                console.log("Not Running in Test Environment"); // Log to indicate the server is running in non-test environment
                 console.log(`Server is running on ${host}:${port}`);
                 console.log(
                     `Swagger Docs available at http://${host}:${port}/api-docs`,

@@ -4,6 +4,9 @@ import {
     updateUserById,
     getUserProperty,
     updateUserProperty,
+    createUser,
+    deleteUserById,
+    getAllUsers, // Added for retrieving all users, if needed
 } from "../controllers/users";
 import handleErrors from "../utilities";
 import { userValidationRules, userValidate } from "../utilities/userValidator";
@@ -140,5 +143,32 @@ usersRouter.put(
      }
     */
 );
+
+// Create a new user
+usersRouter.post(
+    "/",
+    userValidationRules(), // Validate request body using the defined rules
+    userValidate, // Middleware to check for validation errors
+    handleErrors(createUser), // Handle the request and catch errors
+);
+
+// Delete a user by ID
+usersRouter.delete(
+    "/:id",
+    handleErrors(deleteUserById),
+);
+
+// retrieve all users
+usersRouter.get(
+    "/",
+    handleErrors(getAllUsers), // Handle the request and catch errors
+    /*
+     #swagger.tags = ['Users']
+     #swagger.description = 'Retrieve all users.'
+     #swagger.responses[200] = {
+         description: 'List of users retrieved successfully.'
+     }
+    */
+)
 
 export default usersRouter;

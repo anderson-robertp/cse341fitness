@@ -113,3 +113,66 @@ export const updateUserProperty = async (
         next(err);
     }
 };
+
+// Create a new user
+export async function createUser(req: Request, res: Response) {
+    try {
+        const newUser = req.body; // Get all fields from the body
+
+        // Create a new user document
+        const user = new User(newUser);
+
+        // Save the user to the database
+        await user.save();
+
+        // Return the created user document with status 201
+        res.status(201).json({ user });
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return res.status(500).json({
+            message: `Error creating user: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Delete a user by ID
+export async function deleteUserById(req: Request, res: Response) {
+    try {
+        const userId = req.params.id;
+
+        // Attempt to find and delete the user document
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found in users/deleteUserById controller.",
+            });
+        }
+
+        // Return success message
+        res.json({ message: "User deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        return res.status(500).json({
+            message: `Error deleting user: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Rerieve all users (Admin or Public Access)
+export async function getAllUsers(req: Request, res: Response) {
+    try {
+        // Retrieve all users from the database
+        const users = await User.find({});
+
+        // Return the list of users
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("Error retrieving users:", error);
+        return res.status(500).json({
+            message: `Error retrieving users: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Note: The above functions assume that the User model is already defined and imported from the models/user file.
