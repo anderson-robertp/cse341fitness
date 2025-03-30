@@ -1,33 +1,26 @@
 import { Request, Response, NextFunction } from "express";
-import passport from "passport";
+import jwt from "jsonwebtoken";
+import env from "dotenv";
 
-export async function Login(req: Request, res: Response, next: NextFunction) {
-    passport.authenticate("google", (err: Error, user: Express.User) => {
-        if (err) {
-            return next(err); // Handle errors
-        }
-        if (!user) {
-            return res.status(500).json({ error: "Could not login user." });
-        }
+env.config();
 
-        req.logIn(user, (loginErr) => {
-            if (loginErr) {
-                return next(loginErr);
-            }
-
-            res.status(200).redirect("/authentication/google/callback");
-        });
-    })(req, res, next);
-}
-
-export function isAuthenticated(
+// Middleware to protect routes
+export function authenticateJWT(
     req: Request,
     res: Response,
     next: NextFunction,
 ) {
-    if (req.isAuthenticated()) {
-        return next(); // User is authenticated, proceed to the next middleware
-    } else {
-        res.status(401).json({ message: "Unauthorized: Please log in first." });
-    }
+    const token = req.headers["authorization"]?.split(" ")[1];
+    if (!token) res.sendStatus(403);
+
+    jwt.verify(token || "", process.env.JWT_SECRET || "", (err, user) => {
+        if (err) res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
+
+export function logout(req: Request, res: Response) {
+    res.clearCookie("connect.sid");
+    res.json({ message: "Logged out." });
 }

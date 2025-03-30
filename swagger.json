@@ -26,12 +26,24 @@
         "tags": [
           "Authentication"
         ],
-        "description": "Redirects the user to Google authentication page.   **Note:** You must manually click this link to authenticate with Google:   [Click here to log in with Google](http://localhost:3000/authentication/google)",
+        "description": "Redirects the user to Google authentication page.",
         "responses": {
           "302": {
             "description": "Redirects to Google OAuth login"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/authentication/google/callback": {
@@ -39,7 +51,7 @@
         "tags": [
           "Authentication"
         ],
-        "description": "Authenticate the user.",
+        "description": "Authenticate the user with Google OAuth2",
         "responses": {
           "200": {
             "description": "User logged in"
@@ -47,7 +59,19 @@
           "500": {
             "description": "Error authenticating the user."
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/authentication/logout": {
@@ -60,30 +84,19 @@
           "200": {
             "description": "User logged out"
           }
-        }
-      }
-    },
-    "/authentication/logged-out": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "description": "Logout User Page.",
-        "responses": {
-          "200": {
-            "description": "User logged out"
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
           }
-        }
-      }
-    },
-    "/api-docs/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
+        ]
       }
     },
     "/users/{id}": {
@@ -1238,6 +1251,11 @@
         "description": "Create a new achievement",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "required": true,
@@ -1264,10 +1282,25 @@
           "201": {
             "description": "Achievement created successfully."
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Error creating achievement."
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/achievements/{id}": {
@@ -1309,11 +1342,19 @@
             "required": true,
             "type": "string",
             "description": "The ID of the achievement"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Achievement deleted successfully."
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Achievement not found."
@@ -1321,7 +1362,19 @@
           "500": {
             "description": "Error deleting achievement."
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -1335,6 +1388,11 @@
             "required": true,
             "type": "string",
             "description": "The ID of the achievement"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "body",
@@ -1363,13 +1421,28 @@
           "200": {
             "description": "Achievement updated successfully."
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "404": {
             "description": "Achievement not found."
           },
           "500": {
             "description": "Error updating achievement."
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     },
     "/achievements/user/{userId}": {
@@ -1385,11 +1458,19 @@
             "required": true,
             "type": "string",
             "description": "The ID of the user"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "User achievements retrieved successfully."
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "No achievements found for the given user."
@@ -1397,17 +1478,35 @@
           "500": {
             "description": "Error retrieving user achievements."
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          },
+          {
+            "OAuth2": [
+              "openid",
+              "profile",
+              "email"
+            ]
+          }
+        ]
       }
     }
   },
   "components": {
     "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT Authentication"
+      },
       "oauth2": {
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "http://localhost:3000/authentication/google/",
+            "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
             "tokenUrl": "https://oauth2.googleapis.com/token",
             "scopes": {
               "openid": "OpenID authentication",
@@ -1421,7 +1520,14 @@
   },
   "security": [
     {
-      "oauth2": []
+      "BearerAuth": []
+    },
+    {
+      "oauth2": [
+        "openid",
+        "profile",
+        "email"
+      ]
     }
   ]
 }

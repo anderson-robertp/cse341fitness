@@ -7,22 +7,21 @@ const doc = {
     },
     host: "localhost:3000", // Change this when deploying to production
     schemes: ["http"], // Update to "https" when deployed
-    security: [
-        {
-            oauth2: [], // Global security for OAuth2
-        },
-    ],
     components: {
         securitySchemes: {
+            BearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT",
+                description: "JWT Authentication",
+            },
             oauth2: {
                 type: "oauth2",
                 flows: {
                     authorizationCode: {
                         authorizationUrl:
-                            "http://localhost:3000/authentication/google/",
+                            "https://accounts.google.com/o/oauth2/v2/auth",
                         tokenUrl: "https://oauth2.googleapis.com/token",
-                        clientId: process.env.CLIENT_ID,
-                        clientSecret: process.env.CLIENT_SECRET,
                         scopes: {
                             openid: "OpenID authentication",
                             profile: "Profile information",
@@ -33,9 +32,19 @@ const doc = {
             },
         },
     },
+    security: [
+        {
+            BearerAuth: [], // Enables JWT authentication
+        },
+        {
+            oauth2: ["openid", "profile", "email"], // Global security for OAuth2
+        },
+    ],
 };
 
 const outputFile = "./swagger.json";
 const endpointFiles = ["./routes/index.ts"];
 
 swaggerAutogen(outputFile, endpointFiles, doc);
+
+export { outputFile };

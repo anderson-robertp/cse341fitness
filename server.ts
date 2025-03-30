@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import "dotenv/config";
 import express from "express";
-import { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -9,6 +8,9 @@ import session from "express-session";
 import "./config/passport";
 import router from "./routes/index";
 import { InitializeDatabase } from "./db/connection";
+import env from "dotenv";
+
+env.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Express Session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "keyboard cat",
+        secret: process.env.SESSION_SECRET || "",
         resave: false,
         saveUninitialized: false,
     }),
@@ -37,24 +39,6 @@ app.use(
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Protect non-GET routes globally before applying routes
-app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(`Request method: ${req.method}`); // Log the method
-    if (req.method === "GET") {
-        return next(); // Allow GET requests for everyone
-    }
-
-    if (req.isAuthenticated()) {
-        return next(); // Allow non-GET requests if user is authenticated
-    }
-
-    // If the user is not authenticated and is trying a non-GET request
-    res.status(401).json({ message: "Unauthorized: Please log in first." });
-});
-
-// Register authentication routes first (public)
-app.use("/authentication", router);
 
 // Register all other routes
 app.use(router);
