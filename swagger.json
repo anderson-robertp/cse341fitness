@@ -1398,6 +1398,58 @@
             "description": "Error retrieving user achievements."
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Achievements"
+        ],
+        "description": "Create a new user achievement",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "achievementId": {
+                  "type": "string",
+                  "example": "60d5f484f1c2a8b8b8b8b8b8"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Run 5 miles"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Run 5 miles in a week"
+                },
+                "progressGoal": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User achievement created successfully."
+          },
+          "404": {
+            "description": "Achievement not found."
+          },
+          "500": {
+            "description": "Error creating user achievement."
+          }
+        }
       }
     }
   },
