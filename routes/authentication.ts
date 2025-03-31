@@ -9,10 +9,9 @@ authenticationRouter.get(
     passport.authenticate("google", { scope: ["openid", "email", "profile"] }),
     /*  
     #swagger.tags = ['Authentication']
-    #swagger.description = 'Redirects the user to Google authentication page. 
-    #swagger.security = [{ "BearerAuth": [] }, { "OAuth2": ["openid", "profile", "email"] }]
-       **Note:** You must manually click this link to authenticate with Google: 
+    #swagger.description = 'Redirects the user to Google authentication page. **Note:** You must manually click this link to authenticate with Google: 
        [Click here to log in with Google](http://localhost:3000/authentication/google)'
+    #swagger.security = [{ "BearerAuth": [] }, { "OAuth2": ["openid", "profile", "email"] }]
     #swagger.responses[302] = {
         description: 'Redirects to Google OAuth login'
     }
@@ -22,8 +21,12 @@ authenticationRouter.get(
 authenticationRouter.get(
     "/google/callback",
     passport.authenticate("google", {
-        failureRedirect: "/", // Redirect to home if authentication fails
+        failureRedirect: "/google", // Redirect to home if authentication fails
     }),
+    async (req, res) => {
+        // Redirect to Swagger docs after successful authentication
+        res.redirect("/api-docs");
+    },
     /*  
     #swagger.tags = ['Authentication']
     #swagger.description = 'Authenticate the user with Google OAuth2'

@@ -13,7 +13,7 @@ const router = express.Router();
 router.use("/api-docs", swaggerRouter);
 
 // Home route (public, GET)
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
     res.send("Welcome to the Fitness API!");
 });
 
