@@ -41,13 +41,6 @@ app.use(passport.session());
 // Register all other routes
 app.use(router);
 
-//Log session
-app.use((req, res, next) => {
-    console.log("Session:", req.session);
-    console.log("User:", req.user);
-    next();
-});
-
 // Initialize the database
 if (process.env.NODE_ENV !== "test") {
     InitializeDatabase()

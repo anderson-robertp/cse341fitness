@@ -98,14 +98,11 @@ passport.deserializeUser(
         try {
             const user = await User.findById(id).exec();
             if (user) {
-                console.log("Deserialized user:", user);
                 done(null, user as IUser);
             } else {
-                console.error("User not found during deserialization");
                 done(new Error("User not found"), null);
             }
         } catch (err) {
-            console.error("Error during deserialization:", err);
             done(err instanceof Error ? err : new Error("Unknown error"), null);
         }
     },

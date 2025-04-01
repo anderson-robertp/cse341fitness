@@ -17,6 +17,8 @@ metricsRouter.get(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get all health metrics.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.responses[200] = {
             description: 'Health metrics retrieved successfully.',
         },
@@ -33,6 +35,8 @@ metricsRouter.get(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get health metric by ID.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.parameters['id'] = {
                 "name": "id",
                 "in": "path",
@@ -58,6 +62,8 @@ metricsRouter.post(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Create a new health metric.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.parameters['body'] = {
                 name: 'body',
                 in: 'body',
@@ -88,6 +94,8 @@ metricsRouter.put(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Update a health metric by ID.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.parameters['id'] = {
                 "name": "id",
                 "in": "path",
@@ -127,6 +135,8 @@ metricsRouter.delete(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Delete a health metric by ID.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.parameters['id'] = {
                 "name": "id",
                 "in": "path",
@@ -152,6 +162,8 @@ metricsRouter.get(
     /*  
         #swagger.tags = ['Health Metrics'],
         #swagger.description = 'Get health metrics by user ID.',
+        #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
         #swagger.parameters['userId'] = {
                 "name": "userId",
                 "in": "path",

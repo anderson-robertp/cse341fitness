@@ -22,21 +22,26 @@ router.get("/", (req, res) => {
 router.use("/authentication", authenticationRouter);
 
 // Register routes
-router.use("/users", isAuthenticated, usersRouter);
+router.use(
+    "/users",
+    isAuthenticated,
+    usersRouter,
+    /*
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
+    */
+);
 router.use("/workouts", workoutsRouter);
 router.use("/exercises", exercisesRouter);
-router.use("/health-metrics", metricsRouter);
+router.use(
+    "/health-metrics",
+    isAuthenticated,
+    metricsRouter,
+    /*
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
+    */
+);
 router.use("/achievements", achievementsRouter);
-
-//This route is for debugging only, Delete me if you see me in the repository
-router.get("/api/debug-session", (req, res) => {
-    console.log("Session Data:", req.session);
-    console.log("User Data:", req.user);
-    res.json({
-        session: req.session,
-        user: req.user,
-        isAuthenticated: req.isAuthenticated ? req.isAuthenticated() : false,
-    });
-});
 
 export default router;
