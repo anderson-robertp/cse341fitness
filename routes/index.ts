@@ -10,6 +10,9 @@ import swaggerRouter from "./swagger";
 
 const router = express.Router();
 
+// Swagger route (public, GET)
+router.use("/api-docs", swaggerRouter);
+
 // Home route (public, GET)
 router.get("/", (req, res) => {
     res.send("Welcome to the Fitness API!");
@@ -18,23 +21,22 @@ router.get("/", (req, res) => {
 // Authentication route (public, GET)
 router.use("/authentication", authenticationRouter);
 
-// Swagger route (public, GET)
-router.use("/api-docs", swaggerRouter);
-
-// Apply the isAuthenticated middleware to all non-GET routes globally
-router.use((req, res, next) => {
-    if (req.method !== "GET") {
-        // Apply isAuthenticated middleware to all non-GET routes
-        return isAuthenticated(req, res, next);
-    }
-    next(); // Skip isAuthenticated middleware for GET requests
-});
-
 // Register routes
-router.use("/users", usersRouter);
+router.use("/users", isAuthenticated, usersRouter);
 router.use("/workouts", workoutsRouter);
 router.use("/exercises", exercisesRouter);
 router.use("/health-metrics", metricsRouter);
 router.use("/achievements", achievementsRouter);
+
+//This route is for debugging only, Delete me if you see me in the repository
+router.get("/api/debug-session", (req, res) => {
+    console.log("Session Data:", req.session);
+    console.log("User Data:", req.user);
+    res.json({
+        session: req.session,
+        user: req.user,
+        isAuthenticated: req.isAuthenticated ? req.isAuthenticated() : false,
+    });
+});
 
 export default router;

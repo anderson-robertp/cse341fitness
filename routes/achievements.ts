@@ -59,6 +59,8 @@ achievementsRouter.post(
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Create a new achievement'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['body'] = {
         "in": "body",
         "required": true,
