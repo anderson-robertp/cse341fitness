@@ -6,6 +6,7 @@ import {
     getAchievementById,
     updateAchievement,
     getUserAchievements,
+    createUserAchievement,
 } from "../controllers/achievements";
 import handleErrors from "../utilities";
 
@@ -157,6 +158,40 @@ achievementsRouter.get(
     }
     #swagger.responses[500] = {
         description: 'Error retrieving user achievements.'
+    }
+    */
+);
+
+achievementsRouter.post(
+    "/user/:userId",
+    handleErrors(createUserAchievement),
+    /*
+    #swagger.tags = ['Achievements']
+    #swagger.description = 'Create a new user achievement'
+    #swagger.parameters['userId'] = {
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "description": "The ID of the user"
+    }
+    #swagger.parameters['body'] = {
+        "in": "body",
+        "required": true,
+        "schema": {
+            "achievementId": "60d5f484f1c2a8b8b8b8b8b8",
+            "title": "Run 5 miles",
+            "description": "Run 5 miles in a week",
+            "progressGoal": 5
+        }
+    }
+    #swagger.responses[201] = {         
+        description: 'User achievement created successfully.'
+    }
+    #swagger.responses[404] = {
+        description: 'Achievement not found.'
+    }
+    #swagger.responses[500] = {
+        description: 'Error creating user achievement.'
     }
     */
 );
