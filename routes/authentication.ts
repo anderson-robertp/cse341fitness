@@ -8,7 +8,7 @@ authenticationRouter.get(
     /*  
     #swagger.tags = ['Authentication']
     #swagger.description = 'Redirects the user to Google authentication page. 
-       **Note:** You must manually click this link to authenticate with Google: 
+      **Note:** You must manually click this link to authenticate with Google: 
        [Click here to log in with Google](http://localhost:3000/authentication/google)'
     #swagger.security = 
     - oauth2: ["opendid", "profile", "email"]
@@ -31,7 +31,9 @@ authenticationRouter.get(
         }),
     ),
     handleErrors((req: Request, res: Response) => {
-        res.redirect("/api-docs");
+        req.session.save(() => {
+            res.status(200).redirect("/api-docs");
+        });
     }),
     /*  
     #swagger.tags = ['Authentication'],
@@ -54,7 +56,9 @@ authenticationRouter.get(
             if (err) {
                 return next(`Logout failed: ${err}`);
             }
+
             req.session.destroy(() => {
+                res.clearCookie("sessionId");
                 res.json({ message: "Logged out" });
             });
         });

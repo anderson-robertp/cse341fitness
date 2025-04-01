@@ -89,7 +89,7 @@ workoutsRouter.get(
 
 // Get Workouts by User ID Route
 workoutsRouter.get(
-    "/user/:userId",
+    "/user/:id",
     isAuthenticated,
     handleErrors(getWorkoutsByUserId),
 

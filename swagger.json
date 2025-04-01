@@ -120,7 +120,12 @@
           "404": {
             "description": "User not found."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -274,6 +279,11 @@
             "description": "Unprocessable Entity"
           }
         },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -335,7 +345,12 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -417,6 +432,11 @@
             "description": "Unprocessable Entity"
           }
         },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -569,7 +589,12 @@
           "500": {
             "description": "Error creating workout."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "get": {
         "tags": [
@@ -586,7 +611,12 @@
           "500": {
             "description": "Error retrieving workouts."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/workouts/{id}": {
@@ -619,7 +649,12 @@
           "500": {
             "description": "Error retrieving workout."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -759,7 +794,12 @@
           "500": {
             "description": "Error updating workout."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "delete": {
         "tags": [
@@ -790,10 +830,15 @@
           "500": {
             "description": "Error deleting workout."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
-    "/workouts/user/{userId}": {
+    "/workouts/user/{id}": {
       "get": {
         "tags": [
           "Workouts"
@@ -801,13 +846,21 @@
         "description": "Retrieve workouts by user ID",
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "The ID of the user"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -823,7 +876,12 @@
           "500": {
             "description": "Error retrieving workouts."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/exercises/": {
@@ -927,7 +985,12 @@
           "500": {
             "description": "Error creating exercise."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "get": {
         "tags": [
@@ -944,7 +1007,12 @@
           "500": {
             "description": "Error retrieving exercises."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/exercises/{id}": {
@@ -977,7 +1045,12 @@
           "500": {
             "description": "Error retrieving exercise."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -1091,7 +1164,12 @@
           "500": {
             "description": "Error updating exercise."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "delete": {
         "tags": [
@@ -1122,7 +1200,12 @@
           "500": {
             "description": "Error deleting exercise."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/health-metrics/": {
@@ -1141,7 +1224,12 @@
           "500": {
             "description": "Error getting health metrics."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "post": {
         "tags": [
@@ -1210,7 +1298,12 @@
           "500": {
             "description": "Error creating health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/health-metrics/{id}": {
@@ -1242,7 +1335,12 @@
           "500": {
             "description": "Error retrieving health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -1322,7 +1420,12 @@
           "500": {
             "description": "Error updating health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "delete": {
         "tags": [
@@ -1352,7 +1455,12 @@
           "500": {
             "description": "Error deleting health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/health-metrics/user/{userId}": {
@@ -1381,7 +1489,12 @@
           "500": {
             "description": "Error retrieving health metrics."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/achievements/": {
@@ -1400,7 +1513,12 @@
           "500": {
             "description": "Error retrieving achievements."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "post": {
         "tags": [
@@ -1479,7 +1597,12 @@
           "500": {
             "description": "Error retrieving achievement."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "delete": {
         "tags": [
@@ -1510,7 +1633,12 @@
           "500": {
             "description": "Error deleting achievement."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       },
       "put": {
         "tags": [
@@ -1563,7 +1691,12 @@
           "500": {
             "description": "Error updating achievement."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/achievements/user/{userId}": {
@@ -1596,7 +1729,12 @@
           "500": {
             "description": "Error retrieving user achievements."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     }
   },
@@ -1615,6 +1753,11 @@
             }
           }
         }
+      },
+      "SessionAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid"
       }
     }
   },
@@ -1625,6 +1768,9 @@
         "profile",
         "email"
       ]
+    },
+    {
+      "SessionAuth": []
     }
   ]
 }

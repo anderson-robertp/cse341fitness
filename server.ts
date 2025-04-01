@@ -15,7 +15,7 @@ const host = process.env.HOST || "localhost";
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["http://localhost:3000"], // Allow your frontend to make requests
+    origin: ["http://localhost:3000/api-docs"], // Allow your frontend to make requests
     credentials: true, // Allow cookies to be passed with requests
 };
 
@@ -27,9 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Express Session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "keyboard cat",
+        secret: process.env.SESSION_SECRET!,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: { secure: false }, // Set to true if using HTTPS
     }),
 );

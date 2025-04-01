@@ -33,12 +33,18 @@ const doc = {
                     },
                 },
             },
+            SessionAuth: {
+                type: "apiKey",
+                in: "cookie",
+                name: "connect.sid", // Default session cookie name
+            },
         },
     },
     security: [
         {
             oauth2: ["opendid", "profile", "email"], // Global security for OAuth2
         },
+        { SessionAuth: [] },
     ],
 };
 
