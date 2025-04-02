@@ -8,16 +8,20 @@ import {
     getWorkoutsByUserId,
 } from "../controllers/workout"; // Adjust the import path as necessary
 import handleErrors from "../utilities";
+import { isAuthenticated } from "../controllers/authentication";
 
 const workoutsRouter = express.Router();
 
 // Create Workout Route
 workoutsRouter.post(
     "/",
+    isAuthenticated,
     handleErrors(createWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Create a new workout'
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['body'] = {
         "in": "body",
         "required": true,
@@ -85,12 +89,15 @@ workoutsRouter.get(
 
 // Get Workouts by User ID Route
 workoutsRouter.get(
-    "/user/:userId",
+    "/user/:id",
+    isAuthenticated,
     handleErrors(getWorkoutsByUserId),
 
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Retrieve workouts by user ID'
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['userId'] = {
         "in": "path",
         "required": true,
@@ -112,10 +119,13 @@ workoutsRouter.get(
 // Update Workout by ID Route
 workoutsRouter.put(
     "/:id",
+    isAuthenticated,
     handleErrors(updateWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Update an existing workout'
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -152,10 +162,13 @@ workoutsRouter.put(
 // Delete Workout by ID Route
 workoutsRouter.delete(
     "/:id",
+    isAuthenticated,
     handleErrors(deleteWorkout),
     /*  
     #swagger.tags = ['Workouts']
     #swagger.description = 'Delete a workout by ID'
+    #swagger.security = 
+        - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,

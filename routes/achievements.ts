@@ -9,6 +9,7 @@ import {
     createUserAchievement,
 } from "../controllers/achievements";
 import handleErrors from "../utilities";
+import { isAuthenticated } from "../controllers/authentication";
 
 const achievementsRouter = express.Router();
 
@@ -56,10 +57,13 @@ achievementsRouter.get(
 // Create Achievement Route
 achievementsRouter.post(
     "/",
+    isAuthenticated,
     handleErrors(createAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Create a new achievement'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['body'] = {
         "in": "body",
         "required": true,
@@ -81,10 +85,13 @@ achievementsRouter.post(
 // Delete Achievement Route
 achievementsRouter.delete(
     "/:id",
+    isAuthenticated,
     handleErrors(deleteAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Delete an achievement by ID'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -106,10 +113,13 @@ achievementsRouter.delete(
 // Update Achievement Route
 achievementsRouter.put(
     "/:id",
+    isAuthenticated,
     handleErrors(updateAchievement),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Update an existing achievement'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -140,10 +150,13 @@ achievementsRouter.put(
 // Get User Achievements Route
 achievementsRouter.get(
     "/user/:userId",
+    isAuthenticated,
     handleErrors(getUserAchievements),
     /*  
     #swagger.tags = ['Achievements']
     #swagger.description = 'Retrieve achievements for a specific user'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['userId'] = {
         "in": "path",
         "required": true,

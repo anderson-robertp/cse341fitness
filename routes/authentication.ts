@@ -8,14 +8,19 @@ authenticationRouter.get(
     /*  
     #swagger.tags = ['Authentication']
     #swagger.description = 'Redirects the user to Google authentication page. 
-       **Note:** You must manually click this link to authenticate with Google: 
+      **Note:** You must manually click this link to authenticate with Google: 
        [Click here to log in with Google](http://localhost:3000/authentication/google)'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.responses[302] = {
         description: 'Redirects to Google OAuth login'
     }
     */
 
-    passport.authenticate("google", { scope: ["email", "profile"] }),
+    passport.authenticate("google", {
+        scope: ["email", "profile"],
+        prompt: "select_account",
+    }),
 );
 
 authenticationRouter.get(
@@ -26,11 +31,15 @@ authenticationRouter.get(
         }),
     ),
     handleErrors((req: Request, res: Response) => {
-        res.redirect("/api-docs");
+        req.session.save(() => {
+            res.status(200).redirect("/api-docs");
+        });
     }),
     /*  
     #swagger.tags = ['Authentication'],
     #swagger.description = 'Authenticate the user.',
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.responses[200] = {
         description: 'User logged in',
     },
@@ -45,39 +54,24 @@ authenticationRouter.get(
     handleErrors((req: Request, res: Response, next: NextFunction) => {
         req.logout((err: Error) => {
             if (err) {
-                return next(err);
+                return next(`Logout failed: ${err}`);
             }
-            // Redirect to logged-out page after successful logout
-            res.redirect("/authentication/logged-out");
+
+            req.session.destroy(() => {
+                res.clearCookie("sessionId");
+                res.json({ message: "Logged out" });
+            });
         });
     }),
     /*  
     #swagger.tags = ['Authentication'],
     #swagger.description = 'Logout user.',
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.responses[200] = {
         description: 'User logged out',
     }
     */
 );
-
-// Logged-out page route
-authenticationRouter.get("/logged-out", (req: Request, res: Response) => {
-    res.send(`
-        <html>
-            <head><title>You are logged out</title></head>
-            <body>
-                <h1>You are logged out</h1>
-                <p><a href="/api-docs" target="_blank">Go back to Swagger (not logged in)</a></p>
-            </body>
-        </html>
-    `);
-    /*  
-    #swagger.tags = ['Authentication'],
-    #swagger.description = 'Logout User Page.',
-    #swagger.responses[200] = {
-        description: 'User logged out',
-    }
-    */
-});
 
 export default authenticationRouter;

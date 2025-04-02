@@ -1,15 +1,19 @@
 import swaggerAutogen from "swagger-autogen";
 
 const doc = {
+    openapi: "3.0.0",
     info: {
         title: "Fitness API",
         description: "An API for tracking fitness data",
     },
-    host: "localhost:3000", // Change this when deploying to production
-    schemes: ["http"], // Update to "https" when deployed
-    security: [
+    servers: [
         {
-            oauth2: [], // Global security for OAuth2
+            url: "http://localhost:3000",
+            description: "Development server",
+        },
+        {
+            url: "https://cse341fitness.onrender.com",
+            description: "Production Server",
         },
     ],
     components: {
@@ -19,10 +23,8 @@ const doc = {
                 flows: {
                     authorizationCode: {
                         authorizationUrl:
-                            "http://localhost:3000/authentication/google/",
+                            "https://accounts.google.com/o/oauth2/v2/auth",
                         tokenUrl: "https://oauth2.googleapis.com/token",
-                        clientId: process.env.CLIENT_ID,
-                        clientSecret: process.env.CLIENT_SECRET,
                         scopes: {
                             openid: "OpenID authentication",
                             profile: "Profile information",
@@ -31,11 +33,22 @@ const doc = {
                     },
                 },
             },
+            SessionAuth: {
+                type: "apiKey",
+                in: "cookie",
+                name: "connect.sid", // Default session cookie name
+            },
         },
     },
+    security: [
+        {
+            oauth2: ["opendid", "profile", "email"], // Global security for OAuth2
+        },
+        { SessionAuth: [] },
+    ],
 };
 
 const outputFile = "./swagger.json";
 const endpointFiles = ["./routes/index.ts"];
 
-swaggerAutogen(outputFile, endpointFiles, doc);
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointFiles, doc);

@@ -10,9 +10,9 @@ export const createAchievement: RequestHandler = async (
     try {
         const { title, description, progressGoal } = req.body;
         const achievement = new Achievement({
-            title,
-            description,
-            progressGoal,
+            title: title,
+            description: description,
+            progressGoal: progressGoal,
         });
         await achievement.save();
         res.status(201).json(achievement);
