@@ -4,7 +4,7 @@ import { Workout } from "../models/workout";
 import e from "express";
 
 describe("Workouts API", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await Workout.deleteMany({}); // Clear the database before each test
     });
 

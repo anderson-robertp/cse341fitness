@@ -19,7 +19,7 @@ jest.mock("../server", () => ({
 }));
 */
 describe("Achievements API", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await Achievement.deleteMany({}); // Clear the database before each test
     });
 

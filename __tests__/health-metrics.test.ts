@@ -6,7 +6,7 @@ import { use } from "passport";
 import { time } from "console";
 
 describe("Health Metrics API", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await HealthMetric.deleteMany({}); // Clear the database before each test
     });
 
