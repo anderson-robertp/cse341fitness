@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { Request, Response, RequestHandler } from "express";
 import { Achievement, UserAchievement } from "../models/achievement";
+import { User } from "../models/user";
 
 export const createAchievement: RequestHandler = async (
     req: Request,
@@ -108,10 +110,46 @@ export const getUserAchievements: RequestHandler = async (
 ): Promise<void> => {
     try {
         const { userId } = req.params;
-        const userAchievements = await UserAchievement.find({ userId });
+        const userAchievements = await UserAchievement.find({
+            userId,
+        }).populate("achievementId");
         res.status(200).json(userAchievements);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching user achievements" });
+    }
+};
+
+export const createUserAchievement: RequestHandler = async (
+    req: Request,
+    res: Response,
+): Promise<void> => {
+    try {
+        const { userId, achievementId, progress } = req.body;
+
+        // Ensure the achievement exists
+        const achievement = await Achievement.findById(achievementId);
+        if (!achievement) {
+            res.status(404).json({ message: "Achievement not found" });
+            return;
+        }
+
+        // Create a UserAchievement record
+        const userAchievement = new UserAchievement({
+            userId,
+            achievementId,
+            progress,
+        });
+
+        await userAchievement.save();
+
+        await User.findByIdAndUpdate(userId, {
+            $push: { achievements: userAchievement._id },
+        });
+
+        res.status(201).json(userAchievement);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error creating user achievement" });
     }
 };
