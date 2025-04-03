@@ -2,6 +2,7 @@
 import "dotenv/config";
 import express from "express";
 import e, { Request, Response, NextFunction } from "express";
+
 import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -17,7 +18,7 @@ const host = process.env.HOST || "localhost";
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // Allow your frontend to make requests
+    origin: ["http://localhost:3000/api-docs"], // Allow your frontend to make requests
     credentials: true, // Allow cookies to be passed with requests
 };
 
@@ -29,15 +30,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Express Session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "keyboard cat",
+        secret: process.env.SESSION_SECRET!,
         resave: false,
         saveUninitialized: false,
+        cookie: { secure: false }, // Set to true if using HTTPS
     }),
 );
 
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // Protect non-GET routes globally before applying routes
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -69,8 +72,10 @@ if (process.env.NODE_ENV !== "test") {
     InitializeDatabase()
         .then(() => {
             app.listen(port, () => {
+
                 console.log("Not Running in Test Environment"); // Log to indicate the server is running in non-test environment
                 console.log(`Server is running on ${host}:${port}`);
+
                 console.log(
                     `Swagger Docs available at http://${host}:${port}/api-docs`,
                 );

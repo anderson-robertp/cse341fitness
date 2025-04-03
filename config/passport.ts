@@ -4,6 +4,7 @@ import passportGoogle from "passport-google-oauth20";
 import env from "dotenv";
 import { User, IUser } from "../models/user"; // Importing User model and IUser type
 import { Profile } from "passport";
+import { ObjectId } from "mongodb";
 
 // Load environment variables
 env.config();
@@ -40,73 +41,39 @@ passport.use(
         ) => {
             try {
                 // Find the Google user
-                const existingUser = await User.findOne({
+                let user = await User.findOne({
                     googleId: profile.id,
                 }).exec();
 
                 // If user doesn't exist, create a new user
-                if (!existingUser) {
-                    const newUser = new User({
+                if (user == null) {
+                    user = await new User({
                         name: profile.displayName,
                         email: profile.emails ? profile.emails[0].value : "",
                         googleId: profile.id,
-                    });
-
-                    try {
-                        const createdUser = await newUser.save();
-                        done(null, createdUser);
-                    } catch (error) {
-                        console.error("Error creating user:", error);
-                        done(error as Error, false); // Cast to Error type
-                    }
-                } else {
-                    done(null, existingUser); // User found, proceed with existing user
+                        type: "client",
+                    }).save();
                 }
+
+                return done(null, user);
             } catch (error) {
                 console.error("Error looking up user:", error);
-                done(error as Error, false); // Cast to Error type
+                return done(error as Error, false); // Cast to Error type
             }
         },
     ),
 );
 
-// Serialize User: Convert Mongoose Document to plain object
-passport.serializeUser(
-    (user: unknown, done: (err: Error | null, id?: unknown) => void) => {
-        // First, check if the user is of type IUser
-        if (user && typeof user === "object" && "_id" in user) {
-            const typedUser = user as IUser; // Assert that user is of type IUser
+passport.serializeUser((user, done) => {
+    console.log("Serializing user:", user);
+    const userId = (user as IUser)._id as ObjectId;
+    done(null, userId.toString());
+});
 
-            // Check if _id is actually a valid ObjectId (if using MongoDB)
-            if (typedUser._id && typeof typedUser._id.toString === "function") {
-                done(null, typedUser._id.toString()); // Convert ObjectId to string
-            } else {
-                done(new Error("Invalid _id in user object"), null);
-            }
-        } else {
-            done(new Error("Invalid user object"), null);
-        }
-    },
-);
-
-// Deserialize the user from the session
-passport.deserializeUser(
-    async (
-        id: string,
-        done: (err: Error | null, user?: IUser | null) => void,
-    ) => {
-        try {
-            const user = await User.findById(id).exec();
-            if (user) {
-                console.log("Deserialized user:", user);
-                done(null, user as IUser);
-            } else {
-                done(new Error("User not found"), null);
-            }
-        } catch (err) {
-            done(err instanceof Error ? err : new Error("Unknown error"), null);
-        }
-    },
-);
+passport.deserializeUser(async (id, done) => {
+    const user = await User.findById(id).exec();
+    console.log("Deserializing user ID:", id);
+    done(null, user);
+});
 
 export default passport;

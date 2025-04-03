@@ -12,16 +12,13 @@ const uri = process.env.MONGODB_URI as string;
 //Initialize the database
 export async function InitializeDatabase(): Promise<void> {
     if (isConnected) {
-        console.log("Database is already connected");
         return; // Exit if already connected
     }
-    console.log("MongoDB URI:", uri);
     try {
         await mongoose.connect(uri, {
             dbName: "cse341fitness",
         });
         isConnected = true; // Update connection status
-        console.log("Database connected successfully");
     } catch (error) {
         console.error("Error initializing database:", error);
     }

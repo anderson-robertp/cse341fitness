@@ -1,24 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import passport from "passport";
-
-export async function Login(req: Request, res: Response, next: NextFunction) {
-    passport.authenticate("google", (err: Error, user: Express.User) => {
-        if (err) {
-            return next(err); // Handle errors
-        }
-        if (!user) {
-            return res.status(500).json({ error: "Could not login user." });
-        }
-
-        req.logIn(user, (loginErr) => {
-            if (loginErr) {
-                return next(loginErr);
-            }
-
-            res.status(200).redirect("/authentication/google/callback");
-        });
-    })(req, res, next);
-}
+//import { IUser } from "../models/user";
+//import { ObjectId } from "mongodb";
 
 export function isAuthenticated(
     req: Request,
@@ -39,3 +21,32 @@ export function isAuthenticated(
         res.status(401).json({ message: "Unauthorized: Please log in first." });
     }
 }
+
+/*export function isAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+        const currentUser = req.user as IUser;
+
+        if (currentUser.type == "admin") {
+            return next();
+        } else {
+            res.json("Must be an administrator to access this route.");
+        }
+    } catch (error) {
+        res.json(`Error getting user type: ${error}`);
+    }
+}
+
+export function isCurrentUser(req: Request, res: Response, next: NextFunction) {
+    try {
+        const currentUser = req.user as IUser;
+        const userId = currentUser._id as ObjectId;
+
+        if (currentUser.type == "admin" || userId.toString() == req.params.id) {
+            return next();
+        } else {
+            res.json("Users can only access their own data.");
+        }
+    } catch (error) {
+        console.error(`Error checking the current user: ${error}`);
+    }
+}*/

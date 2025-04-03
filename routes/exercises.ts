@@ -7,16 +7,20 @@ import {
     deleteExercise,
 } from "../controllers/exercise";
 import handleErrors from "../utilities";
+import { isAuthenticated } from "../controllers/authentication";
 
 const exercisesRouter = express.Router();
 
 // Create Exercise Route
 exercisesRouter.post(
     "/",
+    isAuthenticated,
     handleErrors(createExercise),
     /*
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Create a new exercise'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['body'] = { 
         "in": "body",
         "required": true,
@@ -84,10 +88,13 @@ exercisesRouter.get(
 //update exercise by id
 exercisesRouter.put(
     "/:id",
+    isAuthenticated,
     handleErrors(updateExercise),
     /*
     #swagger.tags = ['Exercises']       
     #swagger.description = 'Update an exercise by ID'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -123,10 +130,13 @@ exercisesRouter.put(
 // Delete Exercise by ID Route
 exercisesRouter.delete(
     "/:id",
+    isAuthenticated,
     handleErrors(deleteExercise),
     /*
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Delete an exercise by ID'
+    #swagger.security = 
+    - oauth2: ["opendid", "profile", "email"]
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
