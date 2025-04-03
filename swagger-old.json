@@ -1,19 +1,14 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
     "title": "Fitness API",
     "description": "An API for tracking fitness data",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000",
-      "description": "Development server"
-    },
-    {
-      "url": "https://cse341fitness.onrender.com",
-      "description": "Production Server"
-    }
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
   ],
   "paths": {
     "/": {
@@ -26,32 +21,17 @@
         }
       }
     },
-    "/api-docs/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/authentication/google": {
       "get": {
         "tags": [
           "Authentication"
         ],
-        "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google)",
+        "description": "Redirects the user to Google authentication page.   **Note:** You must manually click this link to authenticate with Google:   [Click here to log in with Google](http://localhost:3000/authentication/google)",
         "responses": {
           "302": {
             "description": "Redirects to Google OAuth login"
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/authentication/google/callback": {
@@ -67,12 +47,7 @@
           "500": {
             "description": "Error authenticating the user."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/authentication/logout": {
@@ -85,12 +60,30 @@
           "200": {
             "description": "User logged out"
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
+      }
+    },
+    "/authentication/logged-out": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Logout User Page.",
+        "responses": {
+          "200": {
+            "description": "User logged out"
+          }
+        }
+      }
+    },
+    "/api-docs/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/users/{id}": {
@@ -104,9 +97,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "User ID to retrieve"
           }
         ],
@@ -114,18 +105,10 @@
           "200": {
             "description": "User details retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "User not found."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -137,9 +120,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "User ID to update"
           },
           {
@@ -269,42 +250,11 @@
           "200": {
             "description": "User updated."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "User not found."
           },
           "422": {
             "description": "Unprocessable Entity"
-          }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "workoutIds": {
-                    "example": "any"
-                  },
-                  "favoriteExercise": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -320,18 +270,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "User ID"
           },
           {
             "name": "property",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "Property name (e.g., name, email, workoutIds)"
           }
         ],
@@ -341,16 +287,8 @@
           },
           "400": {
             "description": "Invalid property."
-          },
-          "401": {
-            "description": "Unauthorized"
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -362,18 +300,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "User ID"
           },
           {
             "name": "property",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "Property name (e.g., email, favoriteExercise)"
           },
           {
@@ -425,39 +359,8 @@
           "400": {
             "description": "Invalid property."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "422": {
             "description": "Unprocessable Entity"
-          }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "workoutIds": {
-                    "example": "any"
-                  },
-                  "favoriteExercise": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -583,18 +486,10 @@
           "201": {
             "description": "Workout created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating workout."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "get": {
         "tags": [
@@ -605,18 +500,10 @@
           "200": {
             "description": "Workouts retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving workouts."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/workouts/{id}": {
@@ -630,9 +517,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the workout"
           }
         ],
@@ -640,21 +525,13 @@
           "200": {
             "description": "Workout retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Workout not found."
           },
           "500": {
             "description": "Error retrieving workout."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -666,9 +543,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the workout"
           },
           {
@@ -785,21 +660,13 @@
           "200": {
             "description": "Workout updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Workout not found."
           },
           "500": {
             "description": "Error updating workout."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -811,9 +678,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the workout"
           }
         ],
@@ -821,24 +686,16 @@
           "200": {
             "description": "Workout deleted successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Workout not found."
           },
           "500": {
             "description": "Error deleting workout."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
-    "/workouts/user/{id}": {
+    "/workouts/user/{userId}": {
       "get": {
         "tags": [
           "Workouts"
@@ -846,29 +703,16 @@
         "description": "Retrieve workouts by user ID",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "userId",
             "in": "path",
             "required": true,
-            "description": "The ID of the user",
-            "schema": {
-              "type": "string"
-            }
+            "type": "string",
+            "description": "The ID of the user"
           }
         ],
         "responses": {
           "200": {
             "description": "Workouts retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "No workouts found for the given user."
@@ -876,12 +720,7 @@
           "500": {
             "description": "Error retrieving workouts."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/exercises/": {
@@ -979,18 +818,10 @@
           "201": {
             "description": "Exercise created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating exercise."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "get": {
         "tags": [
@@ -1001,18 +832,10 @@
           "200": {
             "description": "Exercises retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving exercises."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/exercises/{id}": {
@@ -1026,9 +849,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the exercise"
           }
         ],
@@ -1036,21 +857,13 @@
           "200": {
             "description": "Exercise retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Exercise not found."
           },
           "500": {
             "description": "Error retrieving exercise."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -1062,9 +875,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the exercise"
           },
           {
@@ -1155,21 +966,13 @@
           "200": {
             "description": "Exercise updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Exercise not found."
           },
           "500": {
             "description": "Error updating exercise."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -1181,9 +984,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the exercise"
           }
         ],
@@ -1191,21 +992,13 @@
           "200": {
             "description": "Exercise deleted successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Exercise not found."
           },
           "500": {
             "description": "Error deleting exercise."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/health-metrics/": {
@@ -1218,18 +1011,10 @@
           "200": {
             "description": "Health metrics retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error getting health metrics."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -1279,31 +1064,14 @@
         "responses": {
           "201": {
             "description": "Health metric created successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthMetric"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthMetric"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Error creating health metric."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/health-metrics/{id}": {
@@ -1317,17 +1085,12 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Health metric retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -1335,12 +1098,7 @@
           "500": {
             "description": "Error retrieving health metric."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -1352,9 +1110,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           },
           {
             "name": "body",
@@ -1398,21 +1154,9 @@
         "responses": {
           "200": {
             "description": "Health metric updated successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthMetric"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthMetric"
-                }
-              }
+            "schema": {
+              "$ref": "#/definitions/HealthMetric"
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -1420,12 +1164,7 @@
           "500": {
             "description": "Error updating health metric."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -1437,17 +1176,12 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Health metric deleted successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -1455,12 +1189,7 @@
           "500": {
             "description": "Error deleting health metric."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/health-metrics/user/{userId}": {
@@ -1474,27 +1203,17 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Health metrics retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving health metrics."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/achievements/": {
@@ -1507,18 +1226,10 @@
           "200": {
             "description": "Achievements retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving achievements."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -1553,18 +1264,10 @@
           "201": {
             "description": "Achievement created successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error creating achievement."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/achievements/{id}": {
@@ -1578,9 +1281,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the achievement"
           }
         ],
@@ -1588,21 +1289,13 @@
           "200": {
             "description": "Achievement retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Achievement not found."
           },
           "500": {
             "description": "Error retrieving achievement."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -1614,9 +1307,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the achievement"
           }
         ],
@@ -1624,21 +1315,13 @@
           "200": {
             "description": "Achievement deleted successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Achievement not found."
           },
           "500": {
             "description": "Error deleting achievement."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -1650,9 +1333,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the achievement"
           },
           {
@@ -1682,21 +1363,13 @@
           "200": {
             "description": "Achievement updated successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Achievement not found."
           },
           "500": {
             "description": "Error updating achievement."
           }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        }
       }
     },
     "/achievements/user/{userId}": {
@@ -1710,9 +1383,7 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "type": "string",
             "description": "The ID of the user"
           }
         ],
@@ -1720,74 +1391,51 @@
           "200": {
             "description": "User achievements retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "No achievements found for the given user."
           },
           "500": {
             "description": "Error retrieving user achievements."
           }
-
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
-
+        }
+      }
+    },
+    "/user-health-metrics/": {
+      "get": {
+        "tags": [
+          "User Health Metrics"
+        ],
+        "description": "Retrieve all user health metrics",
+        "responses": {
+          "200": {
+            "description": "User health metrics retrieved successfully."
+          },
+          "500": {
+            "description": "Error retrieving user health metrics."
+          }
         }
       },
       "post": {
         "tags": [
-          "Achievements"
+          "User Health Metrics"
         ],
-        "description": "Create a new user achievement",
+        "description": "Create a new user health metric",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the user"
-          },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "achievementId": {
-                  "type": "string",
-                  "example": "60d5f484f1c2a8b8b8b8b8b8"
-                },
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
-                }
-              }
+              "$ref": "#/definitions/HealthMetric"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "User achievement created successfully."
-          },
-          "404": {
-            "description": "Achievement not found."
+            "description": "User health metric created successfully."
           },
           "500": {
-            "description": "Error creating user achievement."
+            "description": "Error creating user health metric."
           }
         }
       }
@@ -1797,21 +1445,25 @@
         "tags": [
           "User Health Metrics"
         ],
-        "description": "Get all health metrics for a specific user.",
+        "description": "Retrieve a user health metric by ID",
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ID of the user health metric"
           }
         ],
         "responses": {
           "200": {
-            "description": "Health metrics retrieved successfully."
+            "description": "User health metric retrieved successfully."
+          },
+          "404": {
+            "description": "User health metric not found."
           },
           "500": {
-            "description": "Error fetching user health metrics."
+            "description": "Error retrieving user health metric."
           }
         }
       }
@@ -1821,306 +1473,25 @@
         "tags": [
           "User Health Metrics"
         ],
-        "description": "Get the latest health metric for a specific user.",
+        "description": "Retrieve the latest user health metric for a specific user",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The ID of the user"
           }
         ],
         "responses": {
           "200": {
-            "description": "Latest health metric retrieved successfully."
+            "description": "Latest user health metric retrieved successfully."
           },
           "404": {
-            "description": "No health records found for the user."
+            "description": "No health metrics found for the given user."
           },
           "500": {
-            "description": "Error fetching latest health metric."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/all": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get all health metrics for all users (Admin route).",
-        "responses": {
-          "200": {
-            "description": "All health metrics retrieved successfully."
-          },
-          "404": {
-            "description": "No health records found."
-          },
-          "500": {
-            "description": "Error fetching all user health metrics."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/": {
-      "post": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Add a new health metric for a specific user.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Health metric data for the user.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "userId": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "67df521afc6481f5bf781ec2"
-                        }
-                      }
-                    },
-                    "metrics": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "object"
-                        },
-                        "properties": {
-                          "type": "object",
-                          "properties": {
-                            "heartRate": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 72
-                                }
-                              }
-                            },
-                            "bloodPressure": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "object"
-                                },
-                                "properties": {
-                                  "type": "object",
-                                  "properties": {
-                                    "systolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 120
-                                        }
-                                      }
-                                    },
-                                    "diastolic": {
-                                      "type": "object",
-                                      "properties": {
-                                        "type": {
-                                          "type": "string",
-                                          "example": "integer"
-                                        },
-                                        "example": {
-                                          "type": "number",
-                                          "example": 80
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            "bloodSugar": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 95
-                                }
-                              }
-                            },
-                            "temperature": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 36.5
-                                }
-                              }
-                            },
-                            "steps": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 5000
-                                }
-                              }
-                            },
-                            "caloriesBurned": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "integer"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 250
-                                }
-                              }
-                            },
-                            "sleepDuration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 7.5
-                                }
-                              }
-                            },
-                            "weight": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 75.2
-                                }
-                              }
-                            },
-                            "hydration": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "example": "number"
-                                },
-                                "example": {
-                                  "type": "number",
-                                  "example": 1.5
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "timestamp": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "2025-03-22T08:00:00.000+00:00"
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "userId",
-                    "metrics",
-                    "timestamp"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Health metric added successfully."
-          },
-          "400": {
-            "description": "Invalid input data."
-          },
-          "500": {
-            "description": "Error adding health metric."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{id}": {
-      "delete": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Delete a health metric for a specific user by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric deleted successfully."
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error deleting health metric."
+            "description": "Error retrieving latest user health metric."
           }
         }
       }
@@ -2132,7 +1503,7 @@
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+            "authorizationUrl": "http://localhost:3000/authentication/google/",
             "tokenUrl": "https://oauth2.googleapis.com/token",
             "scopes": {
               "openid": "OpenID authentication",
@@ -2141,24 +1512,12 @@
             }
           }
         }
-      },
-      "SessionAuth": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "connect.sid"
       }
     }
   },
   "security": [
     {
-      "oauth2": [
-        "opendid",
-        "profile",
-        "email"
-      ]
-    },
-    {
-      "SessionAuth": []
+      "oauth2": []
     }
   ]
 }

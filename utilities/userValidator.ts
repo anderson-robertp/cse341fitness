@@ -25,11 +25,10 @@ export function userValidationRules() {
             .withMessage("Valid workout ids are required."),
 
         body("favoriteExercise")
-            .trim()
-            .isLength({ max: 3 })
-            .escape()
-            .isInt()
-            .withMessage("Valid favorite exercise is required."),
+            .notEmpty()
+            .withMessage("Valid favorite exercise is required.")
+            .isMongoId()
+            .withMessage("favoriteExercise must be a valid ObjectId"),
     ];
 }
 

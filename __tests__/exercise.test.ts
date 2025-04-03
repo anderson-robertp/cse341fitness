@@ -3,7 +3,7 @@ import app from "../server";
 import { Exercise } from "../models/exercise";
 
 describe("Exercises API", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await Exercise.deleteMany({}); // Clear the database before each test
     });
 

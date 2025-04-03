@@ -1,11 +1,31 @@
 /* eslint-disable no-console */
 import { Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
+import mongoose from "mongoose"; // Import mongoose for ObjectId validation
 
 //Get entire user by ID
 export async function getUserById(req: Request, res: Response) {
     try {
-        const user = await User.findById(req.params.id);
+        const userId = req.params.id; // Extract the user ID from the request parameters
+        
+        // Validate the ID parameter from the request
+        if (!userId) {
+            return res.status(400).json({
+                message: "User ID is required in users/getUserById controller.",
+            });
+        }
+        // Check if the provided ID is a valid MongoDB ObjectId format
+        // This is optional but can help avoid unnecessary database queries
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({
+                message: "Invalid User ID format in users/getUserById controller.",
+            });
+        }
+
+        const userIdObject = new mongoose.Types.ObjectId(userId); // Create a new ObjectId instance for validation
+
+        // Attempt to find the user by ID using Mongoose's findById method
+        const user = await User.findById(userIdObject);
         if (!user) {
             return res.status(404).json({
                 message: "User not found in users/getUserById controller.",
@@ -113,3 +133,66 @@ export const updateUserProperty = async (
         next(err);
     }
 };
+
+// Create a new user
+export async function createUser(req: Request, res: Response) {
+    try {
+        const newUser = req.body; // Get all fields from the body
+
+        // Create a new user document
+        const user = new User(newUser);
+
+        // Save the user to the database
+        await user.save();
+
+        // Return the created user document with status 201
+        res.status(201).json({ user });
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return res.status(500).json({
+            message: `Error creating user: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Delete a user by ID
+export async function deleteUserById(req: Request, res: Response) {
+    try {
+        const userId = req.params.id;
+
+        // Attempt to find and delete the user document
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found in users/deleteUserById controller.",
+            });
+        }
+
+        // Return success message
+        res.json({ message: "User deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        return res.status(500).json({
+            message: `Error deleting user: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Rerieve all users (Admin or Public Access)
+export async function getAllUsers(req: Request, res: Response) {
+    try {
+        // Retrieve all users from the database
+        const users = await User.find({});
+
+        // Return the list of users
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("Error retrieving users:", error);
+        return res.status(500).json({
+            message: `Error retrieving users: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    }
+}
+
+// Note: The above functions assume that the User model is already defined and imported from the models/user file.

@@ -1,31 +1,34 @@
 import request from "supertest";
 import app from "../server";
 import { Workout } from "../models/workout";
+import e from "express";
 
 describe("Workouts API", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await Workout.deleteMany({}); // Clear the database before each test
     });
 
     it("should create a new workout", async () => {
         const response = await request(app).post("/workouts").send({
-            name: "Morning Cardio",
-            description: "30 minutes of running",
+            type: "Morning Cardio",
             duration: 30,
             caloriesBurned: 300,
+            exerciseIds: [], // Assuming exerciseIds is optional and can be an empty array
+            timestamp: new Date(), // Assuming timestamp is required and should be the current date/time
         });
 
         expect(response.status).toBe(201);
         expect(response.body.workout).toHaveProperty("_id");
-        expect(response.body.workout.name).toBe("Morning Cardio");
+        expect(response.body.workout.type).toBe("Morning Cardio");
     });
 
     it("should retrieve all workouts", async () => {
         await new Workout({
-            name: "Evening Strength",
-            description: "45 minutes of weight lifting",
-            duration: 45,
-            caloriesBurned: 400,
+            type: "Morning Cardio",
+            duration: 30,
+            caloriesBurned: 300,
+            exerciseIds: [], // Assuming exerciseIds is optional and can be an empty array
+            timestamp: new Date(),
         }).save();
 
         const response = await request(app).get("/workouts").redirects(1);

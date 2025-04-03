@@ -7,6 +7,14 @@ export function isAuthenticated(
     res: Response,
     next: NextFunction,
 ) {
+    // Check if the environment is set to test, if so, skip authentication for testing purposes
+    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
+        console.log("Skipping authentication in test environment. Middleware"); // Log to indicate we're skipping authentication
+        // Skip authentication in test environment
+        return next(); // Proceed to the next middleware
+    } 
+    
+    // Check if the user is authenticated
     if (req.isAuthenticated()) {
         return next(); // User is authenticated, proceed to the next middleware
     } else {

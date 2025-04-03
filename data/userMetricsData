@@ -1,0 +1,92 @@
+[
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-22T08:00:00Z"},
+      "metrics": {
+        "heartRate": 72,
+        "bloodPressure": { "systolic": 120, "diastolic": 80 },
+        "bloodSugar": 95,
+        "temperature": 36.5,
+        "steps": 5000,
+        "caloriesBurned": 250,
+        "sleepDuration": 7.5,
+        "weight": 75.2,
+        "hydration": 1.5
+      }
+    },
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-23T08:00:00Z"},
+      "metrics": {
+        "heartRate": 75,
+        "bloodPressure": { "systolic": 118, "diastolic": 78 },
+        "bloodSugar": 100,
+        "temperature": 36.6,
+        "steps": 7200,
+        "caloriesBurned": 320,
+        "sleepDuration": 8,
+        "weight": 75.0,
+        "hydration": 2.0
+      }
+    },
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-24T20:00:00Z"},
+      "metrics": {
+        "heartRate": 68,
+        "bloodPressure": { "systolic": 115, "diastolic": 76 },
+        "bloodSugar": 92,
+        "temperature": 36.4,
+        "steps": 10000,
+        "caloriesBurned": 450,
+        "sleepDuration": 6.5,
+        "weight": 74.8,
+        "hydration": 1.8
+      }
+    },
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-25T12:00:00Z"},
+      "metrics": {
+        "heartRate": 80,
+        "bloodPressure": { "systolic": 125, "diastolic": 82 },
+        "bloodSugar": 98,
+        "temperature": 36.7,
+        "steps": 8500,
+        "caloriesBurned": 400,
+        "sleepDuration": 7,
+        "weight": 74.6,
+        "hydration": 2.2
+      }
+    },
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-26T18:00:00Z"},
+      "metrics": {
+        "heartRate": 70,
+        "bloodPressure": { "systolic": 118, "diastolic": 79 },
+        "bloodSugar": 96,
+        "temperature": 36.5,
+        "steps": 6300,
+        "caloriesBurned": 280,
+        "sleepDuration": 7.8,
+        "weight": 74.5,
+        "hydration": 1.6
+      }
+    },
+    {
+      "userId": { "$oid": "67df521afc6481f5bf781ec2" },
+      "timestamp": {"$date": "2025-03-27T06:30:00Z"},
+      "metrics": {
+        "heartRate": 65,
+        "bloodPressure": { "systolic": 116, "diastolic": 75 },
+        "bloodSugar": 94,
+        "temperature": 36.3,
+        "steps": 4000,
+        "caloriesBurned": 200,
+        "sleepDuration": 8.2,
+        "weight": 74.4,
+        "hydration": 1.4
+      }
+    }
+  ]  

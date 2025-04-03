@@ -7,6 +7,7 @@ import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
 import { isAuthenticated } from "../controllers/authentication"; // Import the isAuthenticated middleware
 import swaggerRouter from "./swagger";
+import userMetricsRouter from "./user-health-metrics";
 
 const router = express.Router();
 
@@ -43,5 +44,6 @@ router.use(
     */
 );
 router.use("/achievements", achievementsRouter);
+router.use("/user-health-metrics", userMetricsRouter); // User-specific health metrics
 
 export default router;

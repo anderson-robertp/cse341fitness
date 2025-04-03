@@ -11,7 +11,8 @@
         "dev": "tsx watch server.ts",
         "swagger": "tsx ./swagger.ts",
         "start": "tsx server.ts",
-        "test": "jest --config jest.config.cjs",
+        "test": "jest --config jest.config.cjs --runInBand --detectOpenHandles",
+        "test:coverage": "jest --config jest.config.cjs --coverage --runInBand --detectOpenHandles",
         "test:watch": "jest --watch"
     },
     "author": "Robert Anderson, Mandi Beauchaine, Sandi Junker",
