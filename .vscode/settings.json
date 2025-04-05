@@ -5,6 +5,7 @@
         "codepaths",
         "Mandi",
         "onrender",
+        "opendid",
         "Sandi"
     ],
     "editor.formatOnSave": true,
