@@ -17,11 +17,11 @@ usersRouter.get(
     "/:id",
     handleErrors(getUserById),
     /*
-      #swagger.tags = ['Users']
-      #swagger.description = 'Get user by ID.'
-      #swagger.security =
-      - SessionAuth: []
-      #swagger.parameters['id'] = {
+     #swagger.tags = ['Users']
+     #swagger.description = 'Get user by ID.'
+     #swagger.security =
+     - SessionAuth: []
+     #swagger.parameters['id'] = {
          "in": "path",
           "description": 'User ID to retrieve',
           "required": true,
@@ -71,9 +71,9 @@ usersRouter.put(
     userValidate,
     handleErrors(updateUserById),
     /*
-     #swagger.tags = ['Users']
+      #swagger.tags = ['Users']
       #swagger.description = 'Update a user’s details.'
-      #swagger.security = 
+      #swagger.security =
       - SessionAuth: []
       #swagger.parameters['id'] = {
           "in": 'path',
@@ -149,6 +149,17 @@ usersRouter.put(
      #swagger.responses[400] = {
          "description": "Invalid property."
      }
+    */
+);
+
+// Create a new user
+usersRouter.post(
+    "/",
+    userValidationRules(), // Validate request body using the defined rules
+    userValidate, // Middleware to check for validation errors
+    handleErrors(createUser), // Handle the request and catch errors
+    /*
+        #swagger.ignore = true
     */
 );
 

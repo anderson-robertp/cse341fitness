@@ -121,11 +121,7 @@
             "description": "User not found."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -279,11 +275,7 @@
             "description": "Unprocessable Entity"
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -309,7 +301,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Delete a user by ID.",
         "parameters": [
           {
             "name": "id",
@@ -317,19 +312,25 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "User ID to delete"
           }
         ],
         "responses": {
+          "200": {
+            "description": "User deleted successfully."
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Error deleting user."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/users/{id}/{property}": {
@@ -369,11 +370,7 @@
             "description": "Unauthorized"
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -455,11 +452,7 @@
             "description": "Unprocessable Entity"
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -486,45 +479,6 @@
       }
     },
     "/users/": {
-      "post": {
-        "description": "",
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          }
-        },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "workoutIds": {
-                    "example": "any"
-                  },
-                  "favoriteExercise": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "get": {
         "tags": [
           "Users"
@@ -538,11 +492,7 @@
             "description": "Unauthorized"
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/workouts/": {
@@ -695,11 +645,7 @@
             "description": "Error retrieving workouts."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/workouts/{id}": {
@@ -733,11 +679,7 @@
             "description": "Error retrieving workout."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -1087,11 +1029,7 @@
             "description": "Error retrieving exercises."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/exercises/{id}": {
@@ -1125,11 +1063,7 @@
             "description": "Error retrieving exercise."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -1296,11 +1230,7 @@
             "description": "Error getting health metrics."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "post": {
         "tags": [
@@ -1370,11 +1300,7 @@
             "description": "Error creating health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/health-metrics/{id}": {
@@ -1407,11 +1333,7 @@
             "description": "Error retrieving health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -1492,11 +1414,7 @@
             "description": "Error updating health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "delete": {
         "tags": [
@@ -1527,11 +1445,7 @@
             "description": "Error deleting health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/health-metrics/user/{userId}": {
@@ -1561,11 +1475,7 @@
             "description": "Error retrieving health metrics."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/achievements/": {
@@ -1585,11 +1495,7 @@
             "description": "Error retrieving achievements."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "post": {
         "tags": [
@@ -1665,11 +1571,7 @@
             "description": "Error retrieving achievement."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "delete": {
         "tags": [
@@ -1870,11 +1772,7 @@
             "description": "Error fetching all user health metrics."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/user-health-metrics/{userId}": {
@@ -1907,11 +1805,7 @@
             "description": "Error fetching user health metrics."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/user-health-metrics/{userId}/latest": {
@@ -1944,11 +1838,7 @@
             "description": "Error fetching latest health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/user-health-metrics/": {
@@ -2188,11 +2078,7 @@
             "description": "Error adding health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/user-health-metrics/{id}": {
@@ -2225,11 +2111,7 @@
             "description": "Error deleting health metric."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     }
   },

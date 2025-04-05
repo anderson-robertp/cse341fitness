@@ -7,7 +7,7 @@ import mongoose from "mongoose"; // Import mongoose for ObjectId validation
 export async function getUserById(req: Request, res: Response) {
     try {
         const userId = req.params.id; // Extract the user ID from the request parameters
-        
+
         // Validate the ID parameter from the request
         if (!userId) {
             return res.status(400).json({
@@ -18,7 +18,8 @@ export async function getUserById(req: Request, res: Response) {
         // This is optional but can help avoid unnecessary database queries
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({
-                message: "Invalid User ID format in users/getUserById controller.",
+                message:
+                    "Invalid User ID format in users/getUserById controller.",
             });
         }
 
