@@ -20,7 +20,7 @@ exercisesRouter.post(
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Create a new exercise'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['body'] = { 
         "in": "body",
         "required": true,
@@ -94,7 +94,7 @@ exercisesRouter.put(
     #swagger.tags = ['Exercises']       
     #swagger.description = 'Update an exercise by ID'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -136,7 +136,7 @@ exercisesRouter.delete(
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Delete an exercise by ID'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,

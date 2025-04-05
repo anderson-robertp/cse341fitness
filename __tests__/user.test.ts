@@ -2,7 +2,6 @@ import request from "supertest";
 import app from "../server";
 import { User } from "../models/user";
 import mongoose from "mongoose"; // Import mongoose to create ObjectId for testing
-import e from "express";
 
 describe("Users API", () => {
     let userId: mongoose.Types.ObjectId; // Store userId for later tests

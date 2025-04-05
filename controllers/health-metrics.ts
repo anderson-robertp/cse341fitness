@@ -1,4 +1,4 @@
-import express, { Request, Response, RequestHandler } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { HealthMetric } from "../models/health-metrics";
 
 //Create a new health metric

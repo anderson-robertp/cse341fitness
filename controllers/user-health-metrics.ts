@@ -1,4 +1,4 @@
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { UserHealthMetrics } from "../models/user-health-metrics"; // Adjust import path
 import { Types } from "mongoose"; // Import Types for ObjectId validation
 
