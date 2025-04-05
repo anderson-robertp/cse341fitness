@@ -18,8 +18,10 @@ usersRouter.get(
     handleErrors(getUserById),
     /*
       #swagger.tags = ['Users']
-     #swagger.description = 'Get user by ID.'
-     #swagger.parameters['id'] = {
+      #swagger.description = 'Get user by ID.'
+      #swagger.security =
+      - SessionAuth: []
+      #swagger.parameters['id'] = {
          "in": "path",
           "description": 'User ID to retrieve',
           "required": true,
@@ -40,6 +42,8 @@ usersRouter.get(
     /*
       #swagger.tags = ['Users']
       #swagger.description = 'Fetch a specific property of a user.'
+      #swagger.security = 
+      - SessionAuth: []
       #swagger.parameters['id'] = {
           "in": "path",
           "description": 'User ID',
@@ -69,6 +73,8 @@ usersRouter.put(
     /*
      #swagger.tags = ['Users']
       #swagger.description = 'Update a user’s details.'
+      #swagger.security = 
+      - SessionAuth: []
       #swagger.parameters['id'] = {
           "in": 'path',
           "description": 'User ID to update',
@@ -109,6 +115,8 @@ usersRouter.put(
     /*
      #swagger.tags = ['Users']
      #swagger.description  = 'Update a single property of a user.'
+     #swagger.security =
+     - SessionAuth: []
      #swagger.parameters['id'] = {
          "in": "path",
          "description": "User ID",
@@ -144,16 +152,32 @@ usersRouter.put(
     */
 );
 
-// Create a new user
-usersRouter.post(
-    "/",
-    userValidationRules(), // Validate request body using the defined rules
-    userValidate, // Middleware to check for validation errors
-    handleErrors(createUser), // Handle the request and catch errors
-);
-
 // Delete a user by ID
-usersRouter.delete("/:id", handleErrors(deleteUserById));
+usersRouter.delete(
+    "/:id",
+    handleErrors(deleteUserById),
+    /*
+        #swagger.tags = ['Users']
+        #swagger.description = 'Delete a user by ID.'
+        #swagger.security =
+        - SessionAuth: []
+        #swagger.parameters['id'] = {
+            "in": "path",
+            "description": "User ID to delete",
+            "required": true,
+            "type": "string"
+        }
+        #swagger.responses[200] = {
+            description: 'User deleted successfully.'
+        }
+        #swagger.responses[404] = {
+            description: 'User not found.'
+        }
+        #swagger.responses[500] = {
+            description: 'Error deleting user.'
+        }
+    */
+);
 
 // retrieve all users
 usersRouter.get(
@@ -162,6 +186,8 @@ usersRouter.get(
     /*
      #swagger.tags = ['Users']
      #swagger.description = 'Retrieve all users.'
+     #swagger.security =
+     - SessionAuth: []
      #swagger.responses[200] = {
          description: 'List of users retrieved successfully.'
      }
