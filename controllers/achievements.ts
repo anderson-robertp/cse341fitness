@@ -130,54 +130,40 @@ export const createUserAchievement: RequestHandler = async (
     res: Response,
 ): Promise<void> => {
     try {
-        // Extract userId from route params and achievementId, progress from body
-        const { userId } = req.params; // <-- Get from path
-        const { achievementId, progress } = req.body;
+        const { userId } = req.params; // Get userId from path
+        const { title, description, progress } = req.body; // Expect title, description, and progress
 
-        // Log incoming data for debugging
         console.log("Creating UserAchievement:", {
             userId,
-            achievementId,
+            title,
+            description,
             progress,
         });
 
-        // Ensure required fields are present
-        if (!achievementId || progress == null) {
-            res.status(400).json({
-                message: "Missing required fields: achievementId or progress",
-            });
-            return;
-        }
-
-        // Ensure the achievement exists
-        const achievement = await Achievement.findById(achievementId);
+        // Ensure the achievement exists or create it if it doesn't
+        let achievement = await Achievement.findOne({ title, description });
         if (!achievement) {
-            res.status(404).json({ message: "Achievement not found" });
-            return;
+            achievement = new Achievement({ title, description });
+            await achievement.save();
         }
 
-        // Create the UserAchievement
+        // Create the UserAchievement record
         const userAchievement = new UserAchievement({
             userId,
-            achievementId,
+            achievementId: achievement._id,
             progress,
         });
 
-        // Save the UserAchievement
-        const savedUserAchievement = await userAchievement.save();
+        await userAchievement.save();
 
         // Update the user's achievements array
         await User.findByIdAndUpdate(userId, {
-            $push: { achievements: savedUserAchievement._id },
+            $push: { achievements: userAchievement._id },
         });
 
-        // Respond with the created UserAchievement
-        res.status(201).json(savedUserAchievement);
+        res.status(201).json(userAchievement);
     } catch (error) {
-        console.error("Error creating user achievement:", error);
-        res.status(500).json({
-            message: "Error creating user achievement",
-            error: error instanceof Error ? error.message : "Unknown error",
-        });
+        console.error(error);
+        res.status(500).json({ message: "Error creating user achievement" });
     }
 };
