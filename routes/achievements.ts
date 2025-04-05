@@ -63,7 +63,7 @@ achievementsRouter.post(
     #swagger.tags = ['Achievements']
     #swagger.description = 'Create a new achievement'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['body'] = {
         "in": "body",
         "required": true,
@@ -91,7 +91,7 @@ achievementsRouter.delete(
     #swagger.tags = ['Achievements']
     #swagger.description = 'Delete an achievement by ID'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -119,7 +119,7 @@ achievementsRouter.put(
     #swagger.tags = ['Achievements']
     #swagger.description = 'Update an existing achievement'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
@@ -156,7 +156,7 @@ achievementsRouter.get(
     #swagger.tags = ['Achievements']
     #swagger.description = 'Retrieve achievements for a specific user'
     #swagger.security = 
-    - oauth2: ["opendid", "profile", "email"]
+    - SessionAuth: []
     #swagger.parameters['userId'] = {
         "in": "path",
         "required": true,
@@ -177,10 +177,13 @@ achievementsRouter.get(
 
 achievementsRouter.post(
     "/user/:userId",
+    isAuthenticated,
     handleErrors(createUserAchievement),
     /*
     #swagger.tags = ['Achievements']
     #swagger.description = 'Create a new user achievement'
+    #swagger.security =
+    - SessionAuth: []
     #swagger.parameters['userId'] = {
         "in": "path",
         "required": true,
