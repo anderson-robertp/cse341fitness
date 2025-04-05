@@ -153,10 +153,7 @@ usersRouter.post(
 );
 
 // Delete a user by ID
-usersRouter.delete(
-    "/:id",
-    handleErrors(deleteUserById),
-);
+usersRouter.delete("/:id", handleErrors(deleteUserById));
 
 // retrieve all users
 usersRouter.get(
@@ -169,6 +166,6 @@ usersRouter.get(
          description: 'List of users retrieved successfully.'
      }
     */
-)
+);
 
 export default usersRouter;

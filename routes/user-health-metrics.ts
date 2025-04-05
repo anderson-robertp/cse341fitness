@@ -5,7 +5,7 @@ import {
     getLatestUserHealthMetrics,
     addUserHealthMetric,
     deleteUserHealthMetric,
-    getAllUserHealthMetrics // Added for admin route to get all health metrics
+    getAllUserHealthMetrics, // Added for admin route to get all health metrics
 } from "../controllers/user-health-metrics";
 import handleErrors from "../utilities";
 
@@ -13,7 +13,7 @@ const userMetricsRouter = express.Router();
 
 // Routes
 // Get all health metrics (Admin route)
-userMetricsRouter.get( 
+userMetricsRouter.get(
     "/all",
     handleErrors(getAllUserHealthMetrics),
     /*
@@ -177,7 +177,7 @@ userMetricsRouter.post(
 );
 
 // Delete a record
-userMetricsRouter.delete( 
+userMetricsRouter.delete(
     "/:id",
     handleErrors(deleteUserHealthMetric),
     /*

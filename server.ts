@@ -25,8 +25,8 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions)); // Apply CORS with your custom options
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // Express Session
 app.use(
     session({
@@ -40,7 +40,6 @@ app.use(
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Protect non-GET routes globally before applying routes
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -72,7 +71,6 @@ if (process.env.NODE_ENV !== "test") {
     InitializeDatabase()
         .then(() => {
             app.listen(port, () => {
-
                 console.log("Not Running in Test Environment"); // Log to indicate the server is running in non-test environment
                 console.log(`Server is running on ${host}:${port}`);
 

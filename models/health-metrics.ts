@@ -38,7 +38,7 @@ const healthMetricSchema = new Schema<IHealthMetric>(
         unit: { type: String, required: true },
         timestamp: { type: Date, required: true },
     },
-    { collection: "healthMetrics" }
+    { collection: "healthMetrics" },
 );
 
 const userHealthMetricsSchema = new Schema<IUserHealthMetrics>(
@@ -60,9 +60,12 @@ const userHealthMetricsSchema = new Schema<IUserHealthMetrics>(
             hydration: { type: Number, default: null },
         },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 // Export Mongoose Model
-export const HealthMetric = model<IHealthMetric>("HealthMetric", healthMetricSchema);
+export const HealthMetric = model<IHealthMetric>(
+    "HealthMetric",
+    healthMetricSchema,
+);
 //export const UserHealthMetrics = model<IUserHealthMetrics>("UserHealthMetrics", userHealthMetricsSchema);

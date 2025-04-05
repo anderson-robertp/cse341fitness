@@ -41,7 +41,7 @@
         "tags": [
           "Authentication"
         ],
-        "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google)",
+        "description": "Redirects the user to Google authentication page.   **Note:** You must manually click this link to authenticate with Google:   [Click here to log in with Google](http://localhost:3000/authentication/google)",
         "responses": {
           "302": {
             "description": "Redirects to Google OAuth login"
@@ -307,6 +307,29 @@
             }
           }
         }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/users/{id}/{property}": {
@@ -460,6 +483,66 @@
             }
           }
         }
+      }
+    },
+    "/users/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "workoutIds": {
+                    "example": "any"
+                  },
+                  "favoriteExercise": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retrieve all users.",
+        "responses": {
+          "200": {
+            "description": "List of users retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/workouts/": {
@@ -1525,30 +1608,6 @@
           "Achievements"
         ],
         "description": "Create a new achievement",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "201": {
             "description": "Achievement created successfully."
@@ -1561,10 +1620,38 @@
           }
         },
         "security": [
-          "opendid",
+          "openid",
           "profile",
           "email"
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Run 5 miles"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Run 5 miles in a week"
+                  },
+                  "progressGoal": {
+                    "type": "integer",
+                    "example": 5
+                  }
+                },
+                "required": [
+                  "title",
+                  "description"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/achievements/{id}": {
@@ -1654,28 +1741,6 @@
               "type": "string"
             },
             "description": "The ID of the achievement"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -1696,7 +1761,31 @@
           "opendid",
           "profile",
           "email"
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Run 5 miles"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Run 5 miles in a week"
+                  },
+                  "progressGoal": {
+                    "type": "integer",
+                    "example": 5
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/achievements/user/{userId}": {
@@ -1729,15 +1818,12 @@
           "500": {
             "description": "Error retrieving user achievements."
           }
-
         },
         "security": [
           "opendid",
           "profile",
           "email"
         ]
-
-        }
       },
       "post": {
         "tags": [
@@ -1749,39 +1835,18 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "The ID of the user"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "achievementId": {
-                  "type": "string",
-                  "example": "60d5f484f1c2a8b8b8b8b8b8"
-                },
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
-                }
-              }
-            }
+              "type": "string"
+            },
+            "description": "The ID of the user"
           }
         ],
         "responses": {
           "201": {
             "description": "User achievement created successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -1789,56 +1854,34 @@
           "500": {
             "description": "Error creating user achievement."
           }
-        }
-      }
-    },
-    "/user-health-metrics/{userId}": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
         ],
-        "description": "Get all health metrics for a specific user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metrics retrieved successfully."
-          },
-          "500": {
-            "description": "Error fetching user health metrics."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{userId}/latest": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get the latest health metric for a specific user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Latest health metric retrieved successfully."
-          },
-          "404": {
-            "description": "No health records found for the user."
-          },
-          "500": {
-            "description": "Error fetching latest health metric."
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "achievementId": {
+                    "type": "string",
+                    "example": "60d5f484f1c2a8b8b8b8b8b8"
+                  },
+                  "progress": {
+                    "type": "number",
+                    "example": 3
+                  }
+                },
+                "required": [
+                  "achievementId",
+                  "progress"
+                ]
+              }
+            }
           }
         }
       }
@@ -1853,13 +1896,95 @@
           "200": {
             "description": "All health metrics retrieved successfully."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "No health records found."
           },
           "500": {
             "description": "Error fetching all user health metrics."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
+      }
+    },
+    "/user-health-metrics/{userId}": {
+      "get": {
+        "tags": [
+          "User Health Metrics"
+        ],
+        "description": "Get all health metrics for a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health metrics retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "No health records found for the user."
+          },
+          "500": {
+            "description": "Error fetching user health metrics."
+          }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
+      }
+    },
+    "/user-health-metrics/{userId}/latest": {
+      "get": {
+        "tags": [
+          "User Health Metrics"
+        ],
+        "description": "Get the latest health metric for a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest health metric retrieved successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "No health records found for the user."
+          },
+          "500": {
+            "description": "Error fetching latest health metric."
+          }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/user-health-metrics/": {
@@ -2092,10 +2217,18 @@
           "400": {
             "description": "Invalid input data."
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Error adding health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     },
     "/user-health-metrics/{id}": {
@@ -2109,12 +2242,17 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Health metric deleted successfully."
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Health metric not found."
@@ -2122,7 +2260,12 @@
           "500": {
             "description": "Error deleting health metric."
           }
-        }
+        },
+        "security": [
+          "opendid",
+          "profile",
+          "email"
+        ]
       }
     }
   },

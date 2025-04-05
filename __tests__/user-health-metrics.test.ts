@@ -12,21 +12,23 @@ describe("User Health Metrics API", () => {
 
     // Create a new user health metric
     it("should create a new user health metric", async () => {
-        const response = await request(app).post("/user-health-metrics").send({
-            userId: "60c72b2f9b1e8b001c8e4a2a", // Example user ID, replace with a valid one from your database
-            metrics: {
-                "heartRate": 88,
-                "bloodPressure": {systolic: 120, diastolic: 80 },
-                "bloodSugar": 90,
-                "temperature": 98.6,
-                "steps": 10000,
-                "caloriesBurned" : 500,
-                "sleepDuration": 7,
-                "weight": 70,
-                "hydration": 2.5,
-            },
-            timestamp: new Date().toISOString(), // Example timestamp, ensure it's in ISO format
-        });
+        const response = await request(app)
+            .post("/user-health-metrics")
+            .send({
+                userId: "60c72b2f9b1e8b001c8e4a2a", // Example user ID, replace with a valid one from your database
+                metrics: {
+                    heartRate: 88,
+                    bloodPressure: { systolic: 120, diastolic: 80 },
+                    bloodSugar: 90,
+                    temperature: 98.6,
+                    steps: 10000,
+                    caloriesBurned: 500,
+                    sleepDuration: 7,
+                    weight: 70,
+                    hydration: 2.5,
+                },
+                timestamp: new Date().toISOString(), // Example timestamp, ensure it's in ISO format
+            });
 
         expect(response.status).toBe(201);
         expect(response.body.userHealthMetrics).toHaveProperty("_id");
@@ -41,20 +43,22 @@ describe("User Health Metrics API", () => {
         await new UserHealthMetrics({
             userId: "60c72b2f9b1e8b001c8e4a2a", // Example user ID, replace with a valid one from your database
             metrics: {
-                "heartRate": 88,
-                "bloodPressure": {systolic: 120, diastolic: 80 },
-                "bloodSugar": 90,
-                "temperature": 98.6,
-                "steps": 10000,
-                "caloriesBurned" : 500,
-                "sleepDuration": 7,
-                "weight": 70,
-                "hydration": 2.5,
+                heartRate: 88,
+                bloodPressure: { systolic: 120, diastolic: 80 },
+                bloodSugar: 90,
+                temperature: 98.6,
+                steps: 10000,
+                caloriesBurned: 500,
+                sleepDuration: 7,
+                weight: 70,
+                hydration: 2.5,
             },
             timestamp: new Date().toISOString(),
         }).save();
 
-        const response = await request(app).get("/user-health-metrics").redirects(1);
+        const response = await request(app)
+            .get("/user-health-metrics")
+            .redirects(1);
 
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
@@ -62,7 +66,9 @@ describe("User Health Metrics API", () => {
 
     // Retrieve user health metrics by user ID
     it("should retrieve user health metrics by user ID", async () => {
-        const response = await request(app).get(`/user-health-metrics/${userId}`).redirects(1);
+        const response = await request(app)
+            .get(`/user-health-metrics/${userId}`)
+            .redirects(1);
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("userHealthMetrics");

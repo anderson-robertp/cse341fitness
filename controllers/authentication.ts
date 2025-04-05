@@ -12,8 +12,8 @@ export function isAuthenticated(
         console.log("Skipping authentication in test environment. Middleware"); // Log to indicate we're skipping authentication
         // Skip authentication in test environment
         return next(); // Proceed to the next middleware
-    } 
-    
+    }
+
     // Check if the user is authenticated
     if (req.isAuthenticated()) {
         return next(); // User is authenticated, proceed to the next middleware

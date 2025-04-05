@@ -8,6 +8,8 @@ export const createAchievement: RequestHandler = async (
     res: Response,
 ): Promise<void> => {
     try {
+        console.log("Incoming request body:", req.body); //
+        console.log("Headers:", req.headers);
         const { title, description, progressGoal } = req.body;
         const achievement = new Achievement({
             title: title,
@@ -61,7 +63,9 @@ export const updateAchievement: RequestHandler = async (
         const { id } = req.params;
         const { title, description, progressGoal } = req.body;
 
-        // Find the achievement by ID
+        console.log("Updating achievement with ID:", id);
+        console.log("Update body:", req.body);
+
         const achievement = await Achievement.findById(id);
 
         if (!achievement) {
@@ -69,15 +73,16 @@ export const updateAchievement: RequestHandler = async (
             return;
         }
 
-        // Update the fields
-        achievement.title = title || achievement.title;
-        achievement.description = description || achievement.description;
-        achievement.progressGoal = progressGoal || achievement.progressGoal;
+        if (title !== undefined) achievement.title = title;
+        if (description !== undefined) achievement.description = description;
+        if (progressGoal !== undefined) achievement.progressGoal = progressGoal;
 
-        // Save the updated achievement
         await achievement.save();
 
-        res.status(200).json({ message: "Achievement has been updated" });
+        res.status(200).json({
+            message: "Achievement has been updated",
+            achievement,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error updating achievement" });
@@ -112,7 +117,7 @@ export const getUserAchievements: RequestHandler = async (
         const { userId } = req.params;
         const userAchievements = await UserAchievement.find({
             userId,
-        }).populate("achievementId");
+        }).populate("achievementId"); // Populate to get the full achievement data
         res.status(200).json(userAchievements);
     } catch (error) {
         console.error(error);
@@ -125,7 +130,24 @@ export const createUserAchievement: RequestHandler = async (
     res: Response,
 ): Promise<void> => {
     try {
-        const { userId, achievementId, progress } = req.body;
+        // Extract userId from route params and achievementId, progress from body
+        const { userId } = req.params; // <-- Get from path
+        const { achievementId, progress } = req.body;
+
+        // Log incoming data for debugging
+        console.log("Creating UserAchievement:", {
+            userId,
+            achievementId,
+            progress,
+        });
+
+        // Ensure required fields are present
+        if (!achievementId || progress == null) {
+            res.status(400).json({
+                message: "Missing required fields: achievementId or progress",
+            });
+            return;
+        }
 
         // Ensure the achievement exists
         const achievement = await Achievement.findById(achievementId);
@@ -134,22 +156,28 @@ export const createUserAchievement: RequestHandler = async (
             return;
         }
 
-        // Create a UserAchievement record
+        // Create the UserAchievement
         const userAchievement = new UserAchievement({
             userId,
             achievementId,
             progress,
         });
 
-        await userAchievement.save();
+        // Save the UserAchievement
+        const savedUserAchievement = await userAchievement.save();
 
+        // Update the user's achievements array
         await User.findByIdAndUpdate(userId, {
-            $push: { achievements: userAchievement._id },
+            $push: { achievements: savedUserAchievement._id },
         });
 
-        res.status(201).json(userAchievement);
+        // Respond with the created UserAchievement
+        res.status(201).json(savedUserAchievement);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error creating user achievement" });
+        console.error("Error creating user achievement:", error);
+        res.status(500).json({
+            message: "Error creating user achievement",
+            error: error instanceof Error ? error.message : "Unknown error",
+        });
     }
 };
