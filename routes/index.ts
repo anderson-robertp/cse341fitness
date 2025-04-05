@@ -52,7 +52,7 @@ router.use(
     usersRouter,
     /*
     #swagger.security = 
-        - oauth2: ["opendid", "profile", "email"]
+        - SessionAuth: []
     */
 );
 router.use("/workouts", workoutsRouter);
@@ -63,7 +63,7 @@ router.use(
     metricsRouter,
     /*
     #swagger.security = 
-        - oauth2: ["opendid", "profile", "email"]
+        - SessionAuth: []
     */
 );
 router.use("/achievements", achievementsRouter);
