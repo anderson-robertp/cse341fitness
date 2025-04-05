@@ -1069,11 +1069,7 @@
             "description": "Error creating exercise."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "get": {
         "tags": [
@@ -1248,11 +1244,7 @@
             "description": "Error updating exercise."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "delete": {
         "tags": [
@@ -1284,11 +1276,7 @@
             "description": "Error deleting exercise."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/health-metrics/": {
@@ -1643,11 +1631,7 @@
             "description": "Error creating achievement."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/achievements/{id}": {
@@ -1717,11 +1701,7 @@
             "description": "Error deleting achievement."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "put": {
         "tags": [
@@ -1775,11 +1755,7 @@
             "description": "Error updating achievement."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/achievements/user/{userId}": {
@@ -1813,11 +1789,7 @@
             "description": "Error retrieving user achievements."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       },
       "post": {
         "tags": [
@@ -1875,11 +1847,7 @@
             "description": "Error creating user achievement."
           }
         },
-        "security": [
-          "opendid",
-          "profile",
-          "email"
-        ]
+        "security": []
       }
     },
     "/user-health-metrics/all": {
