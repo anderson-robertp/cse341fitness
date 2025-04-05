@@ -209,17 +209,21 @@ achievementsRouter.post(
         "application/json": {
             schema: {
                 type: "object",
-                properties: {
-                    achievementId: {
-                        type: "string",
-                        example: "60d5f484f1c2a8b8b8b8b8b8"
+                "properties": {
+                        "title": {
+                            "type": "string",
+                            "example": "Run 5 miles"
+                        },
+                        "description": {
+                            "type": "string",
+                            "example": "Run 5 miles in a week"
+                        },
+                        "progress": {
+                            "type": "number",
+                            "example": 3
+                        }
                     },
-                    progress: {
-                        type: "number",
-                        example: 3
-                    }
-                },
-                required: ["achievementId", "progress"]
+                    "required": ["title", "description", "progress"]
             }
         }
     }
