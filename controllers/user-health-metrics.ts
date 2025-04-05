@@ -64,22 +64,32 @@ export const getLatestUserHealthMetrics = async (
     }
 };
 
-// Get All health records
+// Get All health records for testing only (not recommended for production use)
 export const getAllUserHealthMetrics = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
-    try {
-        const healthMetrics = await UserHealthMetrics.find().sort({
-            timestamp: -1,
-        });
-        if (healthMetrics.length === 0)
-            return res.status(404).json({ message: "No health records found" });
-        return res.status(200).json(healthMetrics);
-    } catch (error) {
+    if (process.env.NODE_ENV === "test") {
+        try {
+            const healthMetrics = await UserHealthMetrics.find().sort({
+                timestamp: -1,
+            });
+            if (healthMetrics.length === 0)
+                return res.status(404).json({ message: "No health records found" });
+            return res.status(200).json(healthMetrics);
+        } catch (error) {
+            return res
+                .status(500)
+                .json({ message: "Error fetching all user health metrics", error });
+        }
+    } else {
+        // Return 403 Forbidden if not in test environment
         return res
-            .status(500)
-            .json({ message: "Error fetching all user health metrics", error });
+            .status(403)
+            .json({
+                message:
+                    "Access to this endpoint is restricted to test environment only",
+            });
     }
 };
 
