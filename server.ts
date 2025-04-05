@@ -23,8 +23,8 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions)); // Apply CORS with your custom options
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // Express Session
 app.use(
     session({

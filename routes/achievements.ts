@@ -60,26 +60,33 @@ achievementsRouter.post(
     isAuthenticated,
     handleErrors(createAchievement),
     /*  
-    #swagger.tags = ['Achievements']
-    #swagger.description = 'Create a new achievement'
-    #swagger.security = 
+#swagger.tags = ['Achievements']
+#swagger.description = 'Create a new achievement'
+#swagger.security = 
     - SessionAuth: []
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            "title": "Run 5 miles",
-            "description": "Run 5 miles in a week",
-            "progressGoal": 5
+#swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            title: { type: "string", example: "Run 5 miles" },
+            description: { type: "string", example: "Run 5 miles in a week" },
+            progressGoal: { type: "integer", example: 5 }
+          },
+          required: ["title", "description"]
         }
+      }
     }
-    #swagger.responses[201] = {
-        description: 'Achievement created successfully.'
-    }
-    #swagger.responses[500] = {
-        description: 'Error creating achievement.'
-    }
-    */
+}
+#swagger.responses[201] = {
+    description: 'Achievement created successfully.'
+}
+#swagger.responses[500] = {
+    description: 'Error creating achievement.'
+}
+*/
 );
 
 // Delete Achievement Route
@@ -126,15 +133,21 @@ achievementsRouter.put(
         "type": "string",
         "description": "The ID of the achievement"
     }
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            "title": "Run 5 miles",
-            "description": "Run 5 miles in a week",
-            "progressGoal": 5
+    #swagger.requestBody = {
+    required: true,
+    content: {
+        "application/json": {
+            schema: {
+                type: "object",
+                properties: {
+                    title: { type: "string", example: "Run 5 miles" },
+                    description: { type: "string", example: "Run 5 miles in a week" },
+                    progressGoal: { type: "integer", example: 5 }
+                }
+            }
         }
     }
+}
     #swagger.responses[200] = {
         description: 'Achievement updated successfully.'
     }
@@ -179,37 +192,48 @@ achievementsRouter.post(
     "/user/:userId",
     isAuthenticated,
     handleErrors(createUserAchievement),
-    /*
-    #swagger.tags = ['Achievements']
-    #swagger.description = 'Create a new user achievement'
-    #swagger.security =
+    /*  
+#swagger.tags = ['Achievements']
+#swagger.description = 'Create a new user achievement'
+#swagger.security =
     - SessionAuth: []
-    #swagger.parameters['userId'] = {
-        "in": "path",
-        "required": true,
-        "type": "string",
-        "description": "The ID of the user"
-    }
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            "achievementId": "60d5f484f1c2a8b8b8b8b8b8",
-            "title": "Run 5 miles",
-            "description": "Run 5 miles in a week",
-            "progressGoal": 5
+#swagger.parameters['userId'] = {
+    "in": "path",
+    "required": true,
+    "type": "string",
+    "description": "The ID of the user"
+}
+#swagger.requestBody = {
+    required: true,
+    content: {
+        "application/json": {
+            schema: {
+                type: "object",
+                properties: {
+                    achievementId: {
+                        type: "string",
+                        example: "60d5f484f1c2a8b8b8b8b8b8"
+                    },
+                    progress: {
+                        type: "number",
+                        example: 3
+                    }
+                },
+                required: ["achievementId", "progress"]
+            }
         }
     }
-    #swagger.responses[201] = {         
-        description: 'User achievement created successfully.'
-    }
-    #swagger.responses[404] = {
-        description: 'Achievement not found.'
-    }
-    #swagger.responses[500] = {
-        description: 'Error creating user achievement.'
-    }
-    */
+}
+#swagger.responses[201] = {         
+    description: 'User achievement created successfully.'
+}
+#swagger.responses[404] = {
+    description: 'Achievement not found.'
+}
+#swagger.responses[500] = {
+    description: 'Error creating user achievement.'
+}
+*/
 );
 
 export default achievementsRouter;
