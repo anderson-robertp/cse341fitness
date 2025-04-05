@@ -2,10 +2,8 @@ import request from "supertest";
 import app from "../server";
 import { User } from "../models/user";
 import mongoose from "mongoose"; // Import mongoose to create ObjectId for testing
-import e from "express";
 
 describe("Users API", () => {
-
     let userId: mongoose.Types.ObjectId; // Store userId for later tests
 
     /*beforeEach(async () => {
@@ -16,14 +14,18 @@ describe("Users API", () => {
     });
 
     it("should create a new user", async () => {
-        const response = await request(app).post("/users").send({
-            name: "testuser",
-            email: "test@yser.com",
-            googleId: "1234567890",
-            workoutIds: [],
-            favoriteExercise: new mongoose.Types.ObjectId("67d0e2016ab4fc6e4073c80b"),
-            achievements: [],
-        });
+        const response = await request(app)
+            .post("/users")
+            .send({
+                name: "testuser",
+                email: "test@yser.com",
+                googleId: "1234567890",
+                workoutIds: [],
+                favoriteExercise: new mongoose.Types.ObjectId(
+                    "67d0e2016ab4fc6e4073c80b",
+                ),
+                achievements: [],
+            });
 
         //console.log(response.body); // Log the response body for debugging purposes
 
@@ -41,12 +43,14 @@ describe("Users API", () => {
             email: "test2@user.com",
             googleId: "0987654321",
             workoutIds: [],
-            favoriteExercise: new mongoose.Types.ObjectId("67d0e2016ab4fc6e4073c807"), // Assuming favoriteExercise can be an ObjectId of an exercise
+            favoriteExercise: new mongoose.Types.ObjectId(
+                "67d0e2016ab4fc6e4073c807",
+            ), // Assuming favoriteExercise can be an ObjectId of an exercise
             achievements: [],
         }).save();
 
         const response = await request(app).get("/users").redirects(1);
-        
+
         console.log(response.body); // Log the response body for debugging purposes
 
         expect(response.status).toBe(200);
@@ -85,21 +89,24 @@ describe("Users API", () => {
     });
     // Test updateing the entire user by ID
     it("should update the entire user by ID", async () => {
-    
         console.log("User ID for update test:", userId); // Log the userId to ensure it's set before running this test
         // Check if userId is defined before running the test
-        const response = await request(app).put(`/users/${userId}`).send({
-            name: "testuser",
-            email: "updated@email.com",
-            googleId: "1234567890",
-            workoutIds: [],
-            favoriteExercise: new mongoose.Types.ObjectId("67d0e2016ab4fc6e4073c80b"),
-            achievements: [],
-        });
+        const response = await request(app)
+            .put(`/users/${userId}`)
+            .send({
+                name: "testuser",
+                email: "updated@email.com",
+                googleId: "1234567890",
+                workoutIds: [],
+                favoriteExercise: new mongoose.Types.ObjectId(
+                    "67d0e2016ab4fc6e4073c80b",
+                ),
+                achievements: [],
+            });
 
         expect(response.status).toBe(200); // Check if the response status is 200 (OK)
         console.log("Update User Response:", response.body); // Debugging
-    });    
+    });
 
     // Test updating a user's property (e.g., name)
     it("should update the user's name", async () => {
@@ -125,7 +132,10 @@ describe("Users API", () => {
         const response = await request(app).delete(`/users/${userId}`); // Assuming you have an endpoint to delete user by ID
 
         expect(response.status).toBe(200); // Check if the response status is 200 (OK)
-        expect(response.body).toHaveProperty("message", "User deleted successfully."); // Check if the message indicates successful deletion
+        expect(response.body).toHaveProperty(
+            "message",
+            "User deleted successfully.",
+        ); // Check if the message indicates successful deletion
     }); // Test deleting a user by ID
 
     it("should return 404 for deleted user", async () => {

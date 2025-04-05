@@ -1,1518 +1,1441 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Fitness API",
-    "description": "An API for tracking fitness data",
-    "version": "1.0.0"
-  },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
-  "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
+    "swagger": "2.0",
+    "info": {
+        "title": "Fitness API",
+        "description": "An API for tracking fitness data",
+        "version": "1.0.0"
     },
-    "/authentication/google": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google)",
-        "responses": {
-          "302": {
-            "description": "Redirects to Google OAuth login"
-          }
-        }
-      }
-    },
-    "/authentication/google/callback": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "description": "Authenticate the user.",
-        "responses": {
-          "200": {
-            "description": "User logged in"
-          },
-          "500": {
-            "description": "Error authenticating the user."
-          }
-        }
-      }
-    },
-    "/authentication/logout": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "description": "Logout user.",
-        "responses": {
-          "200": {
-            "description": "User logged out"
-          }
-        }
-      }
-    },
-    "/authentication/logged-out": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "description": "Logout User Page.",
-        "responses": {
-          "200": {
-            "description": "User logged out"
-          }
-        }
-      }
-    },
-    "/api-docs/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Get user by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "User ID to retrieve"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User details retrieved successfully."
-          },
-          "404": {
-            "description": "User not found."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Update a user’s details.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "User ID to update"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "John Doe"
-                        }
-                      }
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "paths": {
+        "/": {
+            "get": {
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/authentication/google": {
+            "get": {
+                "tags": ["Authentication"],
+                "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google)",
+                "responses": {
+                    "302": {
+                        "description": "Redirects to Google OAuth login"
+                    }
+                }
+            }
+        },
+        "/authentication/google/callback": {
+            "get": {
+                "tags": ["Authentication"],
+                "description": "Authenticate the user.",
+                "responses": {
+                    "200": {
+                        "description": "User logged in"
                     },
-                    "email": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "john@example.com"
-                        }
-                      }
+                    "500": {
+                        "description": "Error authenticating the user."
+                    }
+                }
+            }
+        },
+        "/authentication/logout": {
+            "get": {
+                "tags": ["Authentication"],
+                "description": "Logout user.",
+                "responses": {
+                    "200": {
+                        "description": "User logged out"
+                    }
+                }
+            }
+        },
+        "/authentication/logged-out": {
+            "get": {
+                "tags": ["Authentication"],
+                "description": "Logout User Page.",
+                "responses": {
+                    "200": {
+                        "description": "User logged out"
+                    }
+                }
+            }
+        },
+        "/api-docs/": {
+            "get": {
+                "description": "",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": ["Users"],
+                "description": "Get user by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "User ID to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details retrieved successfully."
                     },
-                    "workoutIds": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Users"],
+                "description": "Update a user’s details.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "User ID to update"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "example": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                }
+                                            }
+                                        },
+                                        "email": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "example": {
+                                                    "type": "string",
+                                                    "example": "john@example.com"
+                                                }
+                                            }
+                                        },
+                                        "workoutIds": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "array"
+                                                },
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "example": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        "60b8d7e9ef9b3a8ed64f1234"
+                                                    ],
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "favoriteExercise": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "example": {
+                                                    "type": "string",
+                                                    "example": "Dead lifts"
+                                                }
+                                            }
+                                        },
+                                        "achievements": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "array"
+                                                },
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "example": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        "60b8d7e9ef9b3a8ed64f1111"
+                                                    ],
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": ["name", "email"],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                          }
-                        },
-                        "example": {
-                          "type": "array",
-                          "example": [
-                            "60b8d7e9ef9b3a8ed64f1234"
-                          ],
-                          "items": {
-                            "type": "string"
-                          }
                         }
-                      }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated."
                     },
-                    "favoriteExercise": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "Dead lifts"
-                        }
-                      }
+                    "404": {
+                        "description": "User not found."
                     },
-                    "achievements": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
+        "/users/{id}/{property}": {
+            "get": {
+                "tags": ["Users"],
+                "description": "Fetch a specific property of a user.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "User ID"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Property name (e.g., name, email, workoutIds)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User property retrieved."
+                    },
+                    "400": {
+                        "description": "Invalid property."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Users"],
+                "description": "Update a single property of a user.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "User ID"
+                    },
+                    {
+                        "name": "property",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "Property name (e.g., email, favoriteExercise)"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "example": {
+                                                    "type": "string",
+                                                    "example": "johndoe@gmail.com"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": ["value"],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                          }
-                        },
-                        "example": {
-                          "type": "array",
-                          "example": [
-                            "60b8d7e9ef9b3a8ed64f1111"
-                          ],
-                          "items": {
-                            "type": "string"
-                          }
                         }
-                      }
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "name",
-                    "email"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User updated."
-          },
-          "404": {
-            "description": "User not found."
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          }
-        }
-      }
-    },
-    "/users/{id}/{property}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Fetch a specific property of a user.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "User ID"
-          },
-          {
-            "name": "property",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Property name (e.g., name, email, workoutIds)"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User property retrieved."
-          },
-          "400": {
-            "description": "Invalid property."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Update a single property of a user.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "User ID"
-          },
-          {
-            "name": "property",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Property name (e.g., email, favoriteExercise)"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "johndoe@gmail.com"
-                        }
-                      }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User property updated."
+                    },
+                    "400": {
+                        "description": "Invalid property."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "value"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
                 }
-              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User property updated."
-          },
-          "400": {
-            "description": "Invalid property."
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          }
-        }
-      }
-    },
-    "/workouts/": {
-      "post": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Create a new workout",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Type of the workout"
-                        }
-                      }
-                    },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Duration of the workout in minutes"
-                        }
-                      }
-                    },
-                    "caloriesBurned": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Calories burned during the workout"
-                        }
-                      }
-                    },
-                    "exerciseIds": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
+        },
+        "/workouts/": {
+            "post": {
+                "tags": ["Workouts"],
+                "description": "Create a new workout",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Type of the workout"
+                                                }
+                                            }
+                                        },
+                                        "duration": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Duration of the workout in minutes"
+                                                }
+                                            }
+                                        },
+                                        "caloriesBurned": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Calories burned during the workout"
+                                                }
+                                            }
+                                        },
+                                        "exerciseIds": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "array"
+                                                },
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Array of exercise IDs associated with the workout"
+                                                }
+                                            }
+                                        },
+                                        "timestamp": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "format": {
+                                                    "type": "string",
+                                                    "example": "date-time"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Timestamp of the workout"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": [
+                                        "type",
+                                        "duration",
+                                        "caloriesBurned",
+                                        "timestamp"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                          }
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Array of exercise IDs associated with the workout"
                         }
-                      }
-                    },
-                    "timestamp": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "format": {
-                          "type": "string",
-                          "example": "date-time"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Timestamp of the workout"
-                        }
-                      }
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "type",
-                    "duration",
-                    "caloriesBurned",
-                    "timestamp"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Workout created successfully."
+                    },
+                    "500": {
+                        "description": "Error creating workout."
+                    }
                 }
-              }
+            },
+            "get": {
+                "tags": ["Workouts"],
+                "description": "Retrieve all workouts",
+                "responses": {
+                    "200": {
+                        "description": "Workouts retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error retrieving workouts."
+                    }
+                }
             }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Workout created successfully."
-          },
-          "500": {
-            "description": "Error creating workout."
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Retrieve all workouts",
-        "responses": {
-          "200": {
-            "description": "Workouts retrieved successfully."
-          },
-          "500": {
-            "description": "Error retrieving workouts."
-          }
-        }
-      }
-    },
-    "/workouts/{id}": {
-      "get": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Retrieve a workout by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the workout"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Workout retrieved successfully."
-          },
-          "404": {
-            "description": "Workout not found."
-          },
-          "500": {
-            "description": "Error retrieving workout."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Update an existing workout",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the workout"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Type of the workout"
-                        }
-                      }
+        },
+        "/workouts/{id}": {
+            "get": {
+                "tags": ["Workouts"],
+                "description": "Retrieve a workout by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the workout"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Workout retrieved successfully."
                     },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Duration of the workout in minutes"
-                        }
-                      }
+                    "404": {
+                        "description": "Workout not found."
                     },
-                    "caloriesBurned": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Calories burned during the workout"
-                        }
-                      }
+                    "500": {
+                        "description": "Error retrieving workout."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Workouts"],
+                "description": "Update an existing workout",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the workout"
                     },
-                    "exerciseIds": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Type of the workout"
+                                                }
+                                            }
+                                        },
+                                        "duration": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Duration of the workout in minutes"
+                                                }
+                                            }
+                                        },
+                                        "caloriesBurned": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Calories burned during the workout"
+                                                }
+                                            }
+                                        },
+                                        "exerciseIds": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "array"
+                                                },
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Array of exercise IDs associated with the workout"
+                                                }
+                                            }
+                                        },
+                                        "timestamp": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "format": {
+                                                    "type": "string",
+                                                    "example": "date-time"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Timestamp of the workout"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": [
+                                        "type",
+                                        "duration",
+                                        "caloriesBurned",
+                                        "timestamp"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                          }
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Array of exercise IDs associated with the workout"
                         }
-                      }
-                    },
-                    "timestamp": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "format": {
-                          "type": "string",
-                          "example": "date-time"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Timestamp of the workout"
-                        }
-                      }
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "type",
-                    "duration",
-                    "caloriesBurned",
-                    "timestamp"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Workout updated successfully."
-          },
-          "404": {
-            "description": "Workout not found."
-          },
-          "500": {
-            "description": "Error updating workout."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Delete a workout by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the workout"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Workout deleted successfully."
-          },
-          "404": {
-            "description": "Workout not found."
-          },
-          "500": {
-            "description": "Error deleting workout."
-          }
-        }
-      }
-    },
-    "/workouts/user/{userId}": {
-      "get": {
-        "tags": [
-          "Workouts"
-        ],
-        "description": "Retrieve workouts by user ID",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the user"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Workouts retrieved successfully."
-          },
-          "404": {
-            "description": "No workouts found for the given user."
-          },
-          "500": {
-            "description": "Error retrieving workouts."
-          }
-        }
-      }
-    },
-    "/exercises/": {
-      "post": {
-        "tags": [
-          "Exercises"
-        ],
-        "description": "Create a new exercise",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Name of the exercise"
-                        }
-                      }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Workout updated successfully."
                     },
-                    "description": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Description of the exercise"
-                        }
-                      }
+                    "404": {
+                        "description": "Workout not found."
                     },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Duration of the exercise in minutes"
-                        }
-                      }
-                    },
-                    "intensity": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Intensity level of the exercise"
-                        }
-                      }
+                    "500": {
+                        "description": "Error updating workout."
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "name",
-                    "description",
-                    "duration",
-                    "intensity"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
                 }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Exercise created successfully."
-          },
-          "500": {
-            "description": "Error creating exercise."
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Exercises"
-        ],
-        "description": "Retrieve all exercises",
-        "responses": {
-          "200": {
-            "description": "Exercises retrieved successfully."
-          },
-          "500": {
-            "description": "Error retrieving exercises."
-          }
-        }
-      }
-    },
-    "/exercises/{id}": {
-      "get": {
-        "tags": [
-          "Exercises"
-        ],
-        "description": "Retrieve an exercise by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the exercise"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Exercise retrieved successfully."
-          },
-          "404": {
-            "description": "Exercise not found."
-          },
-          "500": {
-            "description": "Error retrieving exercise."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Exercises"
-        ],
-        "description": "Update an exercise by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the exercise"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Name of the exercise"
-                        }
-                      }
-                    },
-                    "description": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Description of the exercise"
-                        }
-                      }
-                    },
-                    "duration": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "number"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Duration of the exercise in minutes"
-                        }
-                      }
-                    },
-                    "intensity": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Intensity level of the exercise"
-                        }
-                      }
+            },
+            "delete": {
+                "tags": ["Workouts"],
+                "description": "Delete a workout by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the workout"
                     }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "name",
-                    "description",
-                    "duration",
-                    "intensity"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Workout deleted successfully."
+                    },
+                    "404": {
+                        "description": "Workout not found."
+                    },
+                    "500": {
+                        "description": "Error deleting workout."
+                    }
                 }
-              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Exercise updated successfully."
-          },
-          "404": {
-            "description": "Exercise not found."
-          },
-          "500": {
-            "description": "Error updating exercise."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Exercises"
-        ],
-        "description": "Delete an exercise by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the exercise"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Exercise deleted successfully."
-          },
-          "404": {
-            "description": "Exercise not found."
-          },
-          "500": {
-            "description": "Error deleting exercise."
-          }
-        }
-      }
-    },
-    "/health-metrics/": {
-      "get": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Get all health metrics.",
-        "responses": {
-          "200": {
-            "description": "Health metrics retrieved successfully."
-          },
-          "500": {
-            "description": "Error getting health metrics."
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Create a new health metric.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Health metric data.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "healthMetric": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "value": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "unit": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "example": "date"
+        },
+        "/workouts/user/{userId}": {
+            "get": {
+                "tags": ["Workouts"],
+                "description": "Retrieve workouts by user ID",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the user"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Workouts retrieved successfully."
+                    },
+                    "404": {
+                        "description": "No workouts found for the given user."
+                    },
+                    "500": {
+                        "description": "Error retrieving workouts."
+                    }
                 }
-              },
-              "required": [
-                "userId",
-                "healthMetric",
-                "value",
-                "unit",
-                "timestamp"
-              ]
             }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Health metric created successfully.",
-            "schema": {
-              "$ref": "#/definitions/HealthMetric"
-            }
-          },
-          "500": {
-            "description": "Error creating health metric."
-          }
-        }
-      }
-    },
-    "/health-metrics/{id}": {
-      "get": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Get health metric by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric retrieved successfully."
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error retrieving health metric."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Update a health metric by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Updated health metric data.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "healthMetric": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "value": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "unit": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "example": "date"
+        },
+        "/exercises/": {
+            "post": {
+                "tags": ["Exercises"],
+                "description": "Create a new exercise",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Name of the exercise"
+                                                }
+                                            }
+                                        },
+                                        "description": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Description of the exercise"
+                                                }
+                                            }
+                                        },
+                                        "duration": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Duration of the exercise in minutes"
+                                                }
+                                            }
+                                        },
+                                        "intensity": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Intensity level of the exercise"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": [
+                                        "name",
+                                        "description",
+                                        "duration",
+                                        "intensity"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Exercise created successfully."
+                    },
+                    "500": {
+                        "description": "Error creating exercise."
+                    }
                 }
-              },
-              "required": [
-                "userId",
-                "healthMetric",
-                "value",
-                "unit",
-                "timestamp"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric updated successfully.",
-            "schema": {
-              "$ref": "#/definitions/HealthMetric"
-            }
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error updating health metric."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Delete a health metric by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric deleted successfully."
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error deleting health metric."
-          }
-        }
-      }
-    },
-    "/health-metrics/user/{userId}": {
-      "get": {
-        "tags": [
-          "Health Metrics"
-        ],
-        "description": "Get health metrics by user ID.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metrics retrieved successfully."
-          },
-          "500": {
-            "description": "Error retrieving health metrics."
-          }
-        }
-      }
-    },
-    "/achievements/": {
-      "get": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Retrieve all achievements",
-        "responses": {
-          "200": {
-            "description": "Achievements retrieved successfully."
-          },
-          "500": {
-            "description": "Error retrieving achievements."
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Create a new achievement",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
+            },
+            "get": {
+                "tags": ["Exercises"],
+                "description": "Retrieve all exercises",
+                "responses": {
+                    "200": {
+                        "description": "Exercises retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error retrieving exercises."
+                    }
                 }
-              }
             }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Achievement created successfully."
-          },
-          "500": {
-            "description": "Error creating achievement."
-          }
-        }
-      }
-    },
-    "/achievements/{id}": {
-      "get": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Retrieve an achievement by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the achievement"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Achievement retrieved successfully."
-          },
-          "404": {
-            "description": "Achievement not found."
-          },
-          "500": {
-            "description": "Error retrieving achievement."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Delete an achievement by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the achievement"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Achievement deleted successfully."
-          },
-          "404": {
-            "description": "Achievement not found."
-          },
-          "500": {
-            "description": "Error deleting achievement."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Update an existing achievement",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the achievement"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Run 5 miles"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Run 5 miles in a week"
-                },
-                "progressGoal": {
-                  "type": "number",
-                  "example": 5
+        },
+        "/exercises/{id}": {
+            "get": {
+                "tags": ["Exercises"],
+                "description": "Retrieve an exercise by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the exercise"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Exercise retrieved successfully."
+                    },
+                    "404": {
+                        "description": "Exercise not found."
+                    },
+                    "500": {
+                        "description": "Error retrieving exercise."
+                    }
                 }
-              }
+            },
+            "put": {
+                "tags": ["Exercises"],
+                "description": "Update an exercise by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the exercise"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "example": "object"
+                                },
+                                "properties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Name of the exercise"
+                                                }
+                                            }
+                                        },
+                                        "description": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Description of the exercise"
+                                                }
+                                            }
+                                        },
+                                        "duration": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "number"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Duration of the exercise in minutes"
+                                                }
+                                            }
+                                        },
+                                        "intensity": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Intensity level of the exercise"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": {
+                                    "type": "array",
+                                    "example": [
+                                        "name",
+                                        "description",
+                                        "duration",
+                                        "intensity"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Exercise updated successfully."
+                    },
+                    "404": {
+                        "description": "Exercise not found."
+                    },
+                    "500": {
+                        "description": "Error updating exercise."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Exercises"],
+                "description": "Delete an exercise by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the exercise"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Exercise deleted successfully."
+                    },
+                    "404": {
+                        "description": "Exercise not found."
+                    },
+                    "500": {
+                        "description": "Error deleting exercise."
+                    }
+                }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Achievement updated successfully."
-          },
-          "404": {
-            "description": "Achievement not found."
-          },
-          "500": {
-            "description": "Error updating achievement."
-          }
-        }
-      }
-    },
-    "/achievements/user/{userId}": {
-      "get": {
-        "tags": [
-          "Achievements"
-        ],
-        "description": "Retrieve achievements for a specific user",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the user"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User achievements retrieved successfully."
-          },
-          "404": {
-            "description": "No achievements found for the given user."
-          },
-          "500": {
-            "description": "Error retrieving user achievements."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{userId}": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get all health metrics for a specific user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metrics retrieved successfully."
-          },
-          "500": {
-            "description": "Error fetching user health metrics."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{userId}/latest": {
-      "get": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Get the latest health metric for a specific user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Latest health metric retrieved successfully."
-          },
-          "404": {
-            "description": "No health records found for the user."
-          },
-          "500": {
-            "description": "Error fetching latest health metric."
-          }
-        }
-      }
-    },
-    "/user-health-metrics/": {
-      "post": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Add a new health metric for a specific user.",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/user-health-metrics/{id}": {
-      "delete": {
-        "tags": [
-          "User Health Metrics"
-        ],
-        "description": "Delete a health metric for a specific user by ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Health metric deleted successfully."
-          },
-          "404": {
-            "description": "Health metric not found."
-          },
-          "500": {
-            "description": "Error deleting health metric."
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "oauth2": {
-        "type": "oauth2",
-        "flows": {
-          "authorizationCode": {
-            "authorizationUrl": "http://localhost:3000/authentication/google/",
-            "tokenUrl": "https://oauth2.googleapis.com/token",
-            "scopes": {
-              "openid": "OpenID authentication",
-              "profile": "Profile information",
-              "email": "Email information"
+        },
+        "/health-metrics/": {
+            "get": {
+                "tags": ["Health Metrics"],
+                "description": "Get all health metrics.",
+                "responses": {
+                    "200": {
+                        "description": "Health metrics retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error getting health metrics."
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Health Metrics"],
+                "description": "Create a new health metric.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Health metric data.",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "healthMetric": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "value": {
+                                    "type": "string",
+                                    "example": "number"
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "timestamp": {
+                                    "type": "string",
+                                    "example": "date"
+                                }
+                            },
+                            "required": [
+                                "userId",
+                                "healthMetric",
+                                "value",
+                                "unit",
+                                "timestamp"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Health metric created successfully.",
+                        "schema": {
+                            "$ref": "#/definitions/HealthMetric"
+                        }
+                    },
+                    "500": {
+                        "description": "Error creating health metric."
+                    }
+                }
             }
-          }
+        },
+        "/health-metrics/{id}": {
+            "get": {
+                "tags": ["Health Metrics"],
+                "description": "Get health metric by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metric retrieved successfully."
+                    },
+                    "404": {
+                        "description": "Health metric not found."
+                    },
+                    "500": {
+                        "description": "Error retrieving health metric."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Health Metrics"],
+                "description": "Update a health metric by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Updated health metric data.",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "healthMetric": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "value": {
+                                    "type": "string",
+                                    "example": "number"
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "example": "string"
+                                },
+                                "timestamp": {
+                                    "type": "string",
+                                    "example": "date"
+                                }
+                            },
+                            "required": [
+                                "userId",
+                                "healthMetric",
+                                "value",
+                                "unit",
+                                "timestamp"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metric updated successfully.",
+                        "schema": {
+                            "$ref": "#/definitions/HealthMetric"
+                        }
+                    },
+                    "404": {
+                        "description": "Health metric not found."
+                    },
+                    "500": {
+                        "description": "Error updating health metric."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Health Metrics"],
+                "description": "Delete a health metric by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metric deleted successfully."
+                    },
+                    "404": {
+                        "description": "Health metric not found."
+                    },
+                    "500": {
+                        "description": "Error deleting health metric."
+                    }
+                }
+            }
+        },
+        "/health-metrics/user/{userId}": {
+            "get": {
+                "tags": ["Health Metrics"],
+                "description": "Get health metrics by user ID.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metrics retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error retrieving health metrics."
+                    }
+                }
+            }
+        },
+        "/achievements/": {
+            "get": {
+                "tags": ["Achievements"],
+                "description": "Retrieve all achievements",
+                "responses": {
+                    "200": {
+                        "description": "Achievements retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error retrieving achievements."
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Achievements"],
+                "description": "Create a new achievement",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "example": "Run 5 miles"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Run 5 miles in a week"
+                                },
+                                "progressGoal": {
+                                    "type": "number",
+                                    "example": 5
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Achievement created successfully."
+                    },
+                    "500": {
+                        "description": "Error creating achievement."
+                    }
+                }
+            }
+        },
+        "/achievements/{id}": {
+            "get": {
+                "tags": ["Achievements"],
+                "description": "Retrieve an achievement by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the achievement"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Achievement retrieved successfully."
+                    },
+                    "404": {
+                        "description": "Achievement not found."
+                    },
+                    "500": {
+                        "description": "Error retrieving achievement."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Achievements"],
+                "description": "Delete an achievement by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the achievement"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Achievement deleted successfully."
+                    },
+                    "404": {
+                        "description": "Achievement not found."
+                    },
+                    "500": {
+                        "description": "Error deleting achievement."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Achievements"],
+                "description": "Update an existing achievement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the achievement"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "example": "Run 5 miles"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Run 5 miles in a week"
+                                },
+                                "progressGoal": {
+                                    "type": "number",
+                                    "example": 5
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Achievement updated successfully."
+                    },
+                    "404": {
+                        "description": "Achievement not found."
+                    },
+                    "500": {
+                        "description": "Error updating achievement."
+                    }
+                }
+            }
+        },
+        "/achievements/user/{userId}": {
+            "get": {
+                "tags": ["Achievements"],
+                "description": "Retrieve achievements for a specific user",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The ID of the user"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User achievements retrieved successfully."
+                    },
+                    "404": {
+                        "description": "No achievements found for the given user."
+                    },
+                    "500": {
+                        "description": "Error retrieving user achievements."
+                    }
+                }
+            }
+        },
+        "/user-health-metrics/{userId}": {
+            "get": {
+                "tags": ["User Health Metrics"],
+                "description": "Get all health metrics for a specific user.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metrics retrieved successfully."
+                    },
+                    "500": {
+                        "description": "Error fetching user health metrics."
+                    }
+                }
+            }
+        },
+        "/user-health-metrics/{userId}/latest": {
+            "get": {
+                "tags": ["User Health Metrics"],
+                "description": "Get the latest health metric for a specific user.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Latest health metric retrieved successfully."
+                    },
+                    "404": {
+                        "description": "No health records found for the user."
+                    },
+                    "500": {
+                        "description": "Error fetching latest health metric."
+                    }
+                }
+            }
+        },
+        "/user-health-metrics/": {
+            "post": {
+                "tags": ["User Health Metrics"],
+                "description": "Add a new health metric for a specific user.",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user-health-metrics/{id}": {
+            "delete": {
+                "tags": ["User Health Metrics"],
+                "description": "Delete a health metric for a specific user by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Health metric deleted successfully."
+                    },
+                    "404": {
+                        "description": "Health metric not found."
+                    },
+                    "500": {
+                        "description": "Error deleting health metric."
+                    }
+                }
+            }
         }
-      }
-    }
-  },
-  "security": [
-    {
-      "oauth2": []
-    }
-  ]
+    },
+    "components": {
+        "securitySchemes": {
+            "oauth2": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "http://localhost:3000/authentication/google/",
+                        "tokenUrl": "https://oauth2.googleapis.com/token",
+                        "scopes": {
+                            "openid": "OpenID authentication",
+                            "profile": "Profile information",
+                            "email": "Email information"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "oauth2": []
+        }
+    ]
 }

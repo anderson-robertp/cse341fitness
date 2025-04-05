@@ -43,4 +43,7 @@ const userHealthMetricsSchema = new Schema<IUserHealthMetrics>(
     //{ timestamps: true }
 );
 
-export const UserHealthMetrics = model<IUserHealthMetrics>("UserHealthMetrics", userHealthMetricsSchema);
+export const UserHealthMetrics = model<IUserHealthMetrics>(
+    "UserHealthMetrics",
+    userHealthMetricsSchema,
+);

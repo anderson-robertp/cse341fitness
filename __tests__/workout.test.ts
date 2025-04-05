@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../server";
 import { Workout } from "../models/workout";
-import e from "express";
 
 describe("Workouts API", () => {
     beforeAll(async () => {
