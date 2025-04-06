@@ -69,7 +69,7 @@ export const getAllUserHealthMetrics = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
-    if (process.env.NODE_ENV === "test") {
+    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
         try {
             const healthMetrics = await UserHealthMetrics.find().sort({
                 timestamp: -1,
@@ -99,17 +99,43 @@ export const addUserHealthMetric = async (
     res: Response,
 ): Promise<Response> => {
     try {
-        const { userId, metrics } = req.body;
-        const timestamp = new Date(); // Set the current timestamp for the record
-        const newMetric = new UserHealthMetrics({ userId, metrics, timestamp });
+        const { userId } = req.params; // Extract userId from request parameters
+        const { metrics } = req.body;  // Extract metrics directly from request body
+
+        // Debugging logs
+        console.log("Incoming userId:", userId);
+        console.log("Full req.body:", JSON.stringify(req.body, null, 2));
+        console.log("metrics:", req.body.metrics);
+        console.log(`Received metrics: ${JSON.stringify(metrics)}`);
+
+        // Validate userId format (optional)
+        if (!Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: "Invalid userId format" });
+        }
+
+        const userObjectId = new Types.ObjectId(userId); // Convert userId to ObjectId
+
+        // Adding health metric for the user
+        console.log(
+            `Adding health metric for userId: ${userId} with metrics: ${JSON.stringify(
+                metrics,
+            )}`,
+        );
+        
+        const timestamp = new Date(); // Set current timestamp
+        const newMetric = new UserHealthMetrics({
+            userId: userObjectId, // Store userId as an ObjectId
+            metrics,              // Store the received metrics
+            timestamp,            // Timestamp for the record
+        });
+
+        // Save the new metric to the database
         await newMetric.save();
-        return res
-            .status(201)
-            .json({ message: "Health metric added", data: newMetric });
+
+        return res.status(201).json({ message: "Health metric added", data: newMetric });
     } catch (error) {
-        return res
-            .status(500)
-            .json({ message: "Error adding health metric", error });
+        console.error(error); // Log the error for debugging
+        return res.status(500).json({ message: "Error adding health metric", error });
     }
 };
 

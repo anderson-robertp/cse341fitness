@@ -1,0 +1,23 @@
+POST http://localhost:3000/user-health-metrics/67df521afc6481f5bf781ec2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "metrics": {
+        "bloodPressure": {
+            "systolic": 118,
+            "diastolic": 78
+        },
+        "heartRate": 75,
+        "bloodSugar": 95,
+        "temperature": 36.6,
+        "steps": 5000,
+        "caloriesBurned": 300,
+        "sleepDuration": 7,
+        "weight": 72,
+        "hydration": 2
+    }
+}
+
+###
+
+GET http://localhost:3000/user-health-metrics/67df521afc6481f5bf781ec2 HTTP/1.1

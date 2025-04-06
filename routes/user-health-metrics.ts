@@ -19,6 +19,9 @@ userMetricsRouter.get(
     /*
         #swagger.tags = ['User Health Metrics'],
         #swagger.description = 'Get all health metrics for all users (Admin route).',
+        #swagger.security = [{
+        "SessionAuth": []
+        }],
         #swagger.responses[200] = {
             description: 'All health metrics retrieved successfully.',
         },
@@ -38,6 +41,10 @@ userMetricsRouter.get(
     /*
         #swagger.tags = ['User Health Metrics'],
         #swagger.description = 'Get all health metrics for a specific user.',
+        #swagger.security = [{
+        #swagger.security = [{
+        "SessionAuth": []
+        }],
         #swagger.parameters['userId'] = {
             "name": "userId",
             "in": "path",
@@ -63,6 +70,9 @@ userMetricsRouter.get(
     /*
         #swagger.tags = ['User Health Metrics'],
         #swagger.description = 'Get the latest health metric for a specific user.',
+        #swagger.security = [{
+        "SessionAuth": []
+        }],
         #swagger.parameters['userId'] = {
             "name": "userId",
             "in": "path",
@@ -83,97 +93,90 @@ userMetricsRouter.get(
 
 // Add a new record
 userMetricsRouter.post(
-    "/",
+    "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
     handleErrors(addUserHealthMetric),
-    /* 
+/* 
     #swagger.tags = ["User Health Metrics"]
     #swagger.description = "Add a new health metric for a specific user."
+    #swagger.security = [{
+        "SessionAuth": []
+    }]
 
-    #swagger.parameters['body'] = {
-        "name": "body",
-        "in": "body",
-        "description": "Health metric data for the user.",
-        "required": true,
-        "schema": {
-            "type": "object",
-            "properties": {
-                "userId": {
-                    "type": "string",
-                    "example": "67df521afc6481f5bf781ec2"
-                },
-                "metrics": {
-                    "type": "object",
-                    "properties": {
-                        "heartRate": {
-                            "type": "integer",
-                            "example": 72
-                        },
-                        "bloodPressure": {
-                            "type": "object",
-                            "properties": {
-                                "systolic": {
-                                    "type": "integer",
-                                    "example": 120
+    #swagger.parameters['userId'] = {
+        name: "userId",
+        in: "path",
+        required: true,
+        type: "string",
+        example: "67df521afc6481f5bf781ec2"
+    }
+
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    properties: {
+                        metrics: {
+                            type: "object",
+                            properties: {
+                                heartRate: { type: "number", example: 72 },
+                                bloodPressure: {
+                                    type: "object",
+                                    properties: {
+                                        systolic: { type: "number", example: 120 },
+                                        diastolic: { type: "number", example: 80 }
+                                    }
                                 },
-                                "diastolic": {
-                                    "type": "integer",
-                                    "example": 80
-                                }
+                                bloodSugar: { type: "number", example: 95 },
+                                temperature: { type: "number", example: 36.5 },
+                                steps: { type: "number", example: 5000 },
+                                caloriesBurned: { type: "number", example: 250 },
+                                sleepDuration: { type: "number", example: 7.5 },
+                                weight: { type: "number", example: 75.2 },
+                                hydration: { type: "number", example: 1.5 }
                             }
-                        },
-                        "bloodSugar": {
-                            "type": "integer",
-                            "example": 95
-                        },
-                        "temperature": {
-                            "type": "number",
-                            "example": 36.5
-                        },
-                        "steps": {
-                            "type": "integer",
-                            "example": 5000
-                        },
-                        "caloriesBurned": {
-                            "type": "integer",
-                            "example": 250
-                        },
-                        "sleepDuration": {
-                            "type": "number",
-                            "example": 7.5
-                        },
-                        "weight": {
-                            "type": "number",
-                            "example": 75.2
-                        },
-                        "hydration": {
-                            "type": "number",
-                            "example": 1.5
                         }
                     }
-                },
-                "timestamp": {
-                    "type": "string",
-                    "example": "2025-03-22T08:00:00.000+00:00"
                 }
-            },
-            "required": [
-                "userId",
-                "metrics",
-                "timestamp"
-            ]
+            }
         }
     }
 
     #swagger.responses[201] = {
-        "description": "Health metric added successfully."
+        description: "Health metric added successfully.",
+        schema: {
+            type: "object",
+            properties: {
+                message: { type: "string", example: "Health metric added" },
+                data: {
+                    type: "object",
+                    properties: {
+                        _id: { type: "string", example: "66102807f2d339001f2e3f3a" },
+                        userId: { type: "string", example: "67df521afc6481f5bf781ec2" },
+                        metrics: { 
+                            type: "object",
+                            example: {
+                                heartRate: 72,
+                                weight: 75.2,
+                                sleepDuration: 7.5
+                            }
+                        },
+                        timestamp: { type: "string", example: "2025-04-05T14:45:00.000Z" }
+                    }
+                }
+            }
+        }
     }
+
     #swagger.responses[400] = {
-        "description": "Invalid input data."
+        description: "Invalid input data."
     }
+
     #swagger.responses[500] = {
-        "description": "Error adding health metric."
+        description: "Error adding health metric."
     }
-    */
+*/
 );
 
 // Delete a record
@@ -183,6 +186,9 @@ userMetricsRouter.delete(
     /*
         #swagger.tags = ['User Health Metrics'],
         #swagger.description = 'Delete a health metric for a specific user by ID.',
+        #swagger.security = [{
+        "SessionAuth": []
+        }],
         #swagger.parameters['id'] = {
             "name": "id",
             "in": "path",
