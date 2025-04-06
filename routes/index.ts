@@ -3,7 +3,7 @@ import authenticationRouter from "./authentication";
 import achievementsRouter from "./achievements";
 import usersRouter from "./users";
 import exercisesRouter from "./exercises";
-import metricsRouter from "./health-metrics";
+//import metricsRouter from "./health-metrics";
 import workoutsRouter from "./workouts";
 import { isAuthenticated } from "../controllers/authentication"; // Import the isAuthenticated middleware
 import swaggerRouter from "./swagger";
@@ -57,15 +57,6 @@ router.use(
 );
 router.use("/workouts", workoutsRouter);
 router.use("/exercises", exercisesRouter);
-router.use(
-    "/health-metrics",
-    isAuthenticated,
-    metricsRouter,
-    /*
-    #swagger.security = 
-        - SessionAuth: []
-    */
-);
 router.use("/achievements", achievementsRouter);
 router.use("/user-health-metrics", userMetricsRouter); // User-specific health metrics
 
