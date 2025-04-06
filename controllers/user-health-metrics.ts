@@ -103,10 +103,10 @@ export const addUserHealthMetric = async (
         const { metrics } = req.body;  // Extract metrics directly from request body
 
         // Debugging logs
-        console.log("Incoming userId:", userId);
-        console.log("Full req.body:", JSON.stringify(req.body, null, 2));
-        console.log("metrics:", req.body.metrics);
-        console.log(`Received metrics: ${JSON.stringify(metrics)}`);
+        //console.log("Incoming userId:", userId);
+        //console.log("Full req.body:", JSON.stringify(req.body, null, 2));
+        //console.log("metrics:", req.body.metrics);
+        //console.log(`Received metrics: ${JSON.stringify(metrics)}`);
 
         // Validate userId format (optional)
         if (!Types.ObjectId.isValid(userId)) {
