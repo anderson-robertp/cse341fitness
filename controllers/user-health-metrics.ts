@@ -146,7 +146,7 @@ export const deleteUserHealthMetric = async (
 ): Promise<Response> => {
     try {
         const { id } = req.params;
-        const deletedMetric = await UserHealthMetrics.findByIdAndDelete(id);
+        const deletedMetric = await UserHealthMetrics.deleteOne({ _id: id});
         if (!deletedMetric)
             return res.status(404).json({ message: "Health metric not found" });
         return res
