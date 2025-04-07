@@ -8,14 +8,45 @@ export const createAchievement: RequestHandler = async (
     res: Response,
 ): Promise<void> => {
     try {
-        console.log("Incoming request body:", req.body); //
+        console.log("Incoming request body:", req.body);
         console.log("Headers:", req.headers);
-        const { title, description, progressGoal } = req.body;
+
+        const { title, description } = req.body;
+        let { progressGoal } = req.body;
+
+        // Reject empty string or invalid progressGoal before conversion
+        if (progressGoal === "") {
+            res.status(400).json({
+                message: "progressGoal cannot be an empty string.",
+            });
+            return;
+        }
+
+        // Auto-convert string to number if necessary
+        if (typeof progressGoal === "string") {
+            progressGoal = Number(progressGoal);
+        }
+
+        const isInvalidProgressGoal =
+            progressGoal === undefined ||
+            progressGoal === null ||
+            typeof progressGoal !== "number" ||
+            isNaN(progressGoal); // Check after conversion
+
+        if (!title || !description || isInvalidProgressGoal) {
+            res.status(400).json({
+                message:
+                    "Title, description, and progressGoal are required, and progressGoal must be a valid number.",
+            });
+            return;
+        }
+
         const achievement = new Achievement({
-            title: title,
-            description: description,
-            progressGoal: progressGoal,
+            title,
+            description,
+            progressGoal,
         });
+
         await achievement.save();
         res.status(201).json(achievement);
     } catch (error) {
@@ -61,7 +92,8 @@ export const updateAchievement: RequestHandler = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const { title, description, progressGoal } = req.body;
+        const { title, description } = req.body;
+        let { progressGoal } = req.body;
 
         console.log("Updating achievement with ID:", id);
         console.log("Update body:", req.body);
@@ -73,9 +105,35 @@ export const updateAchievement: RequestHandler = async (
             return;
         }
 
+        // Validation for progressGoal
+        if (progressGoal !== undefined) {
+            if (progressGoal === "") {
+                res.status(400).json({
+                    message: "progressGoal cannot be an empty string.",
+                });
+                return;
+            }
+            if (typeof progressGoal === "string") {
+                progressGoal = Number(progressGoal);
+            }
+
+            const isInvalidProgressGoal =
+                progressGoal === undefined ||
+                progressGoal === null ||
+                typeof progressGoal !== "number" ||
+                isNaN(progressGoal);
+
+            if (isInvalidProgressGoal) {
+                res.status(400).json({
+                    message: "progressGoal must be a valid number.",
+                });
+                return;
+            }
+            achievement.progressGoal = progressGoal;
+        }
+
         if (title !== undefined) achievement.title = title;
         if (description !== undefined) achievement.description = description;
-        if (progressGoal !== undefined) achievement.progressGoal = progressGoal;
 
         await achievement.save();
 
@@ -130,8 +188,8 @@ export const createUserAchievement: RequestHandler = async (
     res: Response,
 ): Promise<void> => {
     try {
-        const { userId } = req.params; // Get userId from path
-        const { title, description, progress } = req.body; // Expect title, description, and progress
+        const { userId } = req.params;
+        let { title, description, progress } = req.body;
 
         console.log("Creating UserAchievement:", {
             userId,
@@ -145,6 +203,31 @@ export const createUserAchievement: RequestHandler = async (
         if (!achievement) {
             achievement = new Achievement({ title, description });
             await achievement.save();
+        }
+
+        // Validation for progress
+        if (progress === "") {
+            res.status(400).json({
+                message: "progress cannot be an empty string.",
+            });
+            return;
+        }
+
+        if (typeof progress === "string") {
+            progress = Number(progress);
+        }
+
+        const isInvalidProgress =
+            progress === undefined ||
+            progress === null ||
+            typeof progress !== "number" ||
+            isNaN(progress);
+
+        if (isInvalidProgress) {
+            res.status(400).json({
+                message: "progress must be a valid number.",
+            });
+            return;
         }
 
         // Create the UserAchievement record

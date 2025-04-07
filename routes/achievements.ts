@@ -10,6 +10,7 @@ import {
 } from "../controllers/achievements";
 import handleErrors from "../utilities";
 import { isAuthenticated } from "../controllers/authentication";
+import validateAchievementFields from "../utilities/validateAchievement";
 
 const achievementsRouter = express.Router();
 
@@ -58,6 +59,7 @@ achievementsRouter.get(
 achievementsRouter.post(
     "/",
     isAuthenticated,
+    validateAchievementFields,
     handleErrors(createAchievement),
     /*  
 #swagger.tags = ['Achievements']
@@ -73,9 +75,9 @@ achievementsRouter.post(
           properties: {
             title: { type: "string", example: "Run 5 miles" },
             description: { type: "string", example: "Run 5 miles in a week" },
-            progressGoal: { type: "integer", example: 5 }
+            progressGoal: { type: "integer", example: "5" }
           },
-          required: ["title", "description"]
+          required: ["title", "description", "progressGoal"]
         }
       }
     }
@@ -121,6 +123,7 @@ achievementsRouter.delete(
 achievementsRouter.put(
     "/:id",
     isAuthenticated,
+    validateAchievementFields,
     handleErrors(updateAchievement),
     /*  
     #swagger.tags = ['Achievements']
@@ -142,8 +145,9 @@ achievementsRouter.put(
                 properties: {
                     title: { type: "string", example: "Run 5 miles" },
                     description: { type: "string", example: "Run 5 miles in a week" },
-                    progressGoal: { type: "integer", example: 5 }
-                }
+                    progressGoal: { type: "integer", example: "5" }
+                },
+                required: ["title", "description", "progressGoal"]
             }
         }
     }
@@ -191,6 +195,7 @@ achievementsRouter.get(
 achievementsRouter.post(
     "/user/:userId",
     isAuthenticated,
+    validateAchievementFields,
     handleErrors(createUserAchievement),
     /*  
 #swagger.tags = ['Achievements']
@@ -220,7 +225,7 @@ achievementsRouter.post(
                         },
                         "progress": {
                             "type": "number",
-                            "example": 3
+                            "example": "3"
                         }
                     },
                     "required": ["title", "description", "progress"]

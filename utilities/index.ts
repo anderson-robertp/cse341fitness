@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Request, Response, NextFunction } from "express";
 
 // Ignore lint; we want ANY function signature here
