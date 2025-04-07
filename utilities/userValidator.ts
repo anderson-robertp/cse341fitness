@@ -34,7 +34,7 @@ export function userValidationRules() {
 
 //Validation
 export function userValidate(req: Request, res: Response, next: NextFunction) {
-    const { name, email, workoutIds, favoriteExercise } = req.body;
+    // const { name, email, workoutIds, favoriteExercise } = req.body;
 
     const errors = validationResult(req);
 
