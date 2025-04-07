@@ -8,6 +8,7 @@ import {
     getAllUserHealthMetrics, // Added for admin route to get all health metrics
 } from "../controllers/user-health-metrics";
 import handleErrors from "../utilities";
+import { isAuthenticated } from "../controllers/authentication";
 
 const userMetricsRouter = express.Router();
 
@@ -37,6 +38,7 @@ userMetricsRouter.get(
 // Get all health metrics for a user
 userMetricsRouter.get(
     "/:userId",
+    isAuthenticated,
     handleErrors(getUserHealthMetrics),
     /*
         #swagger.tags = ['User Health Metrics'],
@@ -66,6 +68,7 @@ userMetricsRouter.get(
 // Get latest record for a user
 userMetricsRouter.get(
     "/:userId/latest",
+    isAuthenticated,
     handleErrors(getLatestUserHealthMetrics),
     /*
         #swagger.tags = ['User Health Metrics'],
@@ -94,8 +97,9 @@ userMetricsRouter.get(
 // Add a new record
 userMetricsRouter.post(
     "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
+    isAuthenticated, // Ensure the user is authenticated before adding a health metric
     handleErrors(addUserHealthMetric),
-/* 
+    /* 
     #swagger.tags = ["User Health Metrics"]
     #swagger.description = "Add a new health metric for a specific user."
     #swagger.security = [{
@@ -182,6 +186,7 @@ userMetricsRouter.post(
 // Delete a record
 userMetricsRouter.delete(
     "/:id",
+    isAuthenticated, // Ensure the user is authenticated before deleting a health metric
     handleErrors(deleteUserHealthMetric),
     /*
         #swagger.tags = ['User Health Metrics'],
