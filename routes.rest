@@ -24,12 +24,13 @@ GET http://localhost:3000/authentication/logout HTTP/1.1
 // ********************
 ### Get user by ID
 GET http://localhost:3000/users/67ec62deb24b77a915bc82d5 HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Update user details
 PUT http://localhost:3000/users/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "name": "John Doe",
   "email": "john@example.com",
@@ -44,23 +45,24 @@ Content-Type: application/json
 
 ### Delete user by ID
 DELETE http://localhost:3000/users/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Fetch a specific property of a user
 GET http://localhost:3000/users/{id}/{property} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Update a single property of a user
 PUT http://localhost:3000/users/{id}/{property} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "value": "johndoe@gmail.com"
 }
 
 ### Retrieve all users
 GET http://localhost:3000/users/ HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 
 
@@ -69,8 +71,9 @@ Cookie: session_id=${session_id}
 // ********************
 ### Create a new workout
 POST http://localhost:3000/workouts/ HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "type": "strength",
   "duration": 50,
@@ -89,8 +92,9 @@ GET http://localhost:3000/workouts/{id} HTTP/1.1
 
 ### Update an existing workout
 PUT http://localhost:3000/workouts/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "type": "strength",
   "duration": 50,
@@ -103,11 +107,11 @@ Content-Type: application/json
 
 ### Delete a workout by ID
 DELETE http://localhost:3000/workouts/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Retrieve workouts by user ID
 GET http://localhost:3000/workouts/user/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 
 
@@ -116,8 +120,9 @@ Cookie: session_id=${session_id}
 // ********************
 ### Create a new exercise
 POST http://localhost:3000/exercises/ HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "name": "Pushups",
   "type": "strength",
@@ -136,8 +141,9 @@ GET http://localhost:3000/exercises/{id} HTTP/1.1
 
 ### Update an exercise by ID
 PUT http://localhost:3000/exercises/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "name": "Pushups",
   "type": "strength",
@@ -150,7 +156,7 @@ Content-Type: application/json
 
 ### Delete an exercise by ID
 DELETE http://localhost:3000/exercises/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 
 
@@ -162,8 +168,9 @@ GET http://localhost:3000/achievements/ HTTP/1.1
 
 ### Create a new achievement
 POST http://localhost:3000/achievements/ HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "title": "Run 5 miles",
   "description": "Run 5 miles in a week",
@@ -171,34 +178,36 @@ Content-Type: application/json
 }
 
 ### Retrieve an achievement by ID
-GET http://localhost:3000/achievements/{id} HTTP/1.1
+GET http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
 
 ### Update an existing achievement
-PUT http://localhost:3000/achievements/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+PUT http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
-  "title": "Run 5 miles",
-  "description": "Run 5 miles in a week",
+  "title": "Test",
+  "description": "Sample",
   "progressGoal": 5
 }
 
 ### Delete an achievement by ID
-DELETE http://localhost:3000/achievements/{id} HTTP/1.1
-Cookie: session_id=${session_id}
+DELETE http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
+Cookie: session_id={{session_id}}
 
 ### Retrieve achievements for a specific user
-GET http://localhost:3000/achievements/user/{userId} HTTP/1.1
-Cookie: session_id=${session_id}
+GET http://localhost:3000/achievements/user/67ec9785e8827735cbd25359 HTTP/1.1
+Cookie: session_id={{session_id}}
 
 ### Create a new user achievement
-POST http://localhost:3000/achievements/user/{userId} HTTP/1.1
-Cookie: session_id=${session_id}
+POST http://localhost:3000/achievements/user/67ec9785e8827735cbd25359 HTTP/1.1
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
-  "title": "Run 5 miles",
-  "description": "Run 5 miles in a week",
-  "progress": 3
+  "title": "Run 200 miles",
+  "description": "Run 200 miles in a month",
+  "progress": 10
 }
 
 
@@ -211,16 +220,17 @@ GET http://localhost:3000/user-health-metrics/all HTTP/1.1
 
 ### Get all health metrics for a specific user
 GET http://localhost:3000/user-health-metrics/{userId} HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Get the latest health metric for a specific user
 GET http://localhost:3000/user-health-metrics/{userId}/latest HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 
 ### Add a new health metric for a specific user
 POST http://localhost:3000/user-health-metrics/{userId}/ HTTP/1.1
-Cookie: session_id=${session_id}
+Cookie: session_id={{session_id}}
 Content-Type: application/json
+
 {
   "metrics": {
     "heartRate": 72,
