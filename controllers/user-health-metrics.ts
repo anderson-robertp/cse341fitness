@@ -80,12 +80,10 @@ export const getAllUserHealthMetrics = async (
                     .json({ message: "No health records found" });
             return res.status(200).json(healthMetrics);
         } catch (error) {
-            return res
-                .status(500)
-                .json({
-                    message: "Error fetching all user health metrics",
-                    error,
-                });
+            return res.status(500).json({
+                message: "Error fetching all user health metrics",
+                error,
+            });
         }
     } else {
         // Return 403 Forbidden if not in test environment
