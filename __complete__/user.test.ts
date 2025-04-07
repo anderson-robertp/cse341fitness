@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../server";
 import { User } from "../models/user";
 import mongoose from "mongoose"; // Import mongoose to create ObjectId for testing
+import e from "express";
 
 describe("Users API", () => {
     let userId: mongoose.Types.ObjectId; // Store userId for later tests
@@ -87,43 +88,29 @@ describe("Users API", () => {
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("email"); // Check if email property exists in the response
     });
-    // Test updateing the entire user by ID
-    it("should update the entire user by ID", async () => {
+
+    it("should update the user by ID", async () => {
         console.log("User ID for update test:", userId); // Log the userId to ensure it's set before running this test
-        // Check if userId is defined before running the test
+        expect(userId).toBeDefined(); // Ensure userId is set before running this test
         const response = await request(app)
-            .put(`/users/${userId}`)
-            .send({
-                name: "testuser",
-                email: "updated@email.com",
-                googleId: "1234567890",
-                workoutIds: [],
-                favoriteExercise: new mongoose.Types.ObjectId(
-                    "67d0e2016ab4fc6e4073c80b",
-                ),
-                achievements: [],
-            });
+        .put(`/users/${userId}/favoriteExercise`)
+        .set("Content-Type", "application/json")
+        .send({
+            name: "testuser",
+            email: "updateduser@test.com",
+            workoutIds: [],
+            favoriteExercise: new mongoose.Types.ObjectId(
+                "67d0e2016ab4fc6e4073c80b",
+            ),
+        }); // Assuming you have an endpoint to update user by ID
+        console.log("Update User Response:", response.body); // Debugging
 
         expect(response.status).toBe(200); // Check if the response status is 200 (OK)
-        console.log("Update User Response:", response.body); // Debugging
+        expect(response.body).toHaveProperty("message", "favoriteExercise updated successfully"); // Check if the message indicates successful update
+        expect(response.body).toHaveProperty("user"); // Check if the user property exists in the response
+        expect(response.body.user).toHaveProperty("_id", userId); // Check if the user ID matches the updated user ID
     });
-
-    // Test updating a user's property (e.g., name)
-    it("should update the user's name", async () => {
-        console.log("User ID for update test:", userId); // Log the userId to ensure it's set before running this test
-        // Check if userId is defined before running the test
-        expect(userId).toBeDefined(); // Ensure userId is set before running this test
-
-        const response = await request(app)
-            .put(`/users/${userId}`) // Assuming you have an endpoint to update user by ID
-            .send({ name: "updatedTestUser" });
-
-        console.log("Update User Response:", response.body); // Debugging
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("name", "updatedTestUser"); // Check if the name was updated correctly
-    });
-
+    
     it("shoule delete the user by ID", async () => {
         console.log("User ID for deletion test:", userId); // Log the userId to ensure it's set before running this test
         // Check if userId is defined before running the test
@@ -142,6 +129,6 @@ describe("Users API", () => {
         const response = await request(app).get(`/users/${userId}`); // Attempt to retrieve the deleted user
 
         expect(response.status).toBe(404); // Check if the response status is 404 (Not Found)
-        expect(response.body).toHaveProperty("message", "User not found."); // Check if the message indicates user not found
+        expect(response.body).toHaveProperty("message", "User not found in users/getUserById controller."); // Check if the message indicates user not found
     });
 });
