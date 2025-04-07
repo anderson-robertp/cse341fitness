@@ -20,19 +20,25 @@ exercisesRouter.post(
     #swagger.tags = ['Exercises']   
     #swagger.description = 'Create a new exercise'
     #swagger.security = 
-    - SessionAuth: []
-    #swagger.parameters['body'] = { 
-        "in": "body",
-        "required": true,
-        "schema": {
-            "type": "object",
-            "properties": { 
-                "name": { "type": "string", "description": "Name of the exercise" },
-                "description": { "type": "string", "description": "Description of the exercise" },
-                "duration": { "type": "number", "description": "Duration of the exercise in minutes" },
-                "intensity": { "type": "string", "description": "Intensity level of the exercise" },
-            },
-            "required": ["name", "description", "duration", "intensity"]
+        - SessionAuth: []
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    "properties": { 
+                        "name": { "type": "string", "example": "Pushups" },
+                        "type": { "type": "string", "example": "strength"},
+                        "duration": { "type": "number", "example": "50" },
+                        "sets": { "type": "number", "example": "3" },
+                        "reps": { "type": "number", "example": "10" },
+                        "weight": { "type": "number", "example": "0" },
+                        "caloriesBurned": { "type": "number", "example": 200 },
+                    },
+                    "required": ["name", "type", "caloriesBurned"],
+                }
+            }
         }
     }
     #swagger.responses[201] = {
@@ -101,18 +107,24 @@ exercisesRouter.put(
         "type": "string",
         "description": "The ID of the exercise"
     }
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            type: "object",
-            properties: {       
-                name: { type: "string", description: "Name of the exercise" },
-                description: { type: "string", description: "Description of the exercise" },
-                duration: { type: "number", description: "Duration of the exercise in minutes" },
-                intensity: { type: "string", description: "Intensity level of the exercise" },
-            },
-            required: ["name", "description", "duration", "intensity"]
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    "properties": { 
+                        "name": { "type": "string", "example": "Pushups" },
+                        "type": { "type": "string", "example": "strength"},
+                        "duration": { "type": "number", "example": "50" },
+                        "sets": { "type": "number", "example": "3" },
+                        "reps": { "type": "number", "example": "10" },
+                        "weight": { "type": "number", "example": "0" },
+                        "caloriesBurned": { "type": "number", "example": 200 },
+                    },
+                    "required": ["name", "type", "caloriesBurned"],
+                }
+            }
         }
     }
     #swagger.responses[200] = {     

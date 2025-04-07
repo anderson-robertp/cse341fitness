@@ -5,6 +5,8 @@ import { Exercise } from "../models/exercise";
 export const createExercise: RequestHandler = async (req, res) => {
     try {
         const newExercise = new Exercise(req.body);
+        const timestamp = new Date();
+        newExercise.timestamp = timestamp; // Set the current timestamp
         await newExercise.save();
         res.status(201).json(newExercise);
     } catch (error) {
