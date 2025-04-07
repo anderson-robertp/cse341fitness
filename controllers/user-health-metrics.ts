@@ -75,21 +75,24 @@ export const getAllUserHealthMetrics = async (
                 timestamp: -1,
             });
             if (healthMetrics.length === 0)
-                return res.status(404).json({ message: "No health records found" });
+                return res
+                    .status(404)
+                    .json({ message: "No health records found" });
             return res.status(200).json(healthMetrics);
         } catch (error) {
             return res
                 .status(500)
-                .json({ message: "Error fetching all user health metrics", error });
+                .json({
+                    message: "Error fetching all user health metrics",
+                    error,
+                });
         }
     } else {
         // Return 403 Forbidden if not in test environment
-        return res
-            .status(403)
-            .json({
-                message:
-                    "Access to this endpoint is restricted to test environment only",
-            });
+        return res.status(403).json({
+            message:
+                "Access to this endpoint is restricted to test environment only",
+        });
     }
 };
 
@@ -100,7 +103,7 @@ export const addUserHealthMetric = async (
 ): Promise<Response> => {
     try {
         const { userId } = req.params; // Extract userId from request parameters
-        const { metrics } = req.body;  // Extract metrics directly from request body
+        const { metrics } = req.body; // Extract metrics directly from request body
 
         // Debugging logs
         //console.log("Incoming userId:", userId);
@@ -121,21 +124,25 @@ export const addUserHealthMetric = async (
                 metrics,
             )}`,
         );
-        
+
         const timestamp = new Date(); // Set current timestamp
         const newMetric = new UserHealthMetrics({
             userId: userObjectId, // Store userId as an ObjectId
-            metrics,              // Store the received metrics
-            timestamp,            // Timestamp for the record
+            metrics, // Store the received metrics
+            timestamp, // Timestamp for the record
         });
 
         // Save the new metric to the database
         await newMetric.save();
 
-        return res.status(201).json({ message: "Health metric added", data: newMetric });
+        return res
+            .status(201)
+            .json({ message: "Health metric added", data: newMetric });
     } catch (error) {
         console.error(error); // Log the error for debugging
-        return res.status(500).json({ message: "Error adding health metric", error });
+        return res
+            .status(500)
+            .json({ message: "Error adding health metric", error });
     }
 };
 
@@ -146,7 +153,7 @@ export const deleteUserHealthMetric = async (
 ): Promise<Response> => {
     try {
         const { id } = req.params;
-        const deletedMetric = await UserHealthMetrics.deleteOne({ _id: id});
+        const deletedMetric = await UserHealthMetrics.deleteOne({ _id: id });
         if (!deletedMetric)
             return res.status(404).json({ message: "Health metric not found" });
         return res

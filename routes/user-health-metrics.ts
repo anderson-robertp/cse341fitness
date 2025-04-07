@@ -95,7 +95,7 @@ userMetricsRouter.get(
 userMetricsRouter.post(
     "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
     handleErrors(addUserHealthMetric),
-/* 
+    /* 
     #swagger.tags = ["User Health Metrics"]
     #swagger.description = "Add a new health metric for a specific user."
     #swagger.security = [{

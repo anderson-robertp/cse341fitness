@@ -47,8 +47,10 @@ if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
     InitializeDatabase()
         .then(() => {
             app.listen(port, () => {
-                console.log("Database initialized successfully in test/dev environment.")
-                
+                console.log(
+                    "Database initialized successfully in test/dev environment.",
+                );
+
                 console.log(`Server is running on ${host}:${port}`);
 
                 console.log(

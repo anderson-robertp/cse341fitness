@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Request, Response, NextFunction } from "express";
 
 export default function handleErrors(fn: Function) {
