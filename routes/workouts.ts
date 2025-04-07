@@ -104,7 +104,7 @@ workoutsRouter.get(
     #swagger.description = 'Retrieve workouts by user ID'
     #swagger.security = 
         - oauth2: ["opendid", "profile", "email"]
-    #swagger.parameters['userId'] = {
+    #swagger.parameters['id'] = {
         "in": "path",
         "required": true,
         "type": "string",

@@ -686,16 +686,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The ID of the user"
           }
         ],
         "responses": {
