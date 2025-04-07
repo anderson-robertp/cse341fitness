@@ -22,19 +22,25 @@ workoutsRouter.post(
     #swagger.description = 'Create a new workout'
     #swagger.security = 
         - oauth2: ["opendid", "profile", "email"]
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            "type": "object",
-            "properties": {
-                "type": { "type": "string", "description": "Type of the workout" },
-                "duration": { "type": "number", "description": "Duration of the workout in minutes" },
-                "caloriesBurned": { "type": "number", "description": "Calories burned during the workout" },
-                "exerciseIds": { "type": "array", "items": { "type": "string" }, "description": "Array of exercise IDs associated with the workout" },
-                "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp of the workout" }
-            },
-            "required": ["type", "duration", "caloriesBurned", "timestamp"]
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    "properties": { 
+                        "type": { "type": "string", "example": "strength"},
+                        "duration": { "type": "number", "example": "50" },
+                        "caloriesBurned": { "type": "number", "example": 200 },
+                        "exerciseIds": {
+                            type: "array",
+                            items: { type: "string" },
+                            example: ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"],
+                        },
+                    },
+                    "required": ["type", "duration", "caloriesBurned"],
+                }
+            }
         }
     }
     #swagger.responses[201] = {
@@ -132,19 +138,25 @@ workoutsRouter.put(
         "type": "string",
         "description": "The ID of the workout"
     }
-    #swagger.parameters['body'] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-            "type": "object",
-            "properties": {
-                "type": { "type": "string", "description": "Type of the workout" },
-                "duration": { "type": "number", "description": "Duration of the workout in minutes" },
-                "caloriesBurned": { "type": "number", "description": "Calories burned during the workout" },
-                "exerciseIds": { "type": "array", "items": { "type": "string" }, "description": "Array of exercise IDs associated with the workout" },
-                "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp of the workout" }
-            },
-            "required": ["type", "duration", "caloriesBurned", "timestamp"]
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    "properties": { 
+                        "type": { "type": "string", "example": "strength"},
+                        "duration": { "type": "number", "example": "50" },
+                        "caloriesBurned": { "type": "number", "example": 200 },
+                        "exerciseIds": {
+                            type: "array",
+                            items: { type: "string" },
+                            example: ["60d21b4667d0d8992e610c85", "60d21b4667d0d8992e610c86"],
+                        },
+                    },
+                    "required": ["type", "duration", "caloriesBurned"],
+                }
+            }
         }
     }
     #swagger.responses[200] = {

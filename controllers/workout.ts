@@ -5,6 +5,8 @@ import { Workout } from "../models/workout";
 export const createWorkout = async (req: Request, res: Response) => {
     try {
         const newWorkout = new Workout(req.body);
+        const timestamp = new Date();
+        newWorkout.timestamp = timestamp; // Set the current timestamp
         await newWorkout.save();
         res.status(201).json(newWorkout);
     } catch (error) {
