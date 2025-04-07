@@ -144,7 +144,44 @@ export const addUserHealthMetric = async (
     }
 };
 
-// Delete a health record
+// Update a health record
+export const updateUserHealthMetric = async (
+    req: Request,
+    res: Response,
+): Promise<Response> => {
+    try {
+        const { id } = req.params; // Extract id from request parameters
+        const { metrics } = req.body; // Extract metrics from request body
+
+        // Validate the id format (optional)
+        if (!Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid record ID format" });
+        }
+
+        const metricObjectId = new Types.ObjectId(id); // Convert id to ObjectId
+
+        // Find the existing health metric record
+        const existingMetric = await UserHealthMetrics.findById(metricObjectId);
+        if (!existingMetric) {
+            return res.status(404).json({ message: "Health metric not found" });
+        }
+
+        // Update the metrics and save the record
+        existingMetric.metrics = metrics || existingMetric.metrics; // Only update if metrics are provided
+        await existingMetric.save();
+
+        return res.status(200).json({
+            message: "Health metric updated",
+            data: existingMetric,
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ message: "Error updating health metric", error });
+    }
+};
+
+    // Delete a health record
 export const deleteUserHealthMetric = async (
     req: Request,
     res: Response,

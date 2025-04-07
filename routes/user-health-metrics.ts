@@ -5,7 +5,8 @@ import {
     getLatestUserHealthMetrics,
     addUserHealthMetric,
     deleteUserHealthMetric,
-    getAllUserHealthMetrics, // Added for admin route to get all health metrics
+    getAllUserHealthMetrics, // For testing purposes only, should be restricted in production
+    updateUserHealthMetric,
 } from "../controllers/user-health-metrics";
 import handleErrors from "../utilities";
 
@@ -177,6 +178,59 @@ userMetricsRouter.post(
         description: "Error adding health metric."
     }
 */
+);
+
+// Update a metric
+userMetricsRouter.put(
+    "/:userId/:id", // Using userId and id in the path for clarity
+    handleErrors(updateUserHealthMetric),
+    /*
+    
+        #swagger.tags = ['User Health Metrics'],
+        #swagger.description = 'Update a health metric for a specific user by ID.',
+        #swagger.security = [{
+            "SessionAuth": []
+        }],
+        #swagger.parameters['userId'] = {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        #swagger.parameters['id'] = {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            metrics: {
+                                type: "object",
+                                properties: {
+                                    heartRate: { type: "number", example: 75 },
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        #swagger.responses[200] = {
+            description: 'Health metric updated successfully.'
+        },
+        #swagger.responses[404] = {
+            description: 'Health metric not found.'
+        },
+        #swagger.responses[500] = {
+            description: 'Error updating health metric.'
+        }
+    */
 );
 
 // Delete a record
