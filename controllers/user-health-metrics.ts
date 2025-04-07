@@ -74,6 +74,9 @@ export const getAllUserHealthMetrics = async (
             const healthMetrics = await UserHealthMetrics.find().sort({
                 timestamp: -1,
             });
+            console.log(
+                `Fetched ${healthMetrics.length} health metrics from the database`,
+            ); // Debug log to check the number of records fetched
             if (healthMetrics.length === 0)
                 return res
                     .status(404)

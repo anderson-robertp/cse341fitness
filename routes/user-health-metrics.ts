@@ -9,6 +9,7 @@ import {
     updateUserHealthMetric,
 } from "../controllers/user-health-metrics";
 import handleErrors from "../utilities";
+import { isAuthenticated } from "../controllers/authentication";
 
 const userMetricsRouter = express.Router();
 
@@ -16,6 +17,7 @@ const userMetricsRouter = express.Router();
 // Get all health metrics (Admin route)
 userMetricsRouter.get(
     "/all",
+    isAuthenticated,
     handleErrors(getAllUserHealthMetrics),
     /*
         #swagger.tags = ['User Health Metrics'],
@@ -38,6 +40,7 @@ userMetricsRouter.get(
 // Get all health metrics for a user
 userMetricsRouter.get(
     "/:userId",
+    isAuthenticated,
     handleErrors(getUserHealthMetrics),
     /*
         #swagger.tags = ['User Health Metrics'],
@@ -67,6 +70,7 @@ userMetricsRouter.get(
 // Get latest record for a user
 userMetricsRouter.get(
     "/:userId/latest",
+    isAuthenticated,
     handleErrors(getLatestUserHealthMetrics),
     /*
         #swagger.tags = ['User Health Metrics'],
@@ -95,6 +99,7 @@ userMetricsRouter.get(
 // Add a new record
 userMetricsRouter.post(
     "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
+    isAuthenticated,
     handleErrors(addUserHealthMetric),
     /* 
     #swagger.tags = ["User Health Metrics"]
@@ -183,6 +188,7 @@ userMetricsRouter.post(
 // Update a metric
 userMetricsRouter.put(
     "/:userId/:id", // Using userId and id in the path for clarity
+    isAuthenticated,
     handleErrors(updateUserHealthMetric),
     /*
     
@@ -236,6 +242,7 @@ userMetricsRouter.put(
 // Delete a record
 userMetricsRouter.delete(
     "/:id",
+    isAuthenticated,
     handleErrors(deleteUserHealthMetric),
     /*
         #swagger.tags = ['User Health Metrics'],
