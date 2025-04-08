@@ -37,7 +37,7 @@ describe("User Health Metrics API", () => {
         expect(response.status).toBe(201);
         expect(response.body.data).toHaveProperty("_id");
         expect(response.body.data.metrics.weight).toBe(70);
-        
+
         userHealthMetricsId = response.body.data._id; // Store user health metrics ID for later use
         //console.log("Created User Health Metrics ID:", userHealthMetricsId); // Log the created user health metrics ID for debugging purposes
         userObjectId = response.body.data.userId; // Store userId for later use
@@ -63,7 +63,6 @@ describe("User Health Metrics API", () => {
                 },
             });
         //console.log("Get All Add Response body:", response.body); // Log the response body for debugging
- 
 
         const userResponse = await request(app)
             .get("/user-health-metrics/all")
@@ -131,8 +130,8 @@ describe("User Health Metrics API", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.data.metrics.weight).toBe(72);
-    }   );
-    
+    });
+
     // Delete a user health metric
     it("should delete a user health metric", async () => {
         const response = await request(app)
@@ -171,5 +170,4 @@ describe("User Health Metrics API", () => {
         expect(response.status).toBe(400);
         expect(response.body.message).toBe("Invalid userId format");
     });
-
 });

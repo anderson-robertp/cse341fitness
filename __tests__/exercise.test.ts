@@ -11,7 +11,7 @@ describe("Exercises API", () => {
     it("should create a new exercise", async () => {
         const response = await request(app).post("/exercises").send({
             name: "Push Up",
-            type: "strength", 
+            type: "strength",
             duration: 30,
             sets: 3,
             reps: 10,
@@ -59,12 +59,13 @@ describe("Exercises API", () => {
             timestamp: timestamp, // Set the timestamp
         }).save();
 
-        const response = await request(app).get(`/exercises/${newExercise._id}`);
+        const response = await request(app).get(
+            `/exercises/${newExercise._id}`,
+        );
 
         expect(response.status).toBe(200);
         expect(response.body.name).toBe("Lunges");
-    }
-    );
+    });
 
     // Update an exercise by ID
     it("should update an exercise by ID", async () => {
@@ -102,12 +103,13 @@ describe("Exercises API", () => {
             timestamp: timestamp, // Set the timestamp
         }).save();
 
-        const response = await request(app).delete(`/exercises/${newExercise._id}`);
+        const response = await request(app).delete(
+            `/exercises/${newExercise._id}`,
+        );
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Exercise deleted successfully");
-    }
-    );
+    });
 
     /*it("should return 404 if exercise not found", async () => {
         const response = await request(app).get("/exercises/67f4695982f61670c45633an");

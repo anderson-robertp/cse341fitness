@@ -158,7 +158,9 @@ export const updateUserHealthMetric = async (
 
         // Validate the id format (optional)
         if (!Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "Invalid record ID format" });
+            return res
+                .status(400)
+                .json({ message: "Invalid record ID format" });
         }
 
         const metricObjectId = new Types.ObjectId(id); // Convert id to ObjectId
@@ -184,7 +186,7 @@ export const updateUserHealthMetric = async (
     }
 };
 
-    // Delete a health record
+// Delete a health record
 export const deleteUserHealthMetric = async (
     req: Request,
     res: Response,

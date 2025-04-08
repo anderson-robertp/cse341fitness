@@ -2,7 +2,7 @@
 import request from "supertest";
 import app from "../server"; // Assuming your server is exported from the main app file
 //import http from "http"; // Import http to create a server instance
-import { Achievement,UserAchievement } from "../models/achievement";
+import { Achievement, UserAchievement } from "../models/achievement";
 import { User } from "../models/user";
 import mongoose from "mongoose"; // Import mongoose to create ObjectId for testing
 import e from "express";
@@ -10,7 +10,6 @@ import e from "express";
 
 //jest.mock("../models/user"); // Mock the User model to avoid database calls during tests
 //jest.mock("../models/achievement"); // Mock the Achievement model to avoid database calls during tests
-
 
 /*let server: http.Server;
 
@@ -69,7 +68,9 @@ describe("Achievements API", () => {
             progressGoal: 2,
         }).save();
 
-        const response = await request(app).get(`/achievements/${achievement._id}`);
+        const response = await request(app).get(
+            `/achievements/${achievement._id}`,
+        );
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("_id");
@@ -84,11 +85,13 @@ describe("Achievements API", () => {
             progressGoal: 3,
         }).save();
 
-        const response = await request(app).put(`/achievements/${achievement._id}`).send({
-            title: "Updated Third Quest",   // Update the title'
-            description: "Complete your third workout - Updated",
-            progressGoal: 5, // Update the progress goal);
-        });
+        const response = await request(app)
+            .put(`/achievements/${achievement._id}`)
+            .send({
+                title: "Updated Third Quest", // Update the title'
+                description: "Complete your third workout - Updated",
+                progressGoal: 5, // Update the progress goal);
+            });
 
         console.log("Update Response Body:", response.body); // Log the response body for debugging
 
@@ -106,7 +109,9 @@ describe("Achievements API", () => {
             progressGoal: 4,
         }).save();
 
-        const response = await request(app).delete(`/achievements/${achievement._id}`);
+        const response = await request(app).delete(
+            `/achievements/${achievement._id}`,
+        );
 
         console.log("Delete Response Body:", response.body); // Log the response body for debugging
 
@@ -123,13 +128,13 @@ describe("Achievements API", () => {
         });
 
         console.log("Create Achievement Response Body:", response.body); // Log the response body for debugging
-        
+
         expect(response.status).toBe(201); // Ensure the achievement was created successfully
-        
+
         const achievementId = response.body._id; // Get the created achievement ID
-        
+
         console.log("Created Achievement ID:", achievementId); // Log for debugging
-        
+
         const userResponse = await request(app)
             .post("/users")
             .send({
@@ -148,15 +153,23 @@ describe("Achievements API", () => {
         console.log("Created User ID:", userResponse.body.user._id); // Log for debugging
         expect(userResponse.body.user._id).toBe(userId);
         expect(userResponse.body.user.name).toBe("testuser");
-        expect(userResponse.body.user.achievements).toContain(achievementId.toString()); // Ensure the user has the achievement linked
+        expect(userResponse.body.user.achievements).toContain(
+            achievementId.toString(),
+        ); // Ensure the user has the achievement linked
         // Verify the user achievement was created and linked correctly
-        
-        
-        const userAchievementsResponse = await request(app).get(`/users/${userId}/achievements`);
-        console.log("User Achievements Response Body:", userAchievementsResponse.body); // Log the response body for debugging
+
+        const userAchievementsResponse = await request(app).get(
+            `/users/${userId}/achievements`,
+        );
+        console.log(
+            "User Achievements Response Body:",
+            userAchievementsResponse.body,
+        ); // Log the response body for debugging
 
         expect(userAchievementsResponse.status).toBe(200); // Ensure we can retrieve user achievements
-        expect(Array.isArray(userAchievementsResponse.body.achievements)).toBe(true); // Ensure the response is an array
+        expect(Array.isArray(userAchievementsResponse.body.achievements)).toBe(
+            true,
+        ); // Ensure the response is an array
     });
 
     /*it("show a 404 error when trying to retrieve a non-existing achievement", async () => {

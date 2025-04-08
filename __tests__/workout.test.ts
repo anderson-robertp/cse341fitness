@@ -9,15 +9,15 @@ describe("Workouts API", () => {
 
     it("should create a new workout", async () => {
         const response = await request(app)
-        .post("/workouts")
-        .set("Content-Type", "application/json")
-        .set("Accept", "application/json")
-        .send({
-            type: "Morning Cardio",
-            duration: 30,
-            caloriesBurned: 300,
-            exerciseIds: [], // Assuming exerciseIds is optional and can be an empty array
-        });
+            .post("/workouts")
+            .set("Content-Type", "application/json")
+            .set("Accept", "application/json")
+            .send({
+                type: "Morning Cardio",
+                duration: 30,
+                caloriesBurned: 300,
+                exerciseIds: [], // Assuming exerciseIds is optional and can be an empty array
+            });
 
         console.log(response.body); // Log the response body for debugging
         console.log(response.status); // Log the response status for debugging
@@ -76,8 +76,7 @@ describe("Workouts API", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.duration).toBe(45);
-    }
-    );
+    });
 
     // delete a workout by id
     it("should delete a workout by ID", async () => {
@@ -93,14 +92,13 @@ describe("Workouts API", () => {
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Workout deleted successfully");
-    }
-    );
+    });
 
     //it("should return 404 if workout not found", async () => {
-        //const response = await request(app).get("/workouts/67f4695982f61670c45633an");
+    //const response = await request(app).get("/workouts/67f4695982f61670c45633an");
 
-        //expect(response.status).toBe(404);
-        //expect(response.body.message).toBe("Workout not found");
+    //expect(response.status).toBe(404);
+    //expect(response.body.message).toBe("Workout not found");
     //});
     /*it("should return 500 if there is a server error", async () => {
         const response = await request(app).post("/workouts").send({

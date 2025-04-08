@@ -10,14 +10,11 @@ export function userHealthMetricValidationRules() {
             .isMongoId()
             .withMessage("userId must be a valid ObjectId"),
 
-        body("timestamp")
-            .notEmpty(),
+        body("timestamp").notEmpty(),
         // .isISO8601()
         // .withMessage("timestamp must be a valid ISO 8601 date string"),
 
-        body("metrics")
-            .notEmpty()
-            .withMessage("Metrics object is required."),
+        body("metrics").notEmpty().withMessage("Metrics object is required."),
         body("metrics.heartRate")
             .optional()
             .isNumeric()
@@ -59,12 +56,14 @@ export function userHealthMetricValidationRules() {
             .isNumeric()
             .withMessage("hydration must be a number."),
     ];
-
-
 }
 
 //Validation
-export function userHealthMetricValidate(req: Request, res: Response, next: NextFunction) {
+export function userHealthMetricValidate(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
