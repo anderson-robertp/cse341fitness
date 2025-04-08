@@ -45,12 +45,12 @@ app.use(passport.session());
 app.use(router);
 
 // Initialize the database
-if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
+if (process.env.NODE_ENV !== "test") {
     InitializeDatabase()
         .then(() => {
             app.listen(port, () => {
                 console.log(
-                    "Database initialized successfully in test/dev environment.",
+                    "Database initialized successfully in a production environment.",
                 );
 
                 console.log(`Server is running on ${host}:${port}`);
@@ -63,24 +63,6 @@ if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev") {
         .catch((error: Error) => {
             console.error("Error initializing database:", error);
         });
-} else {
-    // For test or dev environments, we do not start the server but still initialize the database connection
-    InitializeDatabase()
-        .then(() => {
-            app.listen(port, () => {
-                console.log("Not Running in Test Environment"); // Log to indicate the server is running in non-test environment
-                console.log(`Server is running on ${host}:${port}`);
-                console.log(
-                    `Swagger Docs available at http://${host}:${port}/api-docs`,
-                );
-            });
-        })
-        .catch((error: Error) => {
-            console.error(
-                "Error initializing database in test/dev environment:",
-                error,
-            );
-        });
-}
+} 
 
 export default app;
