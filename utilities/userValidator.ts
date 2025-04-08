@@ -9,6 +9,7 @@ export function userValidationRules() {
             .notEmpty()
             .escape()
             .withMessage("Valid name is required."),
+        
 
         body("email")
             .isEmail()

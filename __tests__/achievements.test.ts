@@ -36,7 +36,10 @@ describe("Achievements API", () => {
     });
 
     it("should create a new achievement", async () => {
-        const response = await request(app).post("/achievements").send({
+        const response = await request(app).post("/achievements")
+        .set("Content-Type", "application/json")
+        .set("Accept", "application/json")
+        .send({
             title: "First Quest",
             description: "Complete your first workout",
             progressGoal: 1,

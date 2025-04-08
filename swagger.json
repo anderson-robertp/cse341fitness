@@ -41,7 +41,7 @@
         "tags": [
           "Authentication"
         ],
-        "description": "Redirects the user to Google authentication page.   **Note:** You must manually click this link to authenticate with Google:   [Click here to log in with Google](http://localhost:3000/authentication/google) OR (https://cse341fitness.onrender.com/authentication/google)",
+        "description": "Redirects the user to Google authentication page. \r  **Note:** You must manually click this link to authenticate with Google: \r  [Click here to log in with Google](http://localhost:3000/authentication/google) OR (https://cse341fitness.onrender.com/authentication/google)",
         "responses": {
           "302": {
             "description": "Redirects to Google OAuth login"
@@ -107,15 +107,13 @@
             "schema": {
               "type": "string"
             },
-            "description": "User ID to retrieve"
+            "description": "User ID to retrieve",
+            "example": "67f55757445af75667ed5be5"
           }
         ],
         "responses": {
           "200": {
             "description": "User details retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "User not found."
@@ -136,137 +134,13 @@
             "schema": {
               "type": "string"
             },
-            "description": "User ID to update"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "John Doe"
-                        }
-                      }
-                    },
-                    "email": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "john@example.com"
-                        }
-                      }
-                    },
-                    "workoutIds": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
-                            }
-                          }
-                        },
-                        "example": {
-                          "type": "array",
-                          "example": [
-                            "60b8d7e9ef9b3a8ed64f1234"
-                          ],
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "favoriteExercise": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "Dead lifts"
-                        }
-                      }
-                    },
-                    "achievements": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "array"
-                        },
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "example": "string"
-                            }
-                          }
-                        },
-                        "example": {
-                          "type": "array",
-                          "example": [
-                            "60b8d7e9ef9b3a8ed64f1111"
-                          ],
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "name",
-                    "email"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+            "description": "User ID to update",
+            "example": "67f55757445af75667ed5be5"
           }
         ],
         "responses": {
           "200": {
             "description": "User updated."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "User not found."
@@ -275,7 +149,57 @@
             "description": "Unprocessable Entity"
           }
         },
-        "security": []
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                  },
+                  "workoutIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "60b8d7e9ef9b3a8ed64f1234"
+                    ]
+                  },
+                  "favoriteExercise": {
+                    "type": "string",
+                    "example": "67f3e04d38c8ac7c7f11daf3"
+                  },
+                  "achievements": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "60b8d7e9ef9b3a8ed64f1111"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -296,9 +220,6 @@
         "responses": {
           "200": {
             "description": "User deleted successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "User not found."
@@ -342,9 +263,6 @@
           },
           "400": {
             "description": "Invalid property."
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": []
@@ -362,7 +280,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "User ID"
+            "description": "User ID",
+            "example": "67f55757445af75667ed5be5"
           },
           {
             "name": "property",
@@ -371,48 +290,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Property name (e.g., email, favoriteExercise)"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "example": {
-                          "type": "string",
-                          "example": "johndoe@gmail.com"
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "value"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+            "description": "Property name (e.g., workoutIds, favoriteExercise, or achievements)",
+            "example": "favoriteExercise"
           }
         ],
         "responses": {
@@ -421,15 +300,32 @@
           },
           "400": {
             "description": "Invalid property."
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
           }
         },
-        "security": []
+        "security": [
+          {
+            "SessionAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "example": "67f3e04d38c8ac7c7f11daf3"
+                  }
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/users/": {
@@ -441,9 +337,6 @@
         "responses": {
           "200": {
             "description": "List of users retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": []
@@ -520,9 +413,6 @@
           "200": {
             "description": "Workouts retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving workouts."
           }
@@ -549,9 +439,6 @@
         "responses": {
           "200": {
             "description": "Workout retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Workout not found."
@@ -784,9 +671,6 @@
           "200": {
             "description": "Exercises retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving exercises."
           }
@@ -813,9 +697,6 @@
         "responses": {
           "200": {
             "description": "Exercise retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Exercise not found."
@@ -945,9 +826,6 @@
           "200": {
             "description": "Achievements retrieved successfully."
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Error retrieving achievements."
           }
@@ -1021,9 +899,6 @@
         "responses": {
           "200": {
             "description": "Achievement retrieved successfully."
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Achievement not found."
@@ -1262,7 +1137,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           }
         ],
         "responses": {
@@ -1294,7 +1170,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           }
         ],
         "responses": {
@@ -1655,7 +1532,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           },
           {
             "name": "id",
@@ -1663,7 +1541,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "66102807f2d339001f2e3f3a"
           }
         ],
         "responses": {

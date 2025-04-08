@@ -1,0 +1,19 @@
+[
+    {
+      "name": "testuser1",
+      "email": "test1@yser.com",
+      "googleId": "1234567890",
+      "workoutIds": [],
+      "favoriteExercise": "67d0e2016ab4fc6e4073c80b",
+      "achievements": []
+    },
+    {
+      "name": "testuser2",
+      "email": "test2@yser.com",
+      "googleId": "0987654321",
+      "workoutIds": [],
+      "favoriteExercise": "67d0e2016ab4fc6e4073c80b",
+      "achievements": []
+    }
+  ]
+  

@@ -150,39 +150,44 @@ export const addUserHealthMetric = async (
 // Update a health record
 export const updateUserHealthMetric = async (
     req: Request,
-    res: Response,
-): Promise<Response> => {
+    res: Response
+  ): Promise<Response> => {
     try {
-        const { id } = req.params; // Extract id from request parameters
-        const { metrics } = req.body; // Extract metrics from request body
-
-        // Validate the id format (optional)
-        if (!Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "Invalid record ID format" });
-        }
-
-        const metricObjectId = new Types.ObjectId(id); // Convert id to ObjectId
-
-        // Find the existing health metric record
-        const existingMetric = await UserHealthMetrics.findById(metricObjectId);
-        if (!existingMetric) {
-            return res.status(404).json({ message: "Health metric not found" });
-        }
-
-        // Update the metrics and save the record
-        existingMetric.metrics = metrics || existingMetric.metrics; // Only update if metrics are provided
-        await existingMetric.save();
-
-        return res.status(200).json({
-            message: "Health metric updated",
-            data: existingMetric,
-        });
+      const { id } = req.params;
+      const { metrics } = req.body;
+  
+      if (!Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid record ID format" });
+      }
+  
+      const existingMetric = await UserHealthMetrics.findById(id);
+      if (!existingMetric) {
+        return res.status(404).json({ message: "Health metric not found" });
+      }
+  
+      // Delete the old document (required for time-series collections)
+      await UserHealthMetrics.deleteOne({ _id: id });
+  
+      // Insert a new document with the updated data
+      const newMetric = new UserHealthMetrics({
+        ...existingMetric.toObject(),
+        metrics,
+        _id: undefined, // Let Mongo generate a new _id
+        timestamp: new Date(), // Optional: refresh timestamp
+      });
+  
+      await newMetric.save();
+  
+      return res.status(200).json({
+        message: "Health metric updated",
+        data: newMetric,
+      });
     } catch (error) {
-        return res
-            .status(500)
-            .json({ message: "Error updating health metric", error });
+      return res
+        .status(500)
+        .json({ message: "Error updating health metric", error });
     }
-};
+  };
 
     // Delete a health record
 export const deleteUserHealthMetric = async (

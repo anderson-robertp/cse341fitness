@@ -105,7 +105,7 @@ export const updateUserProperty = async (
     try {
         const userId = req.params.id;
         const property = req.params.property; // E.g., 'email', 'name', etc.
-        const value = req.body.value; // The new value for the property
+        let value = req.body.value; // The new value for the property
 
         // Find user by ID
         const user = await User.findById(userId);
@@ -119,10 +119,45 @@ export const updateUserProperty = async (
                 .status(400)
                 .json({ message: `Invalid property: ${property}` });
         }
+        if (property === "email" || property === "name" || property === "googleId") {
+            // can't update email to existing email
+            return res
+                .status(400)
+                .json({ message: `Invalid property: ${property}` });
+        }
 
-        // Update the user property
-        user[property] = value;
-
+        // Update the property
+        if (property === "favoriteExercise") {
+            // Convert string to ObjectId if necessary
+            if (typeof value === "string") {
+                value = new mongoose.Types.ObjectId(value);
+            }
+        
+            // Set the property to the ObjectId (or original object if already one)
+            user[property] = value;
+        } else if (property === "workoutIds" || property === "achievements") {
+            if (!Array.isArray(user[property])) {
+                user[property] = [];
+            }
+        
+            // Convert to ObjectId if value is a string
+            if (typeof value === "string") {
+                value = new mongoose.Types.ObjectId(value);
+            }
+        
+            // Avoid pushing duplicates (optional)
+            const exists = user[property].some(
+                (id: mongoose.Types.ObjectId) => id.toString() === value.toString()
+            );
+        
+            if (!exists) {
+                user[property].push(value);
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ message: `Invalid property: ${property}` });
+        }
         // Save the updated user
         await user.save();
 
