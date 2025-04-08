@@ -9,7 +9,6 @@ import {
     getAllUsers, // Added for retrieving all users, if needed
 } from "../controllers/users";
 import handleErrors from "../utilities";
-import { userValidationRules, userValidate } from "../utilities/userValidator";
 
 const usersRouter = express.Router();
 
@@ -67,8 +66,6 @@ usersRouter.get(
 
 usersRouter.put(
     "/:id",
-    userValidationRules(),
-    userValidate,
     handleErrors(updateUserById),
     /*
       #swagger.tags = ['Users']
@@ -109,8 +106,6 @@ usersRouter.put(
 
 usersRouter.put(
     "/:id/:property",
-    userValidationRules(),
-    userValidate,
     handleErrors(updateUserProperty),
     /*
      #swagger.tags = ['Users']
@@ -155,8 +150,6 @@ usersRouter.put(
 // Create a new user
 usersRouter.post(
     "/",
-    userValidationRules(), // Validate request body using the defined rules
-    userValidate, // Middleware to check for validation errors
     handleErrors(createUser), // Handle the request and catch errors
     /*
         #swagger.ignore = true

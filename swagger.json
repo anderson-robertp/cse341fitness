@@ -1262,7 +1262,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           }
         ],
         "responses": {
@@ -1294,7 +1295,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           }
         ],
         "responses": {
@@ -1655,7 +1657,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "67df521afc6481f5bf781ec2"
           },
           {
             "name": "id",
@@ -1663,7 +1666,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "66102807f2d339001f2e3f3a"
           }
         ],
         "responses": {
