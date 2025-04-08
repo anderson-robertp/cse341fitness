@@ -18,7 +18,10 @@ const host = process.env.HOST || "localhost";
 
 // CORS Configuration
 const corsOptions = {
-    origin: ["http://localhost:3000/api-docs"], // Allow your frontend to make requests
+    origin: [
+        "http://localhost:3000/api-docs",
+        "https://cse341fitness.onrender.com/api-docs",
+    ], // Allow your frontend to make requests
     credentials: true, // Allow cookies to be passed with requests
 };
 
@@ -63,6 +66,6 @@ if (process.env.NODE_ENV !== "test") {
         .catch((error: Error) => {
             console.error("Error initializing database:", error);
         });
-} 
+}
 
 export default app;
