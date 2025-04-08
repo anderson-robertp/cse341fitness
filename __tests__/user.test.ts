@@ -131,4 +131,19 @@ describe("Users API", () => {
         expect(response.status).toBe(404); // Check if the response status is 404 (Not Found)
         expect(response.body).toHaveProperty("message", "User not found in users/getUserById controller."); // Check if the message indicates user not found
     });
+
+    /*it("should return 404 for non-existent user", async () => {
+        const nonExistentId = new mongoose.Types.ObjectId(); // Generate a new ObjectId for testing
+        const response = await request(app).get(`/users/${nonExistentId}`); // Attempt to retrieve a non-existent user
+
+        expect(response.status).toBe(404); // Check if the response status is 404 (Not Found)
+        expect(response.body).toHaveProperty("message", "User not found in users/getUserById controller."); // Check if the message indicates user not found
+    });
+    it("should return 404 for non-existent user email", async () => {
+        const nonExistentId = new mongoose.Types.ObjectId(); // Generate a new ObjectId for testing
+        const response = await request(app).get(`/users/${nonExistentId}/email`); // Attempt to retrieve a non-existent user email
+
+        expect(response.status).toBe(404); // Check if the response status is 404 (Not Found)
+        expect(response.body).toHaveProperty("message", "User not found in users/getUserEmailById controller."); // Check if the message indicates user not found
+    });*/
 });

@@ -143,5 +143,33 @@ describe("User Health Metrics API", () => {
         expect(response.body.message).toBe("Health metric deleted");
     });
     // Check if the metric is deleted
+    it("should not find the deleted user health metric", async () => {
+        const response = await request(app)
+            .get(`/user-health-metrics/${userId}`)
+            .redirects(1);
+
+        expect(response.status).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body.length).toBe(1); // Check if the deleted metric is not found
+    });
+
+    it("should return 404 for non-existent user health metric", async () => {
+        const nonExistentId = new mongoose.Types.ObjectId(); // Generate a new ObjectId for testing
+        const response = await request(app)
+            .get(`/user-health-metrics/${userId}/${nonExistentId}`) // Use the non-existent ID in the URL
+            .redirects(1);
+
+        expect(response.status).toBe(404);
+    });
+
+    it("should return 400 for invalid user ID format", async () => {
+        const invalidUserId = "invalidUserId"; // Invalid user ID format
+        const response = await request(app)
+            .get(`/user-health-metrics/${invalidUserId}`) // Use the invalid user ID in the URL
+            .redirects(1);
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Invalid userId format");
+    });
 
 });

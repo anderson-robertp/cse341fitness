@@ -108,4 +108,26 @@ describe("Exercises API", () => {
         expect(response.body.message).toBe("Exercise deleted successfully");
     }
     );
+
+    /*it("should return 404 if exercise not found", async () => {
+        const response = await request(app).get("/exercises/67f4695982f61670c45633an");
+
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Exercise not found");
+    });
+
+    it("should return 500 if there is a server error", async () => {
+        const response = await request(app).post("/exercises").send({
+            name: "Invalid Exercise",
+            type: "strength",
+            duration: "thirty",
+            sets: 3,
+            reps: 10,
+            weight: 0,
+            caloriesBurned: 100,
+        });
+        expect(response.status).toBe(500);
+        expect(response.body.message).toBe("Error creating exercise");
+    }
+    );*/
 });

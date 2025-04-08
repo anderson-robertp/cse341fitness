@@ -158,5 +158,38 @@ describe("Achievements API", () => {
         expect(Array.isArray(userAchievementsResponse.body.achievements)).toBe(true); // Ensure the response is an array
     });
 
+    /*it("show a 404 error when trying to retrieve a non-existing achievement", async () => {
+        const nonExistingId = new mongoose.Types.ObjectId(); // Generate a random ObjectId
+        const response = await request(app).get(`/achievements/${nonExistingId}`);
+        console.log("404 Error Response Body:", response.body); // Log the response body for debugging
 
+        expect(response.status).toBe(404); // Expect a 404 status code
+        expect(response.body.message).toBe("Achievement not found"); // Expect a specific error message
+    }
+    );
+
+    it("should return 400 error for invalid achievement ID", async () => {
+        const invalidId = "invalidId"; // Invalid ID format
+        const response = await request(app).get(`/achievements/${invalidId}`);
+        console.log("Invalid ID Error Response Body:", response.body); // Log the response body for debugging
+
+        expect(response.status).toBe(400); // Expect a 400 status code
+        expect(response.body.message).toBe("Invalid achievement ID"); // Expect a specific error message
+    });
+    it("should return 400 error for invalid user ID", async () => {
+        const invalidId = "invalidId"; // Invalid ID format
+        const response = await request(app).get(`/users/${invalidId}/achievements`);
+        console.log("Invalid User ID Error Response Body:", response.body); // Log the response body for debugging
+
+        expect(response.status).toBe(400); // Expect a 400 status code
+        expect(response.body.message).toBe("Invalid user ID"); // Expect a specific error message
+    });
+
+    it("should return 500 error for server error", async () => {
+        // Simulate a server error by passing an invalid achievement ID format
+        const invalidId = "invalidId"; // Invalid ID format
+        const response = await request(app).get(`/achievements/${invalidId}`);
+        console.log("Server Error Response Body:", response.body); // Log the response body for debugging
+        expect(response.status).toBe(500); // Expect a 500 status code
+    });*/
 });
