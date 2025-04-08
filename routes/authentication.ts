@@ -9,7 +9,7 @@ authenticationRouter.get(
     #swagger.tags = ['Authentication']
     #swagger.description = 'Redirects the user to Google authentication page. 
       **Note:** You must manually click this link to authenticate with Google: 
-       [Click here to log in with Google](http://localhost:3000/authentication/google)'
+       [Click here to log in with Google](http://localhost:3000/authentication/google) OR (https://cse341fitness.onrender.com)'
     #swagger.security = 
     - oauth2: ["opendid", "profile", "email"]
     #swagger.responses[302] = {
