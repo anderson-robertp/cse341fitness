@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Request, Response, NextFunction } from "express";
 //import { IUser } from "../models/user";
 //import { ObjectId } from "mongodb";

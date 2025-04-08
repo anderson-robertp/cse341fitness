@@ -1,23 +1,252 @@
-POST http://localhost:3000/user-health-metrics/67df521afc6481f5bf781ec2 HTTP/1.1
+# Define the session ID as a variable
+# Note: Replace the session_id value with your actual session ID
+# "Send Request" will not work on authenticated routes, use "command/control + click"
+@session_id = "s%3AntrP6TAQozGwjls1_8H9UGB-GWNZG_-Z.pKFYNluet6wBrJfMMq%2B6BrrPA%2FnlU%2B2g3S3mEZ8t%2BcY"
+
+
+// NOTE: All "{}" placeholders should be replaced with actual values before sending requests.
+// ********************
+//  Authentication
+// ********************
+### Google Authentication Redirect
+GET http://localhost:3000/authentication/google HTTP/1.1
+
+### Google Authentication Callback
+GET http://localhost:3000/authentication/google/callback HTTP/1.1
+
+### Logout the user
+GET http://localhost:3000/authentication/logout HTTP/1.1
+
+
+
+// ********************
+//  Users
+// ********************
+### Get user by ID
+GET http://localhost:3000/users/67ec62deb24b77a915bc82d5 HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Update user details
+PUT http://localhost:3000/users/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
 Content-Type: application/json
 
 {
-    "metrics": {
-        "bloodPressure": {
-            "systolic": 118,
-            "diastolic": 78
-        },
-        "heartRate": 75,
-        "bloodSugar": 95,
-        "temperature": 36.6,
-        "steps": 5000,
-        "caloriesBurned": 300,
-        "sleepDuration": 7,
-        "weight": 72,
-        "hydration": 2
-    }
+  "name": "John Doe",
+  "email": "john@example.com",
+  "workoutIds": [
+    "60b8d7e9ef9b3a8ed64f1234"
+  ],
+  "favoriteExercise": "Dead lifts",
+  "achievements": [
+    "60b8d7e9ef9b3a8ed64f1111"
+  ]
 }
 
-###
+### Delete user by ID
+DELETE http://localhost:3000/users/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
 
-GET http://localhost:3000/user-health-metrics/67df521afc6481f5bf781ec2 HTTP/1.1
+### Fetch a specific property of a user
+GET http://localhost:3000/users/{id}/{property} HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Update a single property of a user
+PUT http://localhost:3000/users/{id}/{property} HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "value": "johndoe@gmail.com"
+}
+
+### Retrieve all users
+GET http://localhost:3000/users/ HTTP/1.1
+Cookie: session_id={{session_id}}
+
+
+
+// ********************
+//  Workouts
+// ********************
+### Create a new workout
+POST http://localhost:3000/workouts/ HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "type": "strength",
+  "duration": 50,
+  "caloriesBurned": 200,
+  "exerciseIds": [
+    "60d21b4667d0d8992e610c85",
+    "60d21b4667d0d8992e610c86"
+  ]
+}
+
+### Retrieve all workouts
+GET http://localhost:3000/workouts/ HTTP/1.1
+
+### Retrieve a workout by ID
+GET http://localhost:3000/workouts/{id} HTTP/1.1
+
+### Update an existing workout
+PUT http://localhost:3000/workouts/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "type": "strength",
+  "duration": 50,
+  "caloriesBurned": 200,
+  "exerciseIds": [
+    "60d21b4667d0d8992e610c85",
+    "60d21b4667d0d8992e610c86"
+  ]
+}
+
+### Delete a workout by ID
+DELETE http://localhost:3000/workouts/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Retrieve workouts by user ID
+GET http://localhost:3000/workouts/user/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
+
+
+
+// ********************
+//  Exercises
+// ********************
+### Create a new exercise
+POST http://localhost:3000/exercises/ HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "name": "Pushups",
+  "type": "strength",
+  "duration": 50,
+  "sets": 3,
+  "reps": 10,
+  "weight": 0,
+  "caloriesBurned": 200
+}
+
+### Retrieve all exercises
+GET http://localhost:3000/exercises/ HTTP/1.1
+
+### Retrieve an exercise by ID
+GET http://localhost:3000/exercises/{id} HTTP/1.1
+
+### Update an exercise by ID
+PUT http://localhost:3000/exercises/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "name": "Pushups",
+  "type": "strength",
+  "duration": 50,
+  "sets": 3,
+  "reps": 10,
+  "weight": 0,
+  "caloriesBurned": 200
+}
+
+### Delete an exercise by ID
+DELETE http://localhost:3000/exercises/{id} HTTP/1.1
+Cookie: session_id={{session_id}}
+
+
+
+// ********************
+//  Achievements
+// ********************
+### Retrieve all achievements
+GET http://localhost:3000/achievements/ HTTP/1.1
+
+### Create a new achievement
+POST http://localhost:3000/achievements/ HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "title": "Run 5 miles",
+  "description": "Run 5 miles in a week",
+  "progressGoal": 5
+}
+
+### Retrieve an achievement by ID
+GET http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
+
+### Update an existing achievement
+PUT http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "description": "Sample",
+  "progressGoal": 5
+}
+
+### Delete an achievement by ID
+DELETE http://localhost:3000/achievements/67f40230208d2623a3661784 HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Retrieve achievements for a specific user
+GET http://localhost:3000/achievements/user/67ec9785e8827735cbd25359 HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Create a new user achievement
+POST http://localhost:3000/achievements/user/67ec9785e8827735cbd25359 HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "title": "Run 200 miles",
+  "description": "Run 200 miles in a month",
+  "progress": 10
+}
+
+
+
+// ********************
+//  User Health Metrics
+// ********************
+### Get all health metrics for all users (Admin route)
+GET http://localhost:3000/user-health-metrics/all HTTP/1.1
+
+### Get all health metrics for a specific user
+GET http://localhost:3000/user-health-metrics/{userId} HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Get the latest health metric for a specific user
+GET http://localhost:3000/user-health-metrics/{userId}/latest HTTP/1.1
+Cookie: session_id={{session_id}}
+
+### Add a new health metric for a specific user
+POST http://localhost:3000/user-health-metrics/{userId}/ HTTP/1.1
+Cookie: session_id={{session_id}}
+Content-Type: application/json
+
+{
+  "metrics": {
+    "heartRate": 72,
+    "bloodPressure": {
+      "systolic": 120,
+      "diastolic": 80
+    },
+    "bloodSugar": 95,
+    "temperature": 36.5,
+    "steps": 5000,
+    "caloriesBurned": 250,
+    "sleepDuration": 7.5,
+    "weight": 75.2,
+    "hydration": 1.5
+  }
+}
+
+### Delete a health metric for a specific user by ID
+DELETE http://localhost:3000/user-health-metrics/{id} HTTP/1.1

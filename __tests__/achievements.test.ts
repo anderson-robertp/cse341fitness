@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import request from "supertest";
 import app from "../server"; // Assuming your server is exported from the main app file
 //import http from "http"; // Import http to create a server instance

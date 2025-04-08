@@ -99,7 +99,7 @@ userMetricsRouter.get(
 // Add a new record
 userMetricsRouter.post(
     "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
-    isAuthenticated,
+    isAuthenticated, // Ensure the user is authenticated before adding a health metric
     handleErrors(addUserHealthMetric),
     /* 
     #swagger.tags = ["User Health Metrics"]
@@ -242,7 +242,7 @@ userMetricsRouter.put(
 // Delete a record
 userMetricsRouter.delete(
     "/:id",
-    isAuthenticated,
+    isAuthenticated, // Ensure the user is authenticated before deleting a health metric
     handleErrors(deleteUserHealthMetric),
     /*
         #swagger.tags = ['User Health Metrics'],
