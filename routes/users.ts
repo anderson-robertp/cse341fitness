@@ -78,22 +78,23 @@ usersRouter.put(
           "required": true,
           "type": 'string'
       }
-      #swagger.parameters[body] = {
-        "in": "body",
-        "required": true,
-        "schema": {
-                type: "object",
-                properties: {
-                    name: { type: "string", example: "John Doe" },
-                    email: { type: "string", example: "john@example.com" },
-                    workoutIds: { type: "array", items: { type: "string" }, example: ["60b8d7e9ef9b3a8ed64f1234"] },
-                    favoriteExercise: { type: "string", example: "Dead lifts" },
-                    achievements: { type: "array", items: { type: "string" }, example: ["60b8d7e9ef9b3a8ed64f1111"] }
-                      },
-                      required: ["name", "email"]
-                  }
-              }
-          }
+      #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    properties: {
+                        name: { type: "string", example: "John Doe" },
+                        email: { type: "string", example: "john@example.com" },
+                        workoutIds: { type: "array", items: { type: "string" }, example: ["60b8d7e9ef9b3a8ed64f1234"] },
+                        favoriteExercise: { type: "string", example: "Dead lifts" },
+                        achievements: { type: "array", items: { type: "string" }, example: ["60b8d7e9ef9b3a8ed64f1111"] }
+                    },
+                required: ["name", "email"]
+                }
+            }
+        }
       }
       #swagger.responses[200] = {
           description: 'User updated.'
@@ -124,20 +125,23 @@ usersRouter.put(
          "required": true,
          "type": "string"
      }
-     #swagger.parameters['body'] = {
-         "in": "body",
-         "required": true,
-         "schema": {
-             "type": "object",
-             "properties": {
-                 "value": { 
-                     "type": "string", 
-                     "example": "johndoe@gmail.com" 
-                 }
-             },
-             "required": ["value"]
-         }
-     }
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "value": { 
+                            "type": "string", 
+                            "example": "johndoe@gmail.com" 
+                        }
+                    },
+                    "required": ["value"]
+                }
+            }
+        }
+    }
      #swagger.responses[200] = {
          "description": "User property updated."
      }
