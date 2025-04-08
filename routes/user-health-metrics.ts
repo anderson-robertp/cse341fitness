@@ -10,6 +10,7 @@ import {
 } from "../controllers/user-health-metrics";
 import handleErrors from "../utilities";
 import { isAuthenticated } from "../controllers/authentication";
+import { userHealthMetricValidationRules } from "../utilities/validUserHealthMetrics";
 
 const userMetricsRouter = express.Router();
 
@@ -53,7 +54,8 @@ userMetricsRouter.get(
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            example: "67df521afc6481f5bf781ec2"
         },
         #swagger.responses[200] = {
             description: 'Health metrics retrieved successfully.',
@@ -82,7 +84,8 @@ userMetricsRouter.get(
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            example: "67df521afc6481f5bf781ec2"
         },
         #swagger.responses[200] = {
             description: 'Latest health metric retrieved successfully.',
@@ -100,6 +103,7 @@ userMetricsRouter.get(
 userMetricsRouter.post(
     "/:userId/", // Using userId in the path for clarity, but it can be in the body as well
     isAuthenticated, // Ensure the user is authenticated before adding a health metric
+    userHealthMetricValidationRules(),
     handleErrors(addUserHealthMetric),
     /* 
     #swagger.tags = ["User Health Metrics"]
@@ -189,6 +193,7 @@ userMetricsRouter.post(
 userMetricsRouter.put(
     "/:userId/:id", // Using userId and id in the path for clarity
     isAuthenticated,
+    userHealthMetricValidationRules(),
     handleErrors(updateUserHealthMetric),
     /*
     
@@ -201,13 +206,15 @@ userMetricsRouter.put(
             "name": "userId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            example: "67df521afc6481f5bf781ec2"
         },
         #swagger.parameters['id'] = {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            example: "66102807f2d339001f2e3f3a"
         },
         #swagger.requestBody = {
             required: true,
